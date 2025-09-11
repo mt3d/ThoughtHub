@@ -2,43 +2,41 @@
 
 namespace backend.Data.Entities
 {
-	/*	{
-	  "comment": {
-		"id": 1,
-		"createdAt": "2016-02-18T03:22:56.637Z",
-		"updatedAt": "2016-02-18T03:22:56.637Z",
-		"body": "It takes a Jacobian",
-		"author": {
-		  "username": "jake",
-		  "bio": "I work at statefarm",
-		  "image": "https://i.stack.imgur.com/xHWG8.jpg",
-		  "following": false
-		}
-	  }
-	}*/
-
 	public class Comment
 	{
-		public int Id { get; set; }
+		public int CommentId { get; set; }
 
-		public string? Text { get; set; }
+		public string? ParentCommentId { get; set; }
+		public Comment? ParentComment { get; set; }
 
-		public User? Author { get; set; }
-
-		// Just return the author above.
-		// Efficient for filtering.
 		[JsonIgnore]
 		public int AuthorId { get; set; }
+		public User? Author { get; set; }
 
-		// Efficient for filtering. No need to include the article.
+		public string BodyHtml { get; set; } = string.Empty; // A rendered version of the comment
+		public string BodySource { get; set; } = string.Empty; // Markdown (raw input)
+
+		// Store to avoid recalculating
+		public int ClapsCount { get; set; }
+		public int RepliesCount { get; set; }
+
+		// The parent article.
+		// Store the article ID for efficient for filtering. No need to include the article.
+		// When returning a comment,
+		// do not return the full article.
 		[JsonIgnore]
 		public int ArticleId { get; set; }
-
-		// When returning comments, do not return the full article.
 		[JsonIgnore]
 		public Article? Article { get; set; }
 
 		public DateTime CreatedAt { get; set; }
 		public DateTime UpdatedAt { get; set; }
+		public bool IsEdited { get; set; }
+
+		// Delted comments are hidden but preserved (for moderation purposes)
+		public bool IsDeleted { get; set; }
+
+		// Authors/Publications can pin comments
+		public bool IsPinned { get; set; }
 	}
 }

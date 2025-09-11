@@ -62,14 +62,17 @@ namespace backend.Logic.Articles
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> Get(string slug)
 		{
-			var article = await context.Articles.AsNoTracking().FirstOrDefaultAsync(x => x.Slug == slug);
-
+			var article = await context.Articles.AsNoTracking()
+				.Include(a => a.Publication)
+				.Include(a => a.Author)
+				.FirstOrDefaultAsync(x => x.Slug == slug);
+			
 			if (article == null)
 			{
 				return NotFound();
 			}
 
-			return Ok(new ArticleWrapper(article));
+			return Ok(article);
 		}
 	}
 }

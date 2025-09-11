@@ -44,7 +44,7 @@ namespace backend.Data
 				}
 			};
 
-/*			List<User> Publications = new()
+			List<Publication> Publications = new()
 			{
 				new Publication
 				{
@@ -64,7 +64,7 @@ namespace backend.Data
 					Url = "/startup-stories",
 					Image = "https://miro.medium.com/v2/resize:fit:40/1*startup-logo.jpg"
 				}
-			};*/
+			};
 
 			if (!context.Articles.Any())
 			{
@@ -82,8 +82,8 @@ namespace backend.Data
 						Image = "https://miro.medium.com/v2/resize:fit:800/1*chatgpt-prompt.jpg",
 						ClapsCount = 6900,
 						CommentsCount = 368,
-						Author = null,
-						Publication = null
+						Author = Authors[0],
+						Publication = Publications[0]
 					},
 					new Article
 					{
@@ -98,8 +98,8 @@ namespace backend.Data
 						Image = "https://miro.medium.com/v2/resize:fit:800/1*ux-design.jpg",
 						ClapsCount = 1200,
 						CommentsCount = 87,
-						Author = null,
-						Publication = null
+						Author = Authors[1],
+						Publication = Publications[0]
 					},
 					new Article
 					{
@@ -114,8 +114,8 @@ namespace backend.Data
 						Image = "https://miro.medium.com/v2/resize:fit:800/1*startup.jpg",
 						ClapsCount = 3400,
 						CommentsCount = 152,
-						Author = null,
-						Publication = null
+						Author = Authors[2],
+						Publication = Publications[2]
 					}
 				);
 
