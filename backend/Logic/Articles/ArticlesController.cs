@@ -1,10 +1,24 @@
 ﻿using backend.Data;
-using Microsoft.AspNetCore.Http;
+using backend.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Logic.Articles
 {
+	/*
+	 * A wrapper/envelope is used add additional metadata to the actual payload, such as
+	 * information about the response status, errors, and other contextual details.
+	 * 
+	 * Records are primarily intended for supporting immutable data models.
+	 */
+	public record ArticleWrapper(Article Article);
+
+	public class ArticlesWrapper
+	{
+		public List<Article> Articles { get; set; } = new();
+		public int Count { get; set; }
+	}
+
 	[Route("[controller]")]
 	[ApiController]
 	public class ArticlesController : ControllerBase
