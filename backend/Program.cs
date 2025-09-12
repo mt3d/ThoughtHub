@@ -72,8 +72,8 @@ builder.Services.AddScoped<IUserAccessor, UserAccessor>();
  */
 builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
 
-// TODO: Add JWT
 builder.Services.AddJwtAuthentication();
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -82,6 +82,8 @@ var app = builder.Build();
 // TODO: Use Cors
 
 app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapControllers();
 
 if (app.Environment.IsDevelopment())
