@@ -1,7 +1,5 @@
 ﻿using frontend.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
 
 namespace frontend.Controllers
@@ -21,28 +19,25 @@ namespace frontend.Controllers
 		{
 			if (User.Identity?.IsAuthenticated == true)
 			{
-				var client = clientFactory.CreateClient("ApiClient");
-				var response = await client.GetAsync($"/articles?limit={PageSize}&offset={(page - 1) * PageSize}");
+				HttpClient? client = clientFactory.CreateClient("ApiClient");
+				JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
 
-				if (!response.IsSuccessStatusCode)
+				var articlesWrapper = await client.GetFromJsonAsync<ArticlesWrapper>($"/articles?limit={PageSize}&offset={(page - 1) * PageSize}", options);
+
+				if (articlesWrapper is null)
 				{
 					ViewBag.Error = "Error while loading articles";
 					return View(new FeedViewModel());
 				}
 
-				var json = await response.Content.ReadAsStringAsync();
-				var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-
-				var articleResponse = JsonSerializer.Deserialize<ArticleResponse>(json, options);
-
 				FeedViewModel feed = new()
 				{
-					Articles = articleResponse.Articles,
+					Articles = articlesWrapper.Articles,
 					PagingInfo = new PagingInfo
 					{
 						CurrentPage = page,
 						ItemsPerPage = PageSize,
-						TotalItems = articleResponse.ArticlesCount
+						TotalItems = articlesWrapper.ArticlesCount
 					}
 				};
 

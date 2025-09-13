@@ -1,21 +1,17 @@
 ﻿namespace frontend.Models
 {
-	public class Author
-	{
-		public string Username { get; set; } = string.Empty;
-		public string Bio { get; set; } = string.Empty;
-		public string Image { get; set; } = string.Empty;
-		public bool Following { get; set; }
-
-		public string Url { get; set; } = string.Empty;
-		public string FullName { get; set; } = string.Empty;
-	}
-
 	public class Article
 	{
+		public int ArticleId { get; set; }
+
 		public string Slug { get; set; } = string.Empty;
 		public string Title { get; set; } = string.Empty;
 		public string Description { get; set; } = string.Empty;
+
+		public string BodySource { get; set; } = string.Empty;
+
+		public List<CommentDto> Comments { get; set; } = new();
+
 		public List<string> Tags { get; set; } = new();
 		public DateTime CreateAt { get; set; }
 		public DateTime UpdatedAt { get; set; }
@@ -28,18 +24,5 @@
 
 		public int ClapsCount { get; set; }
 		public int CommentsCount { get; set; }
-	}
-
-	public class Publication
-	{
-		public string Name { get; set; } = string.Empty;
-		public string Url { get; set; } = string.Empty;
-		public string Image { get; set; } = string.Empty;
-	}
-
-	public class ArticleResponse
-	{
-		public List<Article> Articles { get; set; } = new();
-		public int ArticlesCount { get; set; }
 	}
 }
