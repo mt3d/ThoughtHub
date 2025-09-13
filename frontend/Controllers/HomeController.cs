@@ -1,6 +1,7 @@
 ﻿using frontend.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
 
 namespace frontend.Controllers
@@ -16,64 +17,39 @@ namespace frontend.Controllers
 			this.clientFactory = clientFactory;
 		}
 
-		public IActionResult Index()
+		public async Task<IActionResult> Index(int page = 1)
 		{
 			if (User.Identity?.IsAuthenticated == true)
 			{
-				return RedirectToAction("Feed");
-			}
+				var client = clientFactory.CreateClient("ApiClient");
+				var response = await client.GetAsync($"/articles?limit={PageSize}&offset={(page - 1) * PageSize}");
 
-			return View();
-		}
-
-		/*
-            {
-              "articles":[
-                {
-                ...
-                "author": {
-                  "username": "jake",
-                  "bio": "I work at statefarm",
-                  "image": "https://i.stack.imgur.com/xHWG8.jpg",
-                  "following": false
-                    }
-                },
-                {
-                    ...
-                }
-                }],
-              "articlesCount": 2
-            }
-		 */
-		[Authorize]
-		public async Task<IActionResult> Feed(int page = 1)
-		{
-			var client = clientFactory.CreateClient("ApiClient");
-			var response = await client.GetAsync($"/articles?limit={PageSize}&offset={(page - 1) * PageSize}");
-
-			if (!response.IsSuccessStatusCode)
-			{
-				ViewBag.Error = "Error while loading articles";
-				return View(new FeedViewModel());
-			}
-
-			var json = await response.Content.ReadAsStringAsync();
-			var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-
-			var articleResponse = JsonSerializer.Deserialize<ArticleResponse>(json, options);
-
-			FeedViewModel feed = new()
-			{
-				Articles = articleResponse.Articles,
-				PagingInfo = new PagingInfo
+				if (!response.IsSuccessStatusCode)
 				{
-					CurrentPage = page,
-					ItemsPerPage = PageSize,
-					TotalItems = articleResponse.ArticlesCount
+					ViewBag.Error = "Error while loading articles";
+					return View(new FeedViewModel());
 				}
-			};
 
-			return View(feed);
+				var json = await response.Content.ReadAsStringAsync();
+				var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+				var articleResponse = JsonSerializer.Deserialize<ArticleResponse>(json, options);
+
+				FeedViewModel feed = new()
+				{
+					Articles = articleResponse.Articles,
+					PagingInfo = new PagingInfo
+					{
+						CurrentPage = page,
+						ItemsPerPage = PageSize,
+						TotalItems = articleResponse.ArticlesCount
+					}
+				};
+
+				return View("Feed", feed);
+			}
+
+			return View("Index");
 		}
 	}
 }
