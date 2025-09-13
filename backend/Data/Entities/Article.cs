@@ -4,8 +4,6 @@ namespace backend.Data.Entities
 {
 	public class Article
 	{
-		// TODO: Use long or Guid?
-		// TODO: Rename to Id?
 		public int ArticleId { get; set; }
 
 		public string? Slug { get; set; }

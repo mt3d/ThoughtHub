@@ -21,7 +21,8 @@ namespace backend
 				ValidateIssuer = false
 			};
 
-			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+			services
+				.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 				.AddJwtBearer(options =>
 				{
 					options.TokenValidationParameters = tokenValidationParameters;

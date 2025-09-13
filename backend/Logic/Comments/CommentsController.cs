@@ -22,7 +22,9 @@ namespace backend.Logic.Comments
 		[Authorize]
 		public async Task<IActionResult> Create(string slug, [FromBody] string bodySource)
 		{
-			Article? article = await context.Articles.Include(a => a.Comments).FirstOrDefaultAsync(a => a.Slug == slug);
+			Article? article = await context.Articles
+				.Include(a => a.Comments)
+				.FirstOrDefaultAsync(a => a.Slug == slug);
 
 			if (article == null)
 			{
