@@ -87,11 +87,16 @@
                 List<Claim> claims = token.Claims.ToList();
                 claims.Add(new Claim("username", user.Username));
                 claims.Add(new Claim("email", user.Email));
+                claims.Add(new Claim("access_token", token.RawData));
 
                 ClaimsIdentity identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = true, ExpiresUtc = token.ValidTo });
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    principal,
+                    new AuthenticationProperties { IsPersistent = true, ExpiresUtc = token.ValidTo }
+                );
 
                 return Redirect(ReturnUrl ?? "/");
             }

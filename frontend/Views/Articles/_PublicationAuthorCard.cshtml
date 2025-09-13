@@ -1,0 +1,55 @@
+﻿@using frontend.Controllers
+@using frontend.Infrastructure
+@model ArticleWrapper
+
+    <!-- Publication + Author Card (3-column layout) -->
+<div class="card mb-3 p-3">
+    <div class="row g-3 align-items-center">
+        <!-- Publication Image -->
+        <div class="col-auto">
+            <img src="@Model.Article.Publication.Image" alt="@Model.Article.Publication.Name" class="rounded-circle">
+        </div>
+
+        <!-- Publication Info -->
+        <div class="col">
+            <a href="#" class="text-decoration-none fw-bold">
+                Published in @Model.Article.Publication.Name
+            </a>
+            <p class="text-muted mb-0">@Model.Article.Publication.FollowersCount.ToCompactString() followers · Last published @Model.Article.Publication.LastPublished.ToRelativeTime()</p>
+            <p class="mb-0">@Model.Article.Publication.Description</p>
+        </div>
+
+        <!-- Follow Button -->
+        <div class="col-auto">
+            <button class="btn btn-outline-secondary btn-sm">Follow</button>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row g-3 align-items-center">
+        <!-- Author Image -->
+        <div class="col-auto">
+            <img src="@Model.Article.Publication.Image"
+                    alt="Adarsh Gupta" class="rounded-circle">
+        </div>
+
+        <!-- Author Info -->
+        <div class="col">
+            <a href="/adarsh-gupta" class="text-decoration-none fw-bold">
+                Written by @Model.Article.Author.FullName
+            </a>
+            <p class="text-muted mb-0">
+                @Model.Article.Author.FollowersCount.ToCompactString() followers · @Model.Article.Author.FollowingCount.ToCompactString() following
+            </p>
+            <p class="mb-0">
+                @Model.Article.Author.ProfileDescription
+            </p>
+        </div>
+
+        <!-- Follow Button -->
+        <div class="col-auto">
+            <button class="btn btn-outline-secondary btn-sm">Follow</button>
+        </div>
+    </div>
+</div>

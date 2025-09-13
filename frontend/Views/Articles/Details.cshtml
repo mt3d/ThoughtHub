@@ -1,0 +1,85 @@
+﻿@using frontend.Controllers
+@using frontend.Infrastructure
+@using frontend.Models
+@model ArticleWrapper
+@{
+    Layout = "_MainLayout";
+}
+
+<link href="/css/CommentsStyle.css" rel="stylesheet"/>
+
+<div class="article-page container mt-4">
+    <!-- Publication & Author -->
+    <div class="d-flex align-items-center mb-3">
+        @if (!string.IsNullOrEmpty(Model.Article.Publication.Name))
+        {
+            <a href="@Model.Article.Publication.Url" class="d-flex align-items-center me-3 text-decoration-none">
+                <img src="@Model.Article.Publication.Image" class="rounded-circle me-2" width="24" height="24" />
+                <span class="fw-bold">@Model.Article.Publication.Name</span>
+            </a>
+        }
+        <span class="text-muted me-1">by</span>
+        <a href="/@Model.Article.Author.Url" class="fw-bold text-decoration-none">@Model.Article.Author.FullName</a>
+    </div>
+
+    <!-- Title -->
+    <h1 class="mb-2">@Model.Article.Title</h1>
+
+    <!-- Subtitle / Description -->
+    <p class="text-secondary fs-5 mb-3">@Model.Article.Description</p>
+
+    <!-- Meta Info -->
+    <div class="mb-4 text-muted">
+        <span>@Model.Article.UpdatedAt.ToString("MMM d")</span>
+        <span class="ms-3">☁️ @Model.Article.ClapsCount Claps</span>
+        <span class="ms-3">💬 @Model.Article.CommentsCount Comments</span>
+    </div>
+
+    <!-- Article Image -->
+    @if (!string.IsNullOrEmpty(Model.Article.Image))
+    {
+        <img src="@Model.Article.Image" alt="@Model.Article.Title" class="img-fluid mb-4" />
+    }
+
+    <!-- Article Body (if stored in HTML) -->
+    <div class="article-body mb-5">
+@*         @Html.Raw(Model.Article.BodyHtml) *@
+        @Model.Article.BodySource
+    </div>
+
+    <!-- Tags -->
+    <div class="mb-4">
+        @foreach (var tag in Model.Article.Tags)
+        {
+            <span class="badge bg-secondary me-1">#@tag</span>
+        }
+    </div>
+
+    <partial name="_PublicationAuthorCard" model="Model" />
+
+    <div class="comments-section">
+
+        @if (TempData["CommentFailedMessage"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["CommentFailedMessage"]
+            </div>
+        }
+
+        <form asp-action="AddComment" method="post" asp-route-slug="@Model.Article.Slug">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="ReturnUrl" value="@Url.Action("Details", "Articles", new { slug = Model.Article.Slug })" />
+
+            <img src="https://miro.medium.com/v2/resize:fill:40:40/1*dmbNkD5D-u45r44go_cf0g.png" alt="@User.Identity?.Name">
+            <textarea name="BodySource" class="form-control" placeholder="What are your thoughts?"></textarea>
+            <button type="submit" class="btn btn-primary mt-2">Respond</button>
+        </form>
+
+        <hr />
+
+        @foreach (CommentDto comment in Model.Article.Comments.Where(c => c.ParentCommentId == null))
+        {
+            <partial name="_CommentPartial" model="comment" />
+        }
+    </div>
+</div>

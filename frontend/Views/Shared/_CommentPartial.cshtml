@@ -1,0 +1,32 @@
+﻿@using frontend.Models
+@model CommentDto
+
+<div class="comment">
+    <img src="@Model.Author.ProfilePic" alt="@Model.Author.FullName">
+    <div class="comment-body">
+        <div class="comment-meta">
+            <span class="comment-author">@Model.Author.FullName</span>
+            <span>@Model.UpdatedAt.ToShortDateString()</span>
+        </div>
+        <div class="comment-text">
+            @Model.BodySource
+        </div>
+        <div class="comment-actions">
+            <span>Clap (@Model.ClapsCount)</span>
+
+            @if (Model.Replies?.Any() == true)
+            {
+                <button class="btn btn-link btn-sm toggle-replies">@Model.RepliesCount @(Model.RepliesCount == 1 ? "reply" : "replies")</button>
+
+                <div id="replies-@Model.CommentId" class="collapse ms-4">
+                    @foreach (var reply in Model.Replies)
+                    {
+                        <partial name="_CommentPartial" model="reply" />
+                    }
+                </div>
+            }
+
+            <span>Reply</span>
+        </div>
+    </div>
+</div>

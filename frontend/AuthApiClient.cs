@@ -36,9 +36,9 @@ namespace frontend
 			response.EnsureSuccessStatusCode();
 
 			string stringResponse = await response.Content.ReadAsStringAsync();
-			UserResponse jsonResponse = JsonSerializer.Deserialize<UserResponse>(stringResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!; // successful response
+			UserResponse userResponse = JsonSerializer.Deserialize<UserResponse>(stringResponse, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!; // successful response
 
-			return jsonResponse;
+			return userResponse;
 		}
 
 		public async Task<HttpResponseMessage> RegisterAsync(string username, string email, string password)

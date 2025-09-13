@@ -5,9 +5,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAuthentication("Cookies")
 	.AddCookie("Cookies", options =>
 	{
-		options.LoginPath = "/Account/Signin";   // where to go if not logged in
-		options.LogoutPath = "/Account/Signout"; // optional
-		options.AccessDeniedPath = "/Account/Denied"; // optional
+		options.LoginPath = "/Account/Signin";
+		options.LogoutPath = "/Account/Signout";
+		options.AccessDeniedPath = "/Account/Denied";
+		options.ExpireTimeSpan = TimeSpan.FromDays(30); // cookie lifetime
+		options.SlidingExpiration = true; // optional
 	});
 
 builder.Services.AddAuthorization();
