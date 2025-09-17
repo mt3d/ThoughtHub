@@ -3,6 +3,7 @@ using backend.Data;
 using backend.Infrastructure.UserManagement;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,15 @@ builder.Services.AddDbContext<PlatformContext>(options =>
 	// TODO: Add the ability to use other providers
 	options.UseSqlServer(builder.Configuration["ConnectionStrings:PlatformConnection"]);
 });
+
+builder.Services.AddDbContext<IdentityContext>(options =>
+{
+	options.UseSqlServer(builder.Configuration["ConnectionStrings:IdentityConnection"]);
+});
+
+builder.Services
+	.AddIdentity<IdentityUser, IdentityRole>()
+	.AddEntityFrameworkStores<IdentityContext>();
 
 // TODO: Add Localization
 
