@@ -1,6 +1,6 @@
 ﻿using backend.Data;
 using backend.Data.Entities;
-using backend.Infrastructure.UserManagement;
+using backend.Data.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,12 +10,12 @@ namespace backend.Logic.Comments
 	public class CommentsController : ControllerBase
 	{
 		private PlatformContext context;
-		private IUserAccessor userAccessor;
+		//private IUserAccessor userAccessor;
 
-		public CommentsController(PlatformContext context, IUserAccessor userAccessor)
+		public CommentsController(PlatformContext context)//, IUserAccessor userAccessor)
 		{
 			this.context = context;
-			this.userAccessor = userAccessor;
+			//this.userAccessor = userAccessor;
 		}
 
 		[HttpPost("articles/{slug}/comments")]
@@ -31,7 +31,7 @@ namespace backend.Logic.Comments
 				return NotFound();
 			}
 
-			User author = await context.Users.FirstAsync(u => u.Username == userAccessor.GetCurrentUsername());
+			Profile author = await context.Profiles.FirstAsync(u => u.Username == User.Identity.Name);
 
 			Comment comment = new Comment
 			{

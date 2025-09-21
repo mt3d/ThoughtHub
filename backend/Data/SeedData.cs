@@ -1,4 +1,5 @@
 ﻿using backend.Data.Entities;
+using backend.Data.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Data
@@ -14,8 +15,8 @@ namespace backend.Data
 				context.Database.Migrate();
 			}
 
-			List<User> Authors = new() {
-				new User
+			List<Profile> Authors = new() {
+				new Profile
 				{
 					Username = "jwilkins",
 					FullName = "James Wilkins",
@@ -24,7 +25,7 @@ namespace backend.Data
 					//Following = false,
 					//Url = "/@jwilkins"
 				},
-				new User
+				new Profile
 				{
 					Username = "sarahd",
 					FullName = "Sarah Davis",
@@ -33,7 +34,7 @@ namespace backend.Data
 					//Following = true,
 					//Url = "/@sarahd"
 				},
-				new User
+				new Profile
 				{
 					Username = "mkhan",
 					FullName = "Mohammed Khan",

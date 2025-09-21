@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using backend.Data.Entities;
+using backend.Data.Identity;
 
 namespace backend.Data
 {
-	public class PlatformContext(DbContextOptions options) : DbContext(options)
+	public class PlatformContext(DbContextOptions<PlatformContext> options) : DbContext(options)
 	{
 		public DbSet<Article> Articles => Set<Article>();
-		public DbSet<User> Users => Set<User>();
+		public DbSet<Profile> Profiles => Set<Profile>();
 		public DbSet<FollowMapping> FollowMappings => Set<FollowMapping>();
 		public DbSet<Comment> Comments => Set<Comment>();
 

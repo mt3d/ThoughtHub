@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using backend.Data.Identity;
+using System.Text.Json.Serialization;
 
 namespace backend.Data.Entities
 {
@@ -12,7 +13,7 @@ namespace backend.Data.Entities
 
 		// TODO: A body is not just a string. There are complex formatting and links.
 		public string? Body { get; set; }
-		public User? Author { get; set; }
+		public Profile? Author { get; set; }
 
 		public List<Comment> Comments { get; set; } = new();
 

@@ -1,9 +1,11 @@
 using backend;
 using backend.Data;
-using backend.Infrastructure.UserManagement;
+using backend.Data.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,13 +21,23 @@ builder.Services.AddDbContext<IdentityContext>(options =>
 	options.UseSqlServer(builder.Configuration["ConnectionStrings:IdentityConnection"]);
 });
 
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme).AddIdentityCookies();
+builder.Services.AddAuthorizationBuilder();
+
+/*
+ * AddIdentity adds everything AddIdentityCore adds, with some extra services,
+ * namely Cookie Schemes (Application, External, and 2FA Schemes are all registered),
+ * SignInManager, and RoleManager. Note that AddIdentity adds Role services
+ * automatically, unlike AddDefaultIdentity.
+ */
 builder.Services
-	.AddIdentity<IdentityUser, IdentityRole>()
-	.AddEntityFrameworkStores<IdentityContext>();
+	.AddIdentityCore<User>()
+	.AddEntityFrameworkStores<IdentityContext>()
+	.AddApiEndpoints();
 
 // TODO: Add Localization
 
-//builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opts =>
 {
 	// TODO: Does the API support Non Nullable Reference types?
@@ -67,13 +79,16 @@ builder.Services.AddSwaggerGen(opts =>
 	opts.SwaggerDoc("v1", new OpenApiInfo { Title = "Publishing_Platform", Version = "v0.1" });
 });
 
-// TODO: Add Cors
+builder.Services.AddCors(
+	options => options.AddPolicy(
+		"wasm",
+		policy => policy.WithOrigins([builder.Configuration["BackendUrl"] ?? "http://localhost:5000",
+			builder.Configuration["FrontendUrl"] ?? "http://localhost:5050"])
+			.AllowAnyMethod()
+			.AllowAnyHeader()
+			.AllowCredentials()));
 
 builder.Services.AddControllers();
-
-// TODO: Add custom services here
-builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddScoped<IUserAccessor, UserAccessor>();
 
 /*
  * "You define the configuration using profiles. And then you let AutoMapper
@@ -82,17 +97,27 @@ builder.Services.AddScoped<IUserAccessor, UserAccessor>();
  */
 builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
 
-builder.Services.AddJwtAuthentication();
-builder.Services.AddAuthorization();
-
 var app = builder.Build();
 
-// TODO: Use error handling
-
-// TODO: Use Cors
+// TODO:EXPLAIN
+app.MapIdentityApi<User>();
+// TODO:EXPLAIN
+app.UseCors("wasm");
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapPost("/logout", async (SignInManager<User> signInManager, [FromBody] object empty) =>
+{
+	if (empty is not null)
+	{
+		await signInManager.SignOutAsync();
+
+		return Results.Ok();
+	}
+
+	return Results.Unauthorized();
+}).RequireAuthorization();
 
 app.MapControllers();
 

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using backend.Data.Identity;
+using System.Text.Json.Serialization;
 
 namespace backend.Data.Entities
 {
@@ -29,7 +30,7 @@ namespace backend.Data.Entities
 		/// <summary>
 		/// The comment's author.
 		/// </summary>
-		public User Author { get; set; }
+		public Profile Author { get; set; }
 
 		/// <summary>
 		/// A rendered version of the comment.
