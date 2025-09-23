@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
+@using frontend_blazorwasm.Pages.Modals
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container-fluid">
@@ -34,23 +35,23 @@
 	        <NotAuthorized>
 
                 <!-- Sidebar toggle button -->
-                <button class="btn btn-outline-secondary d-lg-none" type="button"
+@*                 <button class="btn btn-outline-secondary d-lg-none" type="button"
                         data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"
                         aria-controls="sidebarMenu" aria-label="Toggle sidebar">
                     <i class="bi bi-list"></i>
-                </button>
+                </button> *@
 
                 <!-- Logo -->
                 <a class="navbar-brand ms-2" href="/">
                     <img src="/images/logo.svg" alt="ThoughtHub" height="30">
                 </a>
 
-                <button class="navbar-toggler"
+@*                 <button class="navbar-toggler"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#navContent">
                     <span class="navbar-toggler-icon"></span>
-                </button>
+                </button> *@
 
                 <div class="collapse navbar-collapse" id="navContent">
                     <form class="d-flex ms-auto me-3" role="search">
@@ -64,13 +65,13 @@
                             <a class="nav-link" href="#">Membership</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#writeModal">Write</a>
+                            <button class="nav-link" @onclick="@(() => Modal.Show<HomeModal>(new ModalParameters().Add("Type", "writer_register")))">Write</button>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#signinModal">Sign in</a>
+                            <button class="nav-link" @onclick="@(() => Modal.Show<HomeModal>(new ModalParameters().Add("Type", "signin")))">Sign in</button>
                         </li>
                         <li class="nav-item ms-2">
-                            <a class="btn btn-outline-light btn-sm" btn-sm" data-bs-toggle="modal" data-bs-target="#signupModal">Get started</a>
+                            <button class="btn btn-dark" @onclick="@(() => Modal.Show<HomeModal>(new ModalParameters().Add("Type", "signup")))">Get Started</button>
                         </li>
                     </ul>
                 </div>
@@ -78,3 +79,9 @@
         </AuthorizeView>
     </div>
 </nav>
+
+@code
+{
+    [CascadingParameter]
+    public IModalService Modal { get; set; }
+}

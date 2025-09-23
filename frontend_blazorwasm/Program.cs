@@ -3,6 +3,7 @@ using frontend_blazorwasm.Infrastructure;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Blazored.Modal;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -22,5 +23,7 @@ builder.Services.AddHttpClient(
 	"Auth",
 	opt => opt.BaseAddress = new Uri("http://localhost:5000")
 	).AddHttpMessageHandler<CookieHandler>();
+
+builder.Services.AddBlazoredModal();
 
 await builder.Build().RunAsync();
