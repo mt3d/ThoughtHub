@@ -6,7 +6,6 @@ using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace frontend_blazorwasm.Infrastructure
 {
@@ -85,7 +84,7 @@ namespace frontend_blazorwasm.Infrastructure
 
 		public async Task<FormResult> RegisterAsync(string email, string password)
 		{
-			string[] defaultDetail = ["An unknown error prevented registration from succeeding."];
+			string[] defaultDetail = ["An unknown error occured during registration"];
 
 			try
 			{
@@ -98,14 +97,38 @@ namespace frontend_blazorwasm.Infrastructure
 
 				// Explain why the signup failed in some detail.
 
-				var responseDetails = await result.Content.ReadAsStringAsync();
-				var problemDetails = JsonDocument.Parse(responseDetails);
+				/**
+				 * ASP.NET Core model validation response structure:
+				 * {
+				 *	"errors": {
+				 *		"Email": [ "The Email field is required." ],
+				 *		"Password": [ "The field Password must be at least 6 characters." ]
+				 *		}
+				 * }
+				 */
+				string content = await result.Content.ReadAsStringAsync();
+				JsonDocument parsedContent = JsonDocument.Parse(content);
 				var errors = new List<string>();
+				var errorList = parsedContent.RootElement.GetProperty("errors");
+
+				foreach (var entry in errorList.EnumerateObject())
+				{
+					if (entry.Value.ValueKind == JsonValueKind.String)
+					{
+						errors.Add(entry.Value.ToString());
+					}
+					else if (entry.Value.ValueKind == JsonValueKind.Array)
+					{
+						errors.AddRange(entry.Value.EnumerateArray()
+							.Select(e => e.GetString() ?? string.Empty)
+							.Where(e => !string.IsNullOrEmpty(e)));
+					}
+				}
 
 				return new FormResult
 				{
 					Succeeded = false,
-					ErrorList = problemDetails == null ? defaultDetail : [.. errors]
+					ErrorList = parsedContent == null ? defaultDetail : [.. errors]
 				};
 			}
 			catch (Exception ex)

@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
-@using frontend_blazorwasm.Pages.Modals
+@using frontend_blazorwasm.Components.Modals
 
 <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container-fluid">
@@ -16,9 +16,11 @@
                 </button> *@
 
                 <div class="collapse navbar-collapse" id="navContent">
+
                     <form class="d-flex ms-auto me-3" role="search">
                         <input class="form-control form-control-sm" type="search" placeholder="Search" aria-label="Search">
                     </form>
+
                     <ul class="navbar-nav mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link" href="#">Write</a>
@@ -30,6 +32,7 @@
                             <a class="nav-link" href="#">Account</a>
                         </li>
                     </ul>
+
                 </div>
 	        </Authorized>
 	        <NotAuthorized>
@@ -54,10 +57,7 @@
                 </button> *@
 
                 <div class="collapse navbar-collapse" id="navContent">
-                    <form class="d-flex ms-auto me-3" role="search">
-                        <input class="form-control form-control-sm" type="search" placeholder="Search" aria-label="Search">
-                    </form>
-                    <ul class="navbar-nav mb-2 mb-lg-0">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link" href="#">Our Story</a>
                         </li>
@@ -65,13 +65,19 @@
                             <a class="nav-link" href="#">Membership</a>
                         </li>
                         <li class="nav-item">
-                            <button class="nav-link" @onclick="@(() => Modal.Show<HomeModal>(new ModalParameters().Add("Type", "writer_register")))">Write</button>
+                            <button class="nav-link"
+                                    @onclick="@(() => Modal.Show<HomeModal>(new ModalParameters().Add("Mode", HomeModalMode.SignUpWrite)))">
+                                Write</button>
                         </li>
                         <li class="nav-item">
-                            <button class="nav-link" @onclick="@(() => Modal.Show<HomeModal>(new ModalParameters().Add("Type", "signin")))">Sign in</button>
+                            <button class="nav-link"
+                                    @onclick="@(() => Modal.Show< HomeModal > (new ModalParameters().Add("Mode", HomeModalMode.SignIn)))">
+                                Sign in</button>
                         </li>
                         <li class="nav-item ms-2">
-                            <button class="btn btn-dark" @onclick="@(() => Modal.Show<HomeModal>(new ModalParameters().Add("Type", "signup")))">Get Started</button>
+                            <button class="btn btn-dark"
+                                    @onclick="@(() => Modal.Show<HomeModal>(new ModalParameters().Add("Mode", HomeModalMode.SignUpGetStarted)))">
+                                Get Started</button>
                         </li>
                     </ul>
                 </div>
@@ -83,5 +89,5 @@
 @code
 {
     [CascadingParameter]
-    public IModalService Modal { get; set; }
+    public IModalService Modal { get; set; } = default!;
 }
