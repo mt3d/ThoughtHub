@@ -47,13 +47,15 @@ namespace frontend_blazorwasm.Infrastructure
 				userResponse.EnsureSuccessStatusCode();
 
 				var userJson = await userResponse.Content.ReadAsStringAsync();
+				Console.WriteLine(userJson);
+
 				var userDto = JsonSerializer.Deserialize<UserDto>(userJson, jsonSerializerOptions);
 
 				if (userDto != null)
 				{
 					var claims = new List<Claim>
 					{
-						new (ClaimTypes.Name, userDto.Username),
+						//new (ClaimTypes.Name, userDto.Username),
 						new (ClaimTypes.Email, userDto.Email),
 					};
 
@@ -181,6 +183,9 @@ namespace frontend_blazorwasm.Infrastructure
 		public async Task<bool> CheckAuthenticatedState()
 		{
 			await GetAuthenticationStateAsync();
+
+			Console.WriteLine(authenticated);
+
 			return authenticated;
 		}
 	}
