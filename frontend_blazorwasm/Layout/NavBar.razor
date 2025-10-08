@@ -1,0 +1,93 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using frontend_blazorwasm.Components.Modals
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container-fluid">
+        <AuthorizeView>
+	        <Authorized>
+                <a class="navbar-brand fw-bold" href="/">ThoughtHub</a>
+
+    @*          <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navContent"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button> *@
+
+                <div class="collapse navbar-collapse" id="navContent">
+
+                    <form class="d-flex ms-auto me-3" role="search">
+                        <input class="form-control form-control-sm" type="search" placeholder="Search" aria-label="Search">
+                    </form>
+
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Write</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Notifications</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Account</a>
+                        </li>
+                    </ul>
+
+                </div>
+	        </Authorized>
+	        <NotAuthorized>
+
+                <!-- Sidebar toggle button -->
+@*                 <button class="btn btn-outline-secondary d-lg-none" type="button"
+                        data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"
+                        aria-controls="sidebarMenu" aria-label="Toggle sidebar">
+                    <i class="bi bi-list"></i>
+                </button> *@
+
+                <!-- Logo -->
+                <a class="navbar-brand ms-2" href="/">
+                    <img src="/images/logo.svg" alt="ThoughtHub" height="30">
+                </a>
+
+@*                 <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button> *@
+
+                <div class="collapse navbar-collapse" id="navContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Our Story</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Membership</a>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link"
+                                    @onclick="@(() => Modal.Show<HomeModal>(new ModalParameters().Add("Mode", HomeModalMode.SignUpWrite)))">
+                                Write</button>
+                        </li>
+                        <li class="nav-item">
+                            <button class="nav-link"
+                                    @onclick="@(() => Modal.Show< HomeModal > (new ModalParameters().Add("Mode", HomeModalMode.SignIn)))">
+                                Sign in</button>
+                        </li>
+                        <li class="nav-item ms-2">
+                            <button class="btn btn-dark"
+                                    @onclick="@(() => Modal.Show<HomeModal>(new ModalParameters().Add("Mode", HomeModalMode.SignUpGetStarted)))">
+                                Get Started</button>
+                        </li>
+                    </ul>
+                </div>
+	        </NotAuthorized>
+        </AuthorizeView>
+    </div>
+</nav>
+
+@code
+{
+    [CascadingParameter]
+    public IModalService Modal { get; set; } = default!;
+}

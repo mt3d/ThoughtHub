@@ -1,0 +1,110 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using frontend_blazorwasm.Infrastructure
+@using frontend_blazorwasm.Infrastructure.Models
+@inject IAccountManagement Account
+
+@if (formResult.Succeeded)
+{
+    <div class="alert alert-success">
+        You successfully registered. Now you can <a href="login">login</a>.
+    </div>
+}
+else
+{
+    @foreach (var error in formResult.ErrorList)
+    {
+	    <div class="alert alert-danger">@error</div>	
+    }
+
+    <EditForm Model="Input" method="post" OnValidSubmit="RegisterUserAsync" FormName="login">
+        <DataAnnotationsValidator />
+
+        <h3>Sign up with Email</h3>
+
+        <div class="mb-3">
+            <label for="Input.Email" class="form-label">Email</label>
+            <input @bind-value="Input.Email"
+                   id="Input.Email"
+                   class="form-control"
+                   autocomplete="username"
+                   aria-required="true"
+                   placeholder="you@example.com" />
+            <ValidationMessage For="() => Input.Email"
+                               class="text-danger" />
+        </div>
+
+        <div class="mb-3">
+            <label for="Input.Password" class="form-label">Password</label>
+            <input @bind-value="Input.Password"
+                   class="form-control"
+                   type="password"
+                   placeholder="••••••••" />
+            <ValidationMessage For="() => Input.Password"
+                               class="text-danger" />
+        </div>
+
+        <div class="mb-3">
+            <label for="Input.ConfirmPassword" class="form-label">Confirm Password</label>
+            <input @bind-value="Input.ConfirmPassword"
+                   class="form-control"
+                   type="password"
+                   placeholder="••••••••" />
+            <ValidationMessage For="() => Input.ConfirmPassword"
+                               class="text-danger" />
+        </div>
+
+        <button type="submit" class="btn btn-dark w-100">Create Account</button>
+
+        <div class="text-center">
+            <button type="button"
+                    class="btn btn-link p-0"
+                    @onclick="() => OnSwitchMode.InvokeAsync(HomeModalMode.SignUpGetStarted)">
+                Back to sign up options
+            </button>
+        </div>
+
+        <p class="mt-2">
+            Already have an account?
+            <button type="button"
+                    class="btn btn-link p-0"
+                    @onclick="() => OnSwitchMode.InvokeAsync(HomeModalMode.SignIn)">
+                Sign in
+            </button>
+        </p>
+    </EditForm>
+}
+
+@code
+{
+    [Parameter]
+    public EventCallback<HomeModalMode> OnSwitchMode { get; set; }
+
+	private FormResult formResult = new();
+
+	[SupplyParameterFromForm]
+	private InputModel Input { get; set; } = new();
+
+	public async Task RegisterUserAsync()
+	{
+		formResult = await Account.RegisterAsync(Input.Email, Input.Password);
+	}
+
+	private sealed class InputModel
+	{
+		[Required]
+		[EmailAddress]
+		[Display(Name = "Email")]
+		public string Email { get; set; } = string.Empty;
+
+		[Required]
+		[DataType(DataType.Password)]
+		[Display(Name = "Password")]
+		public string Password { get; set; } = string.Empty;
+
+		[Required]
+		[DataType(DataType.Password)]
+		[Compare("Password")]
+		[Display(Name = "Confirm Password")]
+		public string ConfirmPassword { get; set; } = string.Empty;
+	}
+}

@@ -1,0 +1,35 @@
+﻿@using frontend_blazorwasm.Components.Modals
+
+<div class="d-flex flex-column min-vh-100">
+    <header>
+        <NavBar />
+    </header>
+
+    <main class="container flex-grow-1">
+        <section class="hero">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-6 fw-bold">Human Stories & Ideas</h1>
+                    <p class="lead">Great writing on technology, culture, business, and more. Read, clap, and share.</p>
+                    <div>
+                        <button class="btn btn-dark btn-sm me-2"
+                           @onclick="@(() => Modal.Show<HomeModal>(new ModalParameters().Add("Mode", HomeModalMode.SignUpGetStarted)))">
+                            Start Reading
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end d-none d-md-block">
+                    <img src="https://picsum.photos/220/140" alt="featured" class="rounded" />
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+</div>
+
+@code
+{
+    [CascadingParameter]
+    public IModalService Modal { get; set; } = default!;
+}

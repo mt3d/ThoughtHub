@@ -1,0 +1,25 @@
+﻿<div class="modal-body text-center">
+    <h3 class="modal-title text-center" id="writeModalLabel">Welcome back.</h3>
+
+    <a class="btn btn-dark w-100 mb-2"
+       @onclick="() => OnSwitchMode.InvokeAsync(HomeModalMode.SignInEmail)">
+        Sign in with Email
+    </a>
+
+    <p class="mt-2">
+        No account?
+        <button type="button"
+                class="btn btn-link p-0"
+                @onclick="() => OnSwitchMode.InvokeAsync(HomeModalMode.SignUpGetStarted)">
+            Create one</button>
+    </p>
+    <p class="mt-2">
+        Forgot email or trouble signing in?
+        <a>Get help</a>
+    </p>
+</div>
+
+@code {
+    [Parameter]
+    public EventCallback<HomeModalMode> OnSwitchMode { get; set; }
+}

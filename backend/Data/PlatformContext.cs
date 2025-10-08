@@ -1,17 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
-using backend.Data.Entities;
+﻿using backend.Data.Entities;
+using backend.Data.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Data
 {
-	public class PlatformContext(DbContextOptions options) : DbContext(options)
+	public class PlatformContext : IdentityDbContext<User>
 	{
+		public PlatformContext(DbContextOptions<PlatformContext> options) : base(options) { }
+
 		public DbSet<Article> Articles => Set<Article>();
-		public DbSet<User> Users => Set<User>();
+		public DbSet<Profile> Profiles => Set<Profile>();
 		public DbSet<FollowMapping> FollowMappings => Set<FollowMapping>();
 		public DbSet<Comment> Comments => Set<Comment>();
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
+			// This line is critical! It sets up keys for Identity tables.
+			base.OnModelCreating(builder);
+
 			/*
 			* Composite priamry key. The private key is a combination of the two Ids.
 			* One User can follow another User only once (no duplication).
@@ -42,6 +49,11 @@ namespace backend.Data
 				.WithMany(user => user.Followees)
 				.HasForeignKey(table => table.FollowerId)
 				.OnDelete(DeleteBehavior.Restrict);
+
+			//builder.Entity<User>()
+			//	.HasOne(u => u.Profile)
+			//	.WithOne(p => p.User)
+			//	.HasForeignKey<Profile>(p => p.UserId);
 		}
 
 		// TODO: Handle transaction

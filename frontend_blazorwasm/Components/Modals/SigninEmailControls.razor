@@ -1,0 +1,86 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using System.ComponentModel.DataAnnotations
+@using frontend_blazorwasm.Infrastructure
+@using frontend_blazorwasm.Infrastructure.Models
+@inject IAccountManagement Account
+@inject NavigationManager Navigation
+
+@foreach (var error in formResult.ErrorList)
+{
+    <div class="alert alert-danger">@error</div>
+}
+
+<EditForm Model="Input" method="post" OnValidSubmit="LoginUserAsync" FormName="login">
+    <DataAnnotationsValidator />
+
+    <h3>Sign in with Email</h3>
+
+    <div class="mb-3">
+        <label for="Input.Email" class="form-label">Email</label>
+        <input @bind-value="Input.Email"
+               id="Input.Email"
+               class="form-control"
+               autocomplete="username"
+               aria-required="true"
+               placeholder="you@example.com" />
+        <ValidationMessage For="() => Input.Email"
+                           class="text-danger" />
+    </div>
+
+    <div class="mb-3">
+        <label for="Input.Password" class="form-label">Password</label>
+        <input @bind-value="Input.Password"
+               class="form-control"
+               type="password"
+               placeholder="••••••••" />
+        <ValidationMessage For="() => Input.Password"
+                           class="text-danger" />
+    </div>
+
+    <button type="submit" class="btn btn-dark w-100">Sign In</button>
+
+    <div class="text-center">
+        <button type="button"
+                class="btn btn-link p-0"
+                @onclick="() => OnSwitchMode.InvokeAsync(HomeModalMode.SignIn)">
+            Back to sign in options
+        </button>
+    </div>
+</EditForm>
+
+@code
+{
+    [Parameter]
+    public EventCallback<HomeModalMode> OnSwitchMode { get; set; }
+
+    private FormResult formResult = new();
+
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new();
+
+    [SupplyParameterFromQuery]
+    private string? ReturnUrl { get; set; }
+
+    public async Task LoginUserAsync()
+    {
+        formResult = await Account.SigninAsync(Input.Email, Input.Password);
+
+        if (formResult.Succeeded && !string.IsNullOrEmpty(ReturnUrl))
+        {
+            Navigation.NavigateTo(ReturnUrl);
+        }
+    }
+
+    private sealed class InputModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; } = string.Empty;
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; } = string.Empty;
+    }
+}

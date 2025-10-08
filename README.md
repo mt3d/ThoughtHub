@@ -1,46 +1,29 @@
-﻿# ThoughtHub
+﻿# A medium.com clone, built using C# and ASP.NET Core.
 
-**ThoughtHub** is a demo project inspired by Medium.com.  
-It consists of two separate parts:
-
-1. **API Project** — Provides authentication, article, and publication endpoints.
-2. **Frontend Project** — A Razor Pages frontend that consumes the API.
+**ThoughtHub** is a demo project inspired by Medium.com.
 
 **Disclaimer:** This project is created **for educational and learning purposes only**.
 
----
+## Organization
+- Backend (ASP.NET Core API)
+- Frontend (Standalone Blazor WebAssembly app)
 
-## Solution Structure
-- ThoughtHub
-  - backend → ASP.NET Core Web API
-  - frontend → ASP.NET Core Razor Pages frontend
+## Building & Running
 
+1. Clone this repository or download a ZIP archive of it.
 
-## Features
-- User registration & login with JWT authentication.
-- Article feed with claps, comments, and publication support.
-- Medium-inspired UI built with Bootstrap.
-- Clear separation between frontend and backend for flexibility.
+2. The default URLs for the frontend and the backend are:
 
----
+    * `backend` app (`PlatformUrls:BackendUrl`): `http://localhost:5120`
+    * `frontend_blazorwasm` app (`PlatformUrls:BlazorWasmFrontendUrl`): `http://localhost:5220`
 
-## Getting Started
-### 1. Clone the Repository
-```
-git clone https://github.com/mt3d/publishing_platform.git
-cd publishing_platform
-```
+3. You can use the existing URLs or update them in the appsettings.json file of each project with new `BackendUrl` and `BlazorWasmFrontendUrl` endpoints:
 
-### 2. Run the api
-```
-cd backend
-dotnet run
-```
-API will be available at: https://localhost:5000
+    * `appsettings.json` file in the root of the `backend` app.
+    * `wwwroot/appsettings.json` file in the `frontend_blazorwasm` app.
 
-### 3.Run the frontend
-```
-cd ../frontend
-dotnet run
-```
-The frontend will be available at: https://localhost:5100
+4. Run the `backend` and `frontend_blazorwasm` apps.
+
+5. Navigate to the `frontend_blazorwasm` app at the `BlazorWasmFrontendUrl`.
+
+6. Register a new user or use one of the preregistered test users.
