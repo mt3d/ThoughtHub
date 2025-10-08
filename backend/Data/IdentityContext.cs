@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace backend.Data
 {
-	public class IdentityContext : IdentityDbContext<User>
-	{
-		public IdentityContext(DbContextOptions<IdentityContext> options) : base(options) { }
-	}
+	//public class IdentityContext : IdentityDbContext<User>
+	//{
+	//	public IdentityContext(DbContextOptions<IdentityContext> options) : base(options) { }
+	//}
 }

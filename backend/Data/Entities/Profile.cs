@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using backend.Data.Identity;
+using System.Text.Json.Serialization;
 
 namespace backend.Data.Entities
 {
@@ -6,11 +7,13 @@ namespace backend.Data.Entities
 	{
 		public int ProfileId { get; set; }
 
-		public string? Username { get; set; }
+		public User User { get; set; }
+
+		//public string? Username { get; set; }
 
 		public string? FullName { get; set; }
 
-		public string? Email { get; set; }
+		//public string? Email { get; set; }
 
 		public string? Bio { get; set; }
 

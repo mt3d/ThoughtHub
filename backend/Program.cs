@@ -16,12 +16,15 @@ builder.Services.AddDbContext<PlatformContext>(options =>
 	options.UseSqlServer(builder.Configuration["ConnectionStrings:PlatformConnection"]);
 });
 
-builder.Services.AddDbContext<IdentityContext>(options =>
-{
-	options.UseSqlServer(builder.Configuration["ConnectionStrings:IdentityConnection"]);
-});
+//builder.Services.AddDbContext<IdentityContext>(options =>
+//{
+//	options.UseSqlServer(builder.Configuration["ConnectionStrings:IdentityConnection"]);
+//});
 
-builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme).AddIdentityCookies();
+builder.Services
+	.AddAuthentication(IdentityConstants.ApplicationScheme)
+	.AddIdentityCookies();
+
 builder.Services.AddAuthorizationBuilder();
 
 /*
@@ -32,7 +35,7 @@ builder.Services.AddAuthorizationBuilder();
  */
 builder.Services
 	.AddIdentityCore<User>()
-	.AddEntityFrameworkStores<IdentityContext>()
+	.AddEntityFrameworkStores<PlatformContext>()
 	.AddApiEndpoints();
 
 // TODO: Add Localization

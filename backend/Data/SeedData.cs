@@ -18,7 +18,7 @@ namespace backend.Data
 			List<Profile> Authors = new() {
 				new Profile
 				{
-					Username = "jwilkins",
+					//Username = "jwilkins",
 					FullName = "James Wilkins",
 					Bio = "Data scientist and writer about AI and productivity.",
 					ProfilePic = "https://miro.medium.com/v2/resize:fit:200/1*james-avatar.jpg",
@@ -27,7 +27,7 @@ namespace backend.Data
 				},
 				new Profile
 				{
-					Username = "sarahd",
+					//Username = "sarahd",
 					FullName = "Sarah Davis",
 					Bio = "UX designer and writer about design psychology.",
 					ProfilePic = "https://miro.medium.com/v2/resize:fit:200/1*sarah-avatar.jpg",
@@ -36,7 +36,7 @@ namespace backend.Data
 				},
 				new Profile
 				{
-					Username = "mkhan",
+					//Username = "mkhan",
 					FullName = "Mohammed Khan",
 					Bio = "Founder, product builder, and storyteller.",
 					ProfilePic = "https://miro.medium.com/v2/resize:fit:200/1*mkhan-avatar.jpg",

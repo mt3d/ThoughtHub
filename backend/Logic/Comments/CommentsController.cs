@@ -31,7 +31,7 @@ namespace backend.Logic.Comments
 				return NotFound();
 			}
 
-			Profile author = await context.Profiles.FirstAsync(u => u.Username == User.Identity.Name);
+			Profile author = await context.Profiles.FirstAsync(u => u.User.UserName == User.Identity!.Name);
 
 			Comment comment = new Comment
 			{
