@@ -16,11 +16,6 @@ builder.Services.AddDbContext<PlatformContext>(options =>
 	options.UseSqlServer(builder.Configuration["ConnectionStrings:PlatformConnection"]);
 });
 
-//builder.Services.AddDbContext<IdentityContext>(options =>
-//{
-//	options.UseSqlServer(builder.Configuration["ConnectionStrings:IdentityConnection"]);
-//});
-
 builder.Services
 	.AddAuthentication(IdentityConstants.ApplicationScheme)
 	.AddIdentityCookies();
@@ -85,8 +80,8 @@ builder.Services.AddSwaggerGen(opts =>
 builder.Services.AddCors(
 	options => options.AddPolicy(
 		"wasm",
-		policy => policy.WithOrigins([builder.Configuration["BackendUrl"] ?? "http://localhost:5000",
-			builder.Configuration["FrontendUrl"] ?? "http://localhost:5050"])
+		policy => policy.WithOrigins([builder.Configuration["PlatformUrls:BackendUrl"] ?? "http://localhost:5120",
+			builder.Configuration["PlatformUrls:BlazorWasmFrontendUrl"] ?? "http://localhost:5220"])
 			.AllowAnyMethod()
 			.AllowAnyHeader()
 			.AllowCredentials()));
@@ -128,14 +123,14 @@ if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
 	app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "Publishing_Platform"); });
-}
 
-using (var scope = app.Services.CreateScope())
-{
-	var context = scope.ServiceProvider.GetRequiredService<PlatformContext>();
-	//bool created = context.Database.EnsureCreated();
+	using (var scope = app.Services.CreateScope())
+	{
+		var context = scope.ServiceProvider.GetRequiredService<PlatformContext>();
+		//bool created = context.Database.EnsureCreated();
 
-	SeedData.EnsurePopulated(context);
+		SeedData.EnsurePopulated(context);
+	}
 }
 
 app.Run();
