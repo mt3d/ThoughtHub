@@ -1,0 +1,23 @@
+﻿@layout MainLayout
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-lg-8 col-md-7">
+            <FeedList />
+        </div>
+
+        <div class="col-lg-4 col-md-5">
+            <div class="sticky-right-section">
+                <RightFeedSection />
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .sticky-right-section {
+        position: sticky;
+        top: 60px;
+        align-self: flex-start
+    }
+</style>

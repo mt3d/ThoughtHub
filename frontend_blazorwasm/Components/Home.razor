@@ -2,6 +2,11 @@
 @using Microsoft.AspNetCore.Components.Authorization
 
 <AuthorizeView>
+    <Authorized>
+        <MainLayout>
+            <Feed />
+        </MainLayout>
+    </Authorized>
     <NotAuthorized>
         <Welcome />
     </NotAuthorized>
