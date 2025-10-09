@@ -21,7 +21,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddHttpClient(
 	"Auth",
-	opt => opt.BaseAddress = new Uri("http://localhost:5000")
+	opt => opt.BaseAddress = new Uri(builder.Configuration["ApplicationUrls:BackendUrl"] ?? "http://localhost:5120")
 	).AddHttpMessageHandler<CookieHandler>();
 
 builder.Services.AddBlazoredModal();
