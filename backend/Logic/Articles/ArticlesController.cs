@@ -1,5 +1,6 @@
 ﻿using backend.Data;
 using backend.Data.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -57,6 +58,34 @@ namespace backend.Logic.Articles
 			return new ArticlesWrapper { Articles = articles, Count = query.Count() };
 		}
 
+		/// <summary>
+		/// Get "For you" articles, which are articles recommended based on the user's reading history.
+		/// </summary>
+		/// <param name="limit"></param>
+		/// <param name="offset"></param>
+		/// <returns></returns>
+		[HttpGet("/for-you")]
+		[Authorize]
+		public async Task<ArticleWrapper> GetForYou([FromQuery] int? limit, [FromQuery] int? offset)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Get "Featured" articles, which are featured stories from the publications the user follows.
+		/// </summary>
+		/// <param name="limit"></param>
+		/// <param name="offset"></param>
+		/// <returns></returns>
+		[HttpGet("/featured")]
+		[Authorize]
+		public async Task<ArticleWrapper> GetFeatured([FromQuery] int? limit, [FromQuery] int? offset)
+		{
+			throw new NotImplementedException();
+		}
+
+		///
+		///
 		[HttpGet("{slug}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
