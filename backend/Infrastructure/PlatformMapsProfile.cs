@@ -1,7 +1,4 @@
 ﻿using AutoMapper;
-using backend.Data.Entities;
-using backend.Data.Identity;
-using backend.Logic.Users;
 
 namespace backend.Infrastructure
 {
@@ -9,7 +6,6 @@ namespace backend.Infrastructure
 	{
 		public PlatformMapsProfile()
 		{
-			CreateMap<User, UserDto>(MemberList.None);
 		}
 	}
 }
