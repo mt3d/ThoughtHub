@@ -1,0 +1,40 @@
+﻿@using ThoughtHub.Web.BlazorWasm.Models
+
+<article class="card border-0 shadow-sm mb-4 article-card">
+    <div class="card-body">
+
+        <!-- Publication + Author -->
+@*         <div class="d-flex align-items-center mb-2 text-muted small">
+            @if (Article.Publication != null && Article.Author != null)
+            {
+                <a href="@Article.Publication.Url" class="d-flex align-items-center me-2 text-decoration-none text-muted">
+                    <img src="@Article.Publication.Image" alt="@Article.Publication.Name" class="rounded-circle me-1" width="24" height="24">
+                    <span class="fw-semibold">@Article.Publication.Name</span>
+                </a>
+                <span>· by <a href="/@Article.Author.Url" class="text-decoration-none">@Article.Author.FullName</a></span>
+            }
+        </div> *@
+
+        <!-- Title + Description -->
+        <a class="text-decoration-none text-dark d-flex">
+            <div class="flex-grow-1">
+                <h5 class="fw-bold mb-1">@Article.Title</h5>
+                <p class="text-muted mb-2">@Article.Description</p>
+                <div class="d-flex align-items-center small text-muted">
+                    <span>@Article.UpdatedAt.ToString("MMM d, yyyy")</span>
+                    <span class="ms-3"><i class="bi bi-hand-thumbs-up"></i> @Article.ClapsCount</span>
+                    <span class="ms-3"><i class="bi bi-chat"></i> @Article.CommentsCount</span>
+                </div>
+            </div>
+            @if (!string.IsNullOrEmpty(Article.Image))
+            {
+                <img src="@Article.Image" alt="@Article.Title" class="ms-3 rounded" width="120" height="80">
+            }
+        </a>
+    </div>
+</article>
+
+@code {
+    [Parameter]
+    public ArticleModel Article { get; set; }
+}

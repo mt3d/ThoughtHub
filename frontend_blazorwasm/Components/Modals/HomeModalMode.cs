@@ -1,4 +1,4 @@
-﻿namespace frontend_blazorwasm.Components.Modals
+﻿namespace ThoughtHub.Web.BlazorWasm.Components.Modals
 {
 	public enum HomeModalMode
 	{

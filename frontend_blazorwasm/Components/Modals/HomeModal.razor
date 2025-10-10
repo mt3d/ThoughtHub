@@ -1,6 +1,4 @@
-﻿@* @inject Blazored.Modal.Services.BlazoredModalInstance ModalInstance
- *@
-<div tabindex="-1" aria-labelledby="signinModalLabel" aria-hidden="true">
+﻿<div tabindex="-1" aria-labelledby="signinModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -32,9 +30,6 @@
 @code {
     [Parameter]
     public string Type { get; set; } = "signin";
-
-    // [CascadingParameter]
-    // public IModalService ModalService { get; set; } = default!;
 
     [CascadingParameter]
     public BlazoredModalInstance ModalInstance { get; set; } = default!;

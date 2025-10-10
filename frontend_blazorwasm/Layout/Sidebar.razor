@@ -7,64 +7,68 @@
     </div>
 </div>
 
-@* <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
- *@@*     <nav class="nav flex-column">
-        <div class="nav-item px-3">
+<nav id="sidebar"
+        class="@SidebarCssClass bg-light border-end p-3 d-none d-md-block"
+        style="width: 250px;"
+        @onclick="ToggleSidebar">
+    <ul class="list-unstyled">
+        <li>
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+                <i class="bi bi-house-door"></i> Home
             </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Counter
+        </li>
+        <li>
+            <NavLink class="nav-link" href="lists" Match="NavLinkMatch.All">
+                <i class="bi bi-bookmarks"></i> Library
             </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="weather">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Weather
+        </li>
+        <li>
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <i class="bi bi-person"></i> Profile
             </NavLink>
-        </div>
-    </nav> *@
+        </li>
+        <li>
+            <NavLink class="nav-link" href="stories" Match="NavLinkMatch.All">
+                <i class="bi bi-file-text"></i> Stories
+            </NavLink>
+        </li>
+        <li>
+            <NavLink class="nav-link" href="stats" Match="NavLinkMatch.All">
+                <i class="bi bi-graph-up"></i> Stats
+            </NavLink>
+        </li>
+        <li>
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <i class="bi bi-people"></i> Following
+            </NavLink>
+        </li>
+    </ul>
+</nav>
 
-    <nav id="sidebar"
-         class="@SidebarCssClass bg-light border-end p-3 d-none d-md-block"
-         style="width: 250px;"
-         @onclick="ToggleSidebar">
+
+@* <!-- Offcanvas sidebar for mobile -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">Menu</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
         <ul class="list-unstyled">
-            <li>
-                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                    <i class="bi bi-house-door"></i> Home
-                </NavLink>
-            </li>
-            <li>
-                <NavLink class="nav-link" href="lists" Match="NavLinkMatch.All">
-                    <i class="bi bi-bookmarks"></i> Library
-                </NavLink>
-            </li>
-            <li>
-                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                    <i class="bi bi-person"></i> Profile
-                </NavLink>
-            </li>
-            <li>
-                <NavLink class="nav-link" href="stories" Match="NavLinkMatch.All">
-                    <i class="bi bi-file-text"></i> Stories
-                </NavLink>
-            </li>
-            <li>
-                <NavLink class="nav-link" href="stats" Match="NavLinkMatch.All">
-                    <i class="bi bi-graph-up"></i> Stats
-                </NavLink>
-            </li>
-            <li>
-                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                    <i class="bi bi-people"></i> Following
-                </NavLink>
-            </li>
+            <li><a href="/" class="d-block py-2 text-decoration-none">Home</a></li>
+            <li><a href="/library" class="d-block py-2 text-decoration-none">Library</a></li>
+            <li><a href="/profile" class="d-block py-2 text-decoration-none">Profile</a></li>
+            <li><a href="/stories" class="d-block py-2 text-decoration-none">Stories</a></li>
+            <li><a href="/stats" class="d-block py-2 text-decoration-none">Stats</a></li>
+            <li><a href="/following" class="d-block py-2 text-decoration-none">Following</a></li>
         </ul>
-    </nav>
-@* </div>
- *@
+    </div>
+</div>
+
+<script>
+    document.getElementById("hideSidebarBtn").addEventListener("click", function () {
+        document.getElementById("sidebar").classList.add("d-none");
+    });
+</script> *@
 
 @code {
     private bool collapseSidebar = true;

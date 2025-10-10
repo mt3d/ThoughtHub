@@ -1,0 +1,168 @@
+﻿@using System.Threading
+@using ThoughtHub.Web.BlazorWasm.Infrastructure
+
+@typeparam T
+@implements IAsyncDisposable
+
+@foreach (var item in items)
+{
+    @ItemTemplate(item)
+}
+@if (loading)
+{
+    @LoadingTemplate
+}
+
+@if (!allItemsLoaded)
+{
+    @*The @ref attribute assigns the HTML element to a property, whose type must be ElementReference. *@
+    <div @ref="lastItemIndicator" style="height:1px;flex-shrink:0"></div>
+}
+
+@code {
+    private List<T> items = new();
+
+    /// <summary>
+    /// Razor Components can retain references to the HTML elements they create and pass
+    /// those references to JavaScript code.
+    /// </summary>
+    private ElementReference lastItemIndicator;
+
+    /// <summary>
+    /// A handle that lets JavaScript call back into this component.
+    /// </summary>
+    private DotNetObjectReference<InfiniteScroll<T>>? currentComponentReference;
+
+    /// <summary>
+    /// A reference to the imported JavaScript module.
+    /// </summary>
+    private IJSObjectReference? module;
+
+    /// <summary>
+    /// A reference to the JavaScript object returned by initialize().
+    /// The object includes onNewItems() and dispose().
+    /// </summary>
+    private IJSObjectReference? instance;
+
+    /// <summary>
+    /// Indicates if a load is already in progress.
+    /// </summary>
+    private bool loading = false;
+
+    /// <summary>
+    /// Used to prevent further calls once there's no more data.
+    /// </summary>
+    private bool allItemsLoaded = false;
+
+    /// <summary>
+    /// Used to cancel ongoing loading operations cleanly.
+    /// Necessary for cancelling loading if the page is changed
+    /// before completing the process.
+    /// </summary>
+    private CancellationTokenSource? loadItemsCts;
+
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
+
+    /// <summary>
+    /// A functionn that returns more items of type T when called.
+    /// </summary>
+    [Parameter]
+    public ItemsProvider<T> ItemsProvider { get; set; }
+
+    [Parameter]
+    public RenderFragment<T> ItemTemplate { get; set; }
+
+    [Parameter]
+    public RenderFragment LoadingTemplate { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // Initialize the IntersectionObserver
+        if (firstRender)
+        {
+            // Import the JavaScript module.
+            module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/infinite-scrolling.js");
+
+            currentComponentReference = DotNetObjectReference.Create(this);
+
+            // The next step is to provide the JavaScript function with a reference
+            // to the object whose method will be invoked
+            instance = await module.InvokeAsync<IJSObjectReference>("initialize", lastItemIndicator, currentComponentReference);
+        }
+    }
+
+    /// <summary>
+    /// This is called by JavaScript when the user scrolls to the bottom.
+    /// </summary>
+    /// <returns></returns>
+    [JSInvokable]
+    public async Task LoadMoreItems()
+    {
+        // Prevents duplicate calles.
+        if (loading)
+            return;
+
+        loading = true;
+        try
+        {
+            loadItemsCts ??= new CancellationTokenSource();
+
+            // Since loading is now "true", this will allow displaying the loading indicator.
+            StateHasChanged();
+            try
+            {
+                var newItems = await ItemsProvider(new ItemsRequest(items.Count, loadItemsCts.Token));
+
+                var previousCount = items.Count;
+                items.AddRange(newItems);
+
+                // If the items count is the same as before, then we've loaded all items.
+                if (items.Count == previousCount)
+                {
+                    allItemsLoaded = true;
+                }
+                else
+                {
+                    // Invoke a JavaScript function.
+                    await instance.InvokeVoidAsync("onNewItems");
+                }
+            }
+            catch (OperationCanceledException oce) when (oce.CancellationToken == loadItemsCts.Token)
+            {
+            }
+        }
+        finally
+        {
+            loading = false;
+        }
+
+        // Display the new items and hide the loading indicator
+        StateHasChanged();
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        // Cancel the current load items operation
+        if (loadItemsCts != null)
+        {
+            loadItemsCts.Dispose();
+            loadItemsCts = null;
+        }
+
+        // Stop the IntersectionObserver
+        if (instance != null)
+        {
+            await instance.InvokeVoidAsync("dispose");
+            await instance.DisposeAsync();
+            instance = null;
+        }
+
+        if (module != null)
+        {
+            await module.DisposeAsync();
+        }
+
+        currentComponentReference?.Dispose();
+    }
+}
