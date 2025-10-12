@@ -1,7 +1,11 @@
 using backend;
 using backend.Data;
 using backend.Data.Identity;
+using backend.Infrastructure;
+using Microsoft.AspNetCore.Authentication.BearerToken;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +18,11 @@ builder.Services.AddDbContext<PlatformContext>(options =>
 {
 	// TODO: Add the ability to use other providers
 	options.UseSqlServer(builder.Configuration["ConnectionStrings:PlatformConnection"]);
+
+	if (builder.Environment.IsDevelopment())
+	{
+		options.EnableSensitiveDataLogging(true);
+	}
 });
 
 builder.Services
@@ -99,6 +108,8 @@ var app = builder.Build();
 
 // TODO:EXPLAIN
 app.MapIdentityApi<User>();
+app.MapEmailLoginEndpoint();
+
 // TODO:EXPLAIN
 app.UseCors("wasm");
 
@@ -124,13 +135,8 @@ if (app.Environment.IsDevelopment())
 	app.UseSwagger();
 	app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "Publishing_Platform"); });
 
-	using (var scope = app.Services.CreateScope())
-	{
-		var context = scope.ServiceProvider.GetRequiredService<PlatformContext>();
-		//bool created = context.Database.EnsureCreated();
-
-		SeedData.EnsurePopulated(context);
-	}
+	await using var scope = app.Services.CreateAsyncScope();
+	await SeedData.PopulateDatabase(scope.ServiceProvider);
 }
 
 app.Run();

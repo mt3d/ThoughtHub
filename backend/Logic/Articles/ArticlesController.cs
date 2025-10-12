@@ -86,15 +86,20 @@ namespace backend.Logic.Articles
 
 		///
 		///
-		[HttpGet("{slug}")]
+		[HttpGet("/@{author}/{slug}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<IActionResult> Get(string slug)
+		public async Task<IActionResult> GetByAuthor(string author, string slug)
 		{
+			/**
+			 * FirstOrDefault() returns the first element or the default value (null for
+			 * reference types). Meanwhile, First() throws an exception if no element is found.
+			 */
 			var article = await context.Articles.AsNoTracking()
 				.Include(a => a.Publication)
-				.Include(a => a.Author)
-				.FirstOrDefaultAsync(x => x.Slug == slug);
+				.Include(a => a.AuthorProfile)
+				.ThenInclude(p => p.User)
+				.FirstOrDefaultAsync(x => x.AuthorProfile.User.UserName == author && x.Slug == slug);
 			
 			if (article == null)
 			{

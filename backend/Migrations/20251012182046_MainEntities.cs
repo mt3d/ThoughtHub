@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class FreshStart : Migration
+    public partial class MainEntities : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -180,8 +180,7 @@ namespace backend.Migrations
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProfilePic = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ProfilePic = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -205,7 +204,6 @@ namespace backend.Migrations
                     Body = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AuthorProfileId = table.Column<int>(type: "int", nullable: true),
                     Tags = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Favorited = table.Column<bool>(type: "bit", nullable: false),
                     FovoritesCount = table.Column<int>(type: "int", nullable: false),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ClapsCount = table.Column<int>(type: "int", nullable: false),

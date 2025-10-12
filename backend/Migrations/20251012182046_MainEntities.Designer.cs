@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(PlatformContext))]
-    [Migration("20251007145201_FreshStart")]
-    partial class FreshStart
+    [Migration("20251012182046_MainEntities")]
+    partial class MainEntities
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -184,9 +184,6 @@ namespace backend.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Favorited")
-                        .HasColumnType("bit");
-
                     b.Property<int>("FovoritesCount")
                         .HasColumnType("int");
 
@@ -306,9 +303,6 @@ namespace backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProfilePic")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
@@ -464,7 +458,7 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Data.Entities.Article", b =>
                 {
-                    b.HasOne("backend.Data.Entities.Profile", "Author")
+                    b.HasOne("backend.Data.Entities.Profile", "AuthorProfile")
                         .WithMany()
                         .HasForeignKey("AuthorProfileId");
 
@@ -472,7 +466,7 @@ namespace backend.Migrations
                         .WithMany()
                         .HasForeignKey("PublicationId");
 
-                    b.Navigation("Author");
+                    b.Navigation("AuthorProfile");
 
                     b.Navigation("Publication");
                 });

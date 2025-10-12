@@ -19,13 +19,13 @@ namespace backend.Data.Entities
 		// TODO: A body is not just a string. There are complex formatting and links.
 		public string? Body { get; set; }
 
-		public Profile? Author { get; set; }
+		public int? AuthorProfileId { get; set; }
+
+		public Profile? AuthorProfile { get; set; }
 
 		public List<Comment> Comments { get; set; } = new();
 
 		public List<string> Tags { get; set; } = new();
-
-		public bool Favorited { get; set; } // Dynamically generated
 
 		public int FovoritesCount { get; set; } // Dynamically generated
 
@@ -34,6 +34,8 @@ namespace backend.Data.Entities
 		public int ClapsCount { get; set; } // Dynamically generated
 
 		public int CommentsCount { get; set; } // Dynamically generated
+
+		public int? PublicationId { get; set; }
 
 		public Publication? Publication { get; set; }
 

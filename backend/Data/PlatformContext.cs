@@ -2,6 +2,7 @@
 using backend.Data.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace backend.Data
 {
@@ -49,11 +50,6 @@ namespace backend.Data
 				.WithMany(user => user.Followees)
 				.HasForeignKey(table => table.FollowerId)
 				.OnDelete(DeleteBehavior.Restrict);
-
-			//builder.Entity<User>()
-			//	.HasOne(u => u.Profile)
-			//	.WithOne(p => p.User)
-			//	.HasForeignKey<Profile>(p => p.UserId);
 		}
 
 		// TODO: Handle transaction
