@@ -26,4 +26,10 @@
 
 5. Navigate to the `frontend_blazorwasm` app at the `BlazorWasmFrontendUrl`.
 
-6. Register a new user or use one of the preregistered test users.
+6. Register a new user or use one of the preregistered test users (all test users share the same password `12345678ABab$`).
+    * `jwilkins@example.com`
+	* `sarahd@example.com`
+	* `mkhan@example.com`
+	* `lchen@example.com`
+	* `mrivera@example.com`
+	* `sofiam@example.com`
