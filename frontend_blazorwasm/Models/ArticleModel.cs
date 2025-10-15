@@ -4,6 +4,8 @@
 	{
 		public int ArticleId { get; set; }
 
+		public string Url { get; set; } = string.Empty;
+
 		public string Slug { get; set; } = string.Empty;
 
 		public string Title { get; set; } = string.Empty;
@@ -26,8 +28,9 @@
 
 		public string Image { get; set; } = string.Empty;
 
-		//public Author Author { get; set; } = new();
-		//public Publication Publication { get; set; } = new();
+		public AuthorModel Author { get; set; } = new();
+
+		public PublicationModel Publication { get; set; } = new();
 
 		public int ClapsCount { get; set; }
 
