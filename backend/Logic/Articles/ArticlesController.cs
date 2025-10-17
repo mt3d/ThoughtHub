@@ -1,8 +1,10 @@
 ﻿using backend.Data;
 using backend.Data.Entities;
+using ThoughtHub.Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace backend.Logic.Articles
 {
@@ -16,7 +18,7 @@ namespace backend.Logic.Articles
 
 	public class ArticlesWrapper
 	{
-		public List<Article> Articles { get; set; } = new();
+		public List<ArticleModel> Articles { get; set; } = new();
 		public int Count { get; set; }
 	}
 
@@ -25,10 +27,12 @@ namespace backend.Logic.Articles
 	public class ArticlesController : ControllerBase
 	{
 		private PlatformContext context;
+		private IMapper mapper;
 
-		public ArticlesController(PlatformContext context)
+		public ArticlesController(PlatformContext context, IMapper mapper)
 		{
 			this.context = context;
+			this.mapper = mapper;
 		}
 
 		/// <summary>
@@ -49,13 +53,18 @@ namespace backend.Logic.Articles
 				.OrderByDescending(a => a.CreatedAt)
 				.Skip(offset ?? 0)
 				.Take(limit ?? 10)
+				.Include(a => a.Publication)
+				.Include(a => a.AuthorProfile)
+				.ThenInclude(p => p.User)
 				.AsNoTracking()
 				.ToListAsync();
+
+			List<ArticleModel> articleModels = mapper.Map<List<ArticleModel>>(articles);
 
 			// TODO: Handle tags
 			// TODO: Handle author
 
-			return new ArticlesWrapper { Articles = articles, Count = query.Count() };
+			return new ArticlesWrapper { Articles = articleModels, Count = query.Count() };
 		}
 
 		/// <summary>
@@ -89,7 +98,7 @@ namespace backend.Logic.Articles
 		[HttpGet("/@{author}/{slug}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<IActionResult> GetByAuthor(string author, string slug)
+		public async Task<IActionResult> GetIndependentArticle(string author, string slug)
 		{
 			/**
 			 * FirstOrDefault() returns the first element or the default value (null for
@@ -106,7 +115,40 @@ namespace backend.Logic.Articles
 				return NotFound();
 			}
 
-			return Ok(article);
+			return Ok(mapper.Map<ArticleModel>(article));
+		}
+
+		[HttpGet("/{publication}/{slug}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		public async Task<IActionResult> GetPublicationArticle(string publication, string slug)
+		{
+			var article = await context.Articles.AsNoTracking()
+				.Include(a => a.Publication)
+				.FirstOrDefaultAsync(a =>
+					(a.Publication != null && a.Publication.Slug == publication)
+					&& a.Slug == slug);
+
+			if (article == null)
+			{
+				return NotFound();
+			}
+
+			return Ok(mapper.Map<ArticleModel>(article));
+		}
+
+		/// <summary>
+		/// Retreive all the articles published in the specified publication.
+		/// 
+		/// Usage: From the publication page, under Archives.
+		/// </summary>
+		/// <param name="publicationId"></param>
+		/// <param name="year"></param>
+		/// <returns></returns>
+		/// <exception cref="NotImplementedException"></exception>
+		public async Task<IActionResult> GetPublicationArticles(int publicationId, int? year)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

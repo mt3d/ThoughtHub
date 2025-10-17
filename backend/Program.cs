@@ -1,6 +1,7 @@
 using backend.Data;
 using backend.Data.Identity;
 using backend.Infrastructure;
+using backend.Mappings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

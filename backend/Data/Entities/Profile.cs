@@ -1,5 +1,6 @@
 ﻿using backend.Data.Identity;
 using System.Text.Json.Serialization;
+using ThoughtHub.Data.Entities.Publications;
 
 namespace backend.Data.Entities
 {
@@ -18,15 +19,32 @@ namespace backend.Data.Entities
 
 		public string? Bio { get; set; }
 
-		public string? ProfilePic { get; set; }
-
-		// TODO: Remove. The Url is just the username, and usernames are unique.
-		//public string? Url { get; set; }
+		// TODO: Handle images.
+		//public string? ProfilePic { get; set; }
 
 		[JsonIgnore]
 		public List<FollowMapping> Followers { get; init; } = new();
 
 		[JsonIgnore]
 		public List<FollowMapping> Followees { get; init; } = new();
+
+		/// <summary>
+		/// Gets or sets the articles published by this profile.
+		/// </summary>
+		public ICollection<Article> Articles { get; set; } = new List<Article>();
+
+		public ICollection<Publication> MemberPublications { get; set; } = new List<Publication>();
+
+		public ICollection<Publication> FollowedPublications { get; set; } = new List<Publication>();
+
+		/// <summary>
+		/// Provides access to the joint table of the membership relationship.
+		/// </summary>
+		public ICollection<PublicationMember> PublicationMemberships { get; set; } = new List<PublicationMember>();
+
+		/// <summary>
+		/// Provides access to the joint table of the following relationship.
+		/// </summary>
+		public ICollection<PublicationFollower> PublicationFollowers { get; set; } = new List<PublicationFollower>();
 	}
 }

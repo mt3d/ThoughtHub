@@ -1,9 +1,8 @@
 ﻿using backend.Data.Entities;
 using backend.Data.Identity;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using ThoughtHub.Data.Entities.Publications;
 
 namespace backend.Data
 {
@@ -58,37 +57,31 @@ namespace backend.Data
 			{
 				FullName = "James Wilkins",
 				Bio = "Data scientist and writer about AI and productivity.",
-				ProfilePic = "https://miro.medium.com/v2/resize:fit:200/1*james-avatar.jpg",
 			},
 			new Profile
 			{
 				FullName = "Sarah Davis",
 				Bio = "UX designer and writer about design psychology.",
-				ProfilePic = "https://miro.medium.com/v2/resize:fit:200/1*sarah-avatar.jpg",
 			},
 			new Profile
 			{
 				FullName = "Mohammed Khan",
 				Bio = "Founder, product builder, and storyteller.",
-				ProfilePic = "https://miro.medium.com/v2/resize:fit:200/1*mkhan-avatar.jpg",
 			},
 			new Profile
 			{
 				FullName = "Laura Chen",
 				Bio = "Frontend developer passionate about design systems and user experience.",
-				ProfilePic = "https://miro.medium.com/v2/resize:fit:200/1*laura-avatar.jpg",
 			},
 			new Profile
 			{
 				FullName = "Michael Rivera",
 				Bio = "Tech journalist exploring the intersection of innovation, ethics, and society.",
-				ProfilePic = "https://miro.medium.com/v2/resize:fit:200/1*michael-avatar.jpg",
 			},
 			new Profile
 			{
 				FullName = "Sofia Martins",
 				Bio = "Software engineer and open-source advocate who writes about .NET and web technologies.",
-				ProfilePic = "https://miro.medium.com/v2/resize:fit:200/1*sofia-avatar.jpg",
 			}
 		];
 
@@ -96,20 +89,17 @@ namespace backend.Data
 			new Publication
 			{
 				Name = "Data Science Collective",
-				Url = "/data-science-collective",
-				Image = "https://miro.medium.com/v2/resize:fit:40/1*dsc-logo.jpg"
+				Slug = "data-science-collective",
 			},
 			new Publication
 			{
 				Name = "UX Collective",
-				Url = "/ux-collective",
-				Image = "https://miro.medium.com/v2/resize:fit:40/1*uxc-logo.jpg"
+				Slug = "ux-collective",
 			},
 			new Publication
 			{
 				Name = "Startup Stories",
-				Url = "/startup-stories",
-				Image = "https://miro.medium.com/v2/resize:fit:40/1*startup-logo.jpg"
+				Slug = "startup-stories",
 			}
 		];
 
@@ -148,7 +138,7 @@ namespace backend.Data
 				UpdatedAt = DateTime.UtcNow.AddDays(-45),
 				Image = "https://miro.medium.com/v2/resize:fit:800/1*startup.jpg",
 				AuthorProfile = Profiles[2],
-				Publication = Publications[2]
+				Publication = null
 			},
 			new Article
 			{
@@ -293,7 +283,7 @@ namespace backend.Data
 				UpdatedAt = DateTime.UtcNow.AddDays(-13),
 				Image = "https://miro.medium.com/v2/resize:fit:800/1*wasm-rise.jpg",
 				AuthorProfile = Profiles[0],
-				Publication = Publications[2]
+				Publication = null
 			},
 			new Article
 			{
@@ -329,7 +319,7 @@ namespace backend.Data
 				UpdatedAt = DateTime.UtcNow.AddDays(-15),
 				Image = "https://miro.medium.com/v2/resize:fit:800/1*learning-hacks.jpg",
 				AuthorProfile = Profiles[4],
-				Publication = Publications[0]
+				Publication = null
 			},
 			new Article
 			{
@@ -377,7 +367,7 @@ namespace backend.Data
 				UpdatedAt = DateTime.UtcNow.AddDays(-37),
 				Image = "https://miro.medium.com/v2/resize:fit:800/1*small-teams.jpg",
 				AuthorProfile = Profiles[4],
-				Publication = Publications[1]
+				Publication = null
 			},
 			new Article
 			{
@@ -401,7 +391,7 @@ namespace backend.Data
 				UpdatedAt = DateTime.UtcNow.AddDays(-27),
 				Image = "https://miro.medium.com/v2/resize:fit:800/1*deep-focus.jpg",
 				AuthorProfile = Profiles[3],
-				Publication = Publications[2]
+				Publication = null
 			}
 		];
 

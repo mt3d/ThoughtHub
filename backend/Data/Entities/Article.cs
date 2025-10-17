@@ -1,5 +1,5 @@
-﻿using backend.Data.Identity;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using ThoughtHub.Data.Entities.Publications;
 
 namespace backend.Data.Entities
 {
@@ -37,6 +37,7 @@ namespace backend.Data.Entities
 
 		public int? PublicationId { get; set; }
 
+		[JsonIgnore]
 		public Publication? Publication { get; set; }
 
 		public DateTime CreatedAt { get; set; }

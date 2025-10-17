@@ -2,7 +2,7 @@
 using backend.Data.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
+using ThoughtHub.Data.Entities.Publications;
 
 namespace backend.Data
 {
@@ -14,6 +14,10 @@ namespace backend.Data
 		public DbSet<Profile> Profiles => Set<Profile>();
 		public DbSet<FollowMapping> FollowMappings => Set<FollowMapping>();
 		public DbSet<Comment> Comments => Set<Comment>();
+
+		public DbSet<Publication> Publications => Set<Publication>();
+		public DbSet<PublicationFollower> PublicationFollowers => Set<PublicationFollower>();
+		public DbSet<PublicationMember> PublicationMembers => Set<PublicationMember>();
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
@@ -50,6 +54,34 @@ namespace backend.Data
 				.WithMany(user => user.Followees)
 				.HasForeignKey(table => table.FollowerId)
 				.OnDelete(DeleteBehavior.Restrict);
+
+			// Configure publications
+
+			builder.Entity<Publication>()
+				.HasMany(p => p.Articles)
+				.WithOne(a => a.Publication)
+				.HasForeignKey(a => a.PublicationId)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			builder.Entity<Publication>()
+				.HasIndex(p => p.Slug)
+				.IsUnique();
+
+			builder.Entity<Publication>()
+				.HasOne(p => p.Owner)
+				.WithMany()
+				.HasForeignKey(p => p.OwnerId)
+				.OnDelete(DeleteBehavior.Restrict);
+
+			builder.Entity<Profile>()
+				.HasMany(p => p.FollowedPublications)
+				.WithMany(p => p.Followers)
+				.UsingEntity<PublicationFollower>();
+
+			builder.Entity<Profile>()
+				.HasMany(p => p.MemberPublications)
+				.WithMany(p => p.Members)
+				.UsingEntity<PublicationMember>();
 		}
 
 		// TODO: Handle transaction

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(PlatformContext))]
-    partial class PlatformContextModelSnapshot : ModelSnapshot
+    [Migration("20251017100207_CreatePublications")]
+    partial class CreatePublications
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -397,10 +400,20 @@ namespace backend.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("PublicationId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PublicationId1")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ProfileId");
+
+                    b.HasIndex("PublicationId");
+
+                    b.HasIndex("PublicationId1");
 
                     b.HasIndex("UserId");
 
@@ -537,7 +550,7 @@ namespace backend.Migrations
             modelBuilder.Entity("ThoughtHub.Data.Entities.Publications.PublicationFollower", b =>
                 {
                     b.HasOne("backend.Data.Entities.Profile", "Profile")
-                        .WithMany("PublicationFollowers")
+                        .WithMany("FollowedPublications")
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -634,6 +647,14 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Data.Entities.Profile", b =>
                 {
+                    b.HasOne("ThoughtHub.Data.Entities.Publications.Publication", null)
+                        .WithMany("Followers")
+                        .HasForeignKey("PublicationId");
+
+                    b.HasOne("ThoughtHub.Data.Entities.Publications.Publication", null)
+                        .WithMany("Members")
+                        .HasForeignKey("PublicationId1");
+
                     b.HasOne("backend.Data.Identity.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
@@ -644,6 +665,10 @@ namespace backend.Migrations
             modelBuilder.Entity("ThoughtHub.Data.Entities.Publications.Publication", b =>
                 {
                     b.Navigation("Articles");
+
+                    b.Navigation("Followers");
+
+                    b.Navigation("Members");
 
                     b.Navigation("PublicationFollowers");
 
@@ -659,11 +684,11 @@ namespace backend.Migrations
                 {
                     b.Navigation("Articles");
 
+                    b.Navigation("FollowedPublications");
+
                     b.Navigation("Followees");
 
                     b.Navigation("Followers");
-
-                    b.Navigation("PublicationFollowers");
 
                     b.Navigation("PublicationMemberships");
                 });
