@@ -143,7 +143,7 @@ namespace ThoughtHub.Logic.Articles
 
 		[HttpPost("/updateprogress")]
 		[Authorize]
-		public async Task<IActionResult> UpdateReadingProgress(int articleId, double progress)
+		public async Task<IActionResult> UpdateReadingProgress(int articleId, double progress, int readSeconds)
 		{
 			// TODO: Find a better way to access current user profile.
 			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -159,6 +159,12 @@ namespace ThoughtHub.Logic.Articles
 
 			history.Progress = Math.Max(history.Progress, progress);
 			history.Completed = history.Progress >= 95;
+
+			if (readSeconds > (history.TotalReadsSecond ?? 0)) // To avoid resets
+			{
+				history.TotalReadsSecond = readSeconds;
+			}
+
 			history.LastReadAt = DateTime.UtcNow;
 
 			await context.SaveChangesAsync();
