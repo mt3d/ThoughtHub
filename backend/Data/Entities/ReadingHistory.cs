@@ -12,6 +12,10 @@
 
 		public Article Article { get; set; }
 
+		public DateTime FirstReadAt { get; set; }
+
+		public DateTime LastReadAt { get; set; }
+
 		public int ReadCount { get; set; } = 1;
 
 		public double Progress { get; set; }

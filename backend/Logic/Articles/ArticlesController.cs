@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using System.Security.Claims;
 
 namespace ThoughtHub.Logic.Articles
 {
@@ -93,8 +94,6 @@ namespace ThoughtHub.Logic.Articles
 			throw new NotImplementedException();
 		}
 
-		///
-		///
 		[HttpGet("/@{author}/{slug}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -109,13 +108,99 @@ namespace ThoughtHub.Logic.Articles
 				.Include(a => a.AuthorProfile)
 				.ThenInclude(p => p.User)
 				.FirstOrDefaultAsync(x => x.AuthorProfile.User.UserName == author && x.Slug == slug);
-			
+
 			if (article == null)
 			{
 				return NotFound();
 			}
 
+			// TODO: find a better way to get profile.
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var profile = await context.Profiles.FirstAsync(p => p.UserId == userId);
+
+			var history = await context.ReadingHistories
+				.FirstOrDefaultAsync(r => r.ProfileId == profile.ProfileId && r.ArticleId == article.ArticleId);
+
+			if (history == null)
+			{
+				history = new ReadingHistory
+				{
+					ProfileId = profile.ProfileId,
+					ArticleId = article.ArticleId,
+					FirstReadAt = DateTime.UtcNow,
+				};
+
+				context.ReadingHistories.Add(history);
+			}
+
+			history.ReadCount++;
+			history.LastReadAt = DateTime.UtcNow;
+
+			await context.SaveChangesAsync();
+
 			return Ok(mapper.Map<ArticleModel>(article));
+		}
+
+		[HttpPost("/updateprogress")]
+		[Authorize]
+		public async Task<IActionResult> UpdateReadingProgress(int articleId, double progress)
+		{
+			// TODO: Find a better way to access current user profile.
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var profile = await context.Profiles.FirstAsync(p => p.UserId == userId);
+
+			var history = await context.ReadingHistories
+				.FirstOrDefaultAsync(r => r.ProfileId == profile.ProfileId && r.ArticleId == articleId);
+
+			if (history == null)
+			{
+				return NotFound();
+			}
+
+			history.Progress = Math.Max(history.Progress, progress);
+			history.Completed = history.Progress >= 95;
+			history.LastReadAt = DateTime.UtcNow;
+
+			await context.SaveChangesAsync();
+			return Ok();
+		}
+
+		[Authorize]
+		[HttpGet("/recently_read")]
+		public async Task<IActionResult> GetRecentlyRead(int limit = 5)
+		{
+			// TODO: Find a better way.
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var profile = await context.Profiles.FirstAsync(p => p.UserId == userId);
+
+			var recentReads = await context.ReadingHistories
+				.Include(r => r.Article)
+				.ThenInclude(a => a.AuthorProfile)
+				.Where(r => r.ProfileId == profile.ProfileId)
+				.OrderByDescending(r => r.LastReadAt)
+				.Take(limit)
+				.ToListAsync();
+
+			return Ok(mapper.Map<List<ArticleModel>>(recentReads));
+		}
+
+		[Authorize]
+		[HttpGet("/continue_reading")]
+		public async Task<IActionResult> GetContinueReading(int limit = 5)
+		{
+			// TODO: Find a better way.
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var profile = await context.Profiles.FirstAsync(p => p.UserId == userId);
+
+			var recentReads = await context.ReadingHistories
+				.Include(r => r.Article)
+				.ThenInclude(a => a.AuthorProfile)
+				.Where(r => r.ProfileId == profile.ProfileId && r.Progress <= 95)
+				.OrderByDescending(r => r.LastReadAt)
+				.Take(limit)
+				.ToListAsync();
+
+			return Ok(mapper.Map<List<ArticleModel>>(recentReads));
 		}
 
 		[HttpGet("/{publication}/{slug}")]
