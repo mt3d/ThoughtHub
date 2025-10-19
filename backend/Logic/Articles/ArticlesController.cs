@@ -1,12 +1,12 @@
-﻿using backend.Data;
-using backend.Data.Entities;
+﻿using ThoughtHub.Data;
+using ThoughtHub.Data.Entities;
 using ThoughtHub.Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 
-namespace backend.Logic.Articles
+namespace ThoughtHub.Logic.Articles
 {
 	/*
 	 * A wrapper/envelope is used add additional metadata to the actual payload, such as

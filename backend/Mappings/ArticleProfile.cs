@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using backend.Data.Entities;
+using ThoughtHub.Data.Entities;
 using ThoughtHub.Api.Models;
 using ThoughtHub.Data.Entities.Publications;
 
-namespace backend.Mappings
+namespace ThoughtHub.Mappings
 {
 	public class ArticleProfile : AutoMapper.Profile
 	{

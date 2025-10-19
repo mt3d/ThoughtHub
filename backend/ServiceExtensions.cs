@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace backend
+namespace ThoughtHub
 {
 	public static class ServiceExtensions
 	{

@@ -1,4 +1,4 @@
-﻿using backend.Data.Entities;
+﻿using ThoughtHub.Data.Entities;
 
 namespace ThoughtHub.Data.Entities.Publications
 {

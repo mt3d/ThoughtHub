@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Text.Json.Serialization;
 
-namespace backend.Data.Identity
+namespace ThoughtHub.Data.Identity
 {
 	public class User : IdentityUser
 	{

@@ -1,6 +1,6 @@
-﻿using backend.Data.Identity;
+﻿using ThoughtHub.Data.Identity;
 
-namespace backend.Data.Entities
+namespace ThoughtHub.Data.Entities
 {
 	public class FollowMapping
 	{

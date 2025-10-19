@@ -1,7 +1,7 @@
-﻿using backend.Data.Identity;
+﻿using ThoughtHub.Data.Identity;
 using System.Text.Json.Serialization;
 
-namespace backend.Data.Entities
+namespace ThoughtHub.Data.Entities
 {
 	public class Comment
 	{

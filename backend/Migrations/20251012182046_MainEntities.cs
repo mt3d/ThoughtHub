@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace backend.Migrations
+namespace ThoughtHub.Migrations
 {
     /// <inheritdoc />
     public partial class MainEntities : Migration

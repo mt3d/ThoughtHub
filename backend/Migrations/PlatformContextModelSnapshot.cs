@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using backend.Data;
+using ThoughtHub.Data;
 
 #nullable disable
 
-namespace backend.Migrations
+namespace ThoughtHub.Migrations
 {
     [DbContext(typeof(PlatformContext))]
     partial class PlatformContextModelSnapshot : ModelSnapshot

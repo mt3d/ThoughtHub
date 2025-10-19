@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using ThoughtHub.Data.Entities.Publications;
 
-namespace backend.Data.Entities
+namespace ThoughtHub.Data.Entities
 {
 	public class Article
 	{

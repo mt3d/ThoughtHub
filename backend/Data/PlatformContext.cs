@@ -1,10 +1,10 @@
-﻿using backend.Data.Entities;
-using backend.Data.Identity;
+﻿using ThoughtHub.Data.Entities;
+using ThoughtHub.Data.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ThoughtHub.Data.Entities.Publications;
 
-namespace backend.Data
+namespace ThoughtHub.Data
 {
 	public class PlatformContext : IdentityDbContext<User>
 	{
@@ -18,6 +18,8 @@ namespace backend.Data
 		public DbSet<Publication> Publications => Set<Publication>();
 		public DbSet<PublicationFollower> PublicationFollowers => Set<PublicationFollower>();
 		public DbSet<PublicationMember> PublicationMembers => Set<PublicationMember>();
+
+		public DbSet<ReadingHistory> ReadingHistories => Set<ReadingHistory>();
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
@@ -82,6 +84,26 @@ namespace backend.Data
 				.HasMany(p => p.MemberPublications)
 				.WithMany(p => p.Members)
 				.UsingEntity<PublicationMember>();
+
+			builder.Entity<ReadingHistory>()
+				.HasIndex(r => new { r.ProfileId, r.ArticleId })
+				.IsUnique();
+
+			builder.Entity<ReadingHistory>()
+				.HasOne(r => r.Profile)
+				.WithMany()
+				.HasForeignKey(r => r.ProfileId)
+				.OnDelete(DeleteBehavior.Restrict); // TODO: Explain
+
+			builder.Entity<ReadingHistory>()
+				.HasOne(r => r.Article)
+				.WithMany()
+				.HasForeignKey(r => r.ArticleId)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			builder.Entity<ReadingHistory>()
+				.Property(r => r.Progress)
+				.HasPrecision(5, 2); // TODO: Explain
 		}
 
 		// TODO: Handle transaction

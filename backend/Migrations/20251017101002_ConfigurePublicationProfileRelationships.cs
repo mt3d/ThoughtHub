@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace backend.Migrations
+namespace ThoughtHub.Migrations
 {
     /// <inheritdoc />
     public partial class ConfigurePublicationProfileRelationships : Migration

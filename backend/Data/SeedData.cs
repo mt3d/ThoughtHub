@@ -1,10 +1,10 @@
-﻿using backend.Data.Entities;
-using backend.Data.Identity;
+﻿using ThoughtHub.Data.Entities;
+using ThoughtHub.Data.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ThoughtHub.Data.Entities.Publications;
 
-namespace backend.Data
+namespace ThoughtHub.Data
 {
 	public static class SeedData
 	{

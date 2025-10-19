@@ -1,11 +1,11 @@
-﻿using backend.Data.Identity;
+﻿using ThoughtHub.Data.Identity;
 using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
-namespace backend.Infrastructure
+namespace ThoughtHub.Infrastructure
 {
 	public static class EndpointRouteBuilderExtensions
 	{

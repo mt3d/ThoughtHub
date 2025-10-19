@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 
-namespace backend.Infrastructure
+namespace ThoughtHub.Infrastructure
 {
 	public class PlatformMapsProfile : AutoMapper.Profile
 	{

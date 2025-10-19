@@ -1,11 +1,11 @@
-﻿using backend.Data;
-using backend.Data.Entities;
-using backend.Data.Identity;
+﻿using ThoughtHub.Data;
+using ThoughtHub.Data.Entities;
+using ThoughtHub.Data.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace backend.Logic.Comments
+namespace ThoughtHub.Logic.Comments
 {
 	public class CommentsController : ControllerBase
 	{
