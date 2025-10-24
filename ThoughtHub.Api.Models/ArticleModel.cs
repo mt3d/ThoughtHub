@@ -16,7 +16,7 @@
 
 		//public List<CommentModel> Comments { get; set; } = new();
 
-		public List<string> Tags { get; set; } = new();
+		public List<TagModel> Tags { get; set; } = new();
 
 		public DateTime CreateAt { get; set; }
 

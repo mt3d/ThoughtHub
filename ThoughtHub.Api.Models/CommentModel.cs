@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace ThoughtHub.Web.BlazorWasm.Models
+﻿namespace ThoughtHub.Api.Models
 {
 	public class CommentModel
 	{
@@ -10,7 +8,6 @@ namespace ThoughtHub.Web.BlazorWasm.Models
 
 		public CommentModel? ParentComment { get; set; }
 
-		[JsonIgnore]
 		public List<CommentModel> Replies { get; set; } = new();
 
 		public AuthorModel? Author { get; set; }

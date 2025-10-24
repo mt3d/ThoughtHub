@@ -11,9 +11,11 @@ namespace ThoughtHub.Data
 		public PlatformContext(DbContextOptions<PlatformContext> options) : base(options) { }
 
 		public DbSet<Article> Articles => Set<Article>();
+		public DbSet<Tag> Tags => Set<Tag>();
+		public DbSet<Comment> Comments => Set<Comment>();
+
 		public DbSet<Profile> Profiles => Set<Profile>();
 		public DbSet<FollowMapping> FollowMappings => Set<FollowMapping>();
-		public DbSet<Comment> Comments => Set<Comment>();
 
 		public DbSet<Publication> Publications => Set<Publication>();
 		public DbSet<PublicationFollower> PublicationFollowers => Set<PublicationFollower>();
@@ -104,6 +106,19 @@ namespace ThoughtHub.Data
 			builder.Entity<ReadingHistory>()
 				.Property(r => r.Progress)
 				.HasPrecision(5, 2); // TODO: Explain
+
+			builder.Entity<Tag>()
+				.Property(t => t.Name)
+				.IsRequired()
+				.HasMaxLength(50);
+
+			builder.Entity<Tag>()
+				.HasIndex(t => t.Name)
+				.IsUnique();
+
+			builder.Entity<Tag>()
+				.Property(t => t.Name)
+				.UseCollation("SQL_Latin1_General_CP1_CI_AS"); // TODO: Explain. Use case-insensitive comparisons.
 		}
 
 		// TODO: Handle transaction

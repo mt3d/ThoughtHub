@@ -78,6 +78,20 @@ namespace ThoughtHub.Logic.Articles
 		[Authorize]
 		public async Task<ArticleWrapper> GetForYou([FromQuery] int? limit, [FromQuery] int? offset)
 		{
+			// TODO: Find a better way to access current user profile.
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var profile = await context.Profiles.FirstAsync(p => p.UserId == userId);
+
+			var readArticleIds = await context.ReadingHistories
+				.Where(r => r.ProfileId == profile.ProfileId)
+				.Select(a => a.ArticleId)
+				.ToListAsync();
+
+			//var recommendedArticles = await context.Articles
+			//	.Include(a => a.AuthorProfile)
+			//	.Include(a => a.Tags)
+			//	.Where(a => a.Tags.Contains())
+
 			throw new NotImplementedException();
 		}
 
@@ -104,6 +118,7 @@ namespace ThoughtHub.Logic.Articles
 			 * reference types). Meanwhile, First() throws an exception if no element is found.
 			 */
 			var article = await context.Articles.AsNoTracking()
+				.Include(a => a.Tags)
 				.Include(a => a.Publication)
 				.Include(a => a.AuthorProfile)
 				.ThenInclude(p => p.User)
@@ -216,6 +231,7 @@ namespace ThoughtHub.Logic.Articles
 		{
 			var article = await context.Articles.AsNoTracking()
 				.Include(a => a.Publication)
+				.Include(a => a.Tags)
 				.FirstOrDefaultAsync(a =>
 					(a.Publication != null && a.Publication.Slug == publication)
 					&& a.Slug == slug);
@@ -238,6 +254,76 @@ namespace ThoughtHub.Logic.Articles
 		/// <returns></returns>
 		/// <exception cref="NotImplementedException"></exception>
 		public async Task<IActionResult> GetPublicationArticles(int publicationId, int? year)
+		{
+			throw new NotImplementedException();
+		}
+
+		[HttpGet("/tag/{topic}")]
+		public async Task<IActionResult> GetArticlesByTopic(string topic)
+		{
+			throw new NotImplementedException();
+		}
+
+		public class ArticleCreateDto
+		{
+			public List<string> TagList = new();
+		}
+
+		[HttpPost]
+		[Authorize]
+		public async Task<IActionResult> Create(ArticleCreateDto model)
+		{
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var authorProfile = await context.Profiles.FirstAsync(p => p.UserId == userId);
+
+			var tags = new List<Tag>();
+
+			List<string> tagNames = model.TagList;
+			List<string> normalizedNames = tagNames
+				.Select(t => t.Trim().ToLowerInvariant())
+				.Distinct()
+				.ToList();
+
+			// Naive implementation: loop over all tagNames. This is inefficient.
+			// Better: Single query for existing tags.
+			List<Tag> existingTags = await context.Tags
+				.Where(t => normalizedNames.Contains(t.Name.ToLower()))
+				.ToListAsync();
+
+			List<Tag> newTags = normalizedNames
+				.Except(existingTags.Select(t => t.Name.ToLowerInvariant()))
+				.Select(name => new Tag { Name = name })
+				.ToList();
+
+			if (newTags.Any())
+			{
+				// Batch insert missing tags (more efficient).
+				// TODO: might hit a race condition if two users try to add
+				// the same new tag at the same time
+				// Fix: Wrap in a try/catch for DbUpdateException on unique index
+				// violation, then reload the conflicting tag from DB.
+				await context.Tags.AddRangeAsync(newTags);
+				await context.SaveChangesAsync(); // Generate Ids
+			}
+
+			List<Tag> allTags = existingTags.Concat(newTags).ToList();
+
+			Article article = new();
+			article.Tags = allTags;
+
+			throw new NotImplementedException();
+		}
+
+		[HttpPut("{slug}")]
+		[Authorize]
+		public Task<IActionResult> Edit(string slug)
+		{
+			throw new NotImplementedException();
+		}
+
+		[HttpDelete("{slug}")]
+		[Authorize]
+		public Task<IActionResult> Delete(string slug)
 		{
 			throw new NotImplementedException();
 		}

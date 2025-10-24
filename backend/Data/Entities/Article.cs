@@ -25,8 +25,6 @@ namespace ThoughtHub.Data.Entities
 
 		public List<Comment> Comments { get; set; } = new();
 
-		public List<string> Tags { get; set; } = new();
-
 		public int FovoritesCount { get; set; } // Dynamically generated
 
 		public string Image { get; set; } = string.Empty;
@@ -44,6 +42,9 @@ namespace ThoughtHub.Data.Entities
 
 		public DateTime UpdatedAt { get; set; }
 
-		// TODO: Add tags, comments, favorites count, and the people who added this article as a favorite.
+		/// <summary>
+		/// Gets or sets the list of tags applied to this article.
+		/// </summary>
+		public List<Tag> Tags { get; set; } = new();
 	}
 }

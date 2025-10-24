@@ -103,298 +103,6 @@ namespace ThoughtHub.Data
 			}
 		];
 
-		public static readonly List<Article> Articles = [
-			new Article
-			{
-				Slug = "prompt-like-a-pro",
-				Title = "You’re Using ChatGPT Wrong: How to Prompt Like a Pro",
-				Description = "Smarter prompts lead to smarter responses.",
-				Tags = new List<string> { "AI", "ChatGPT", "Productivity" },
-				CreatedAt = DateTime.UtcNow.AddDays(-10),
-				UpdatedAt = DateTime.UtcNow.AddDays(-5),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*chatgpt-prompt.jpg",
-				AuthorProfile = Profiles[0],
-				Publication = Publications[0]
-			},
-			new Article
-			{
-				Slug = "design-for-humans",
-				Title = "Designing for Humans: The Secret to Great UX",
-				Description = "Practical lessons for crafting user-centered products.",
-				Tags = new List<string> { "UX", "Design", "Psychology" },
-				CreatedAt = DateTime.UtcNow.AddDays(-30),
-				UpdatedAt = DateTime.UtcNow.AddDays(-20),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*ux-design.jpg",
-				AuthorProfile = Profiles[1],
-				Publication = Publications[0]
-			},
-			new Article
-			{
-				Slug = "startup-lessons",
-				Title = "10 Hard Lessons from My First Startup",
-				Description = "What I wish I knew before launching.",
-				Tags = new List<string> { "Startups", "Entrepreneurship", "Business" },
-				CreatedAt = DateTime.UtcNow.AddDays(-60),
-				UpdatedAt = DateTime.UtcNow.AddDays(-45),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*startup.jpg",
-				AuthorProfile = Profiles[2],
-				Publication = null
-			},
-			new Article
-			{
-				Slug = "the-future-of-smart-homes",
-				Title = "The Future of Smart Homes: Beyond Voice Assistants",
-				Description = "From predictive lighting to emotion-aware devices — what’s next in home automation?",
-				Tags = new List<string> { "Technology", "IoT", "Innovation" },
-				CreatedAt = DateTime.UtcNow.AddDays(-30),
-				UpdatedAt = DateTime.UtcNow.AddDays(-25),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*smart-home.jpg",
-				AuthorProfile = Profiles[1],
-				Publication = Publications[0]
-			},
-			new Article
-			{
-				Slug = "embracing-creative-failure",
-				Title = "Embracing Creative Failure: Why Your Worst Ideas Matter",
-				Description = "Behind every breakthrough lies a trail of failed experiments — and that’s okay.",
-				Tags = new List<string> { "Creativity", "Psychology", "Productivity" },
-				CreatedAt = DateTime.UtcNow.AddDays(-22),
-				UpdatedAt = DateTime.UtcNow.AddDays(-20),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*creative-failure.jpg",
-				AuthorProfile = Profiles[2],
-				Publication = Publications[1]
-			},
-			new Article
-			{
-				Slug = "zero-to-hero-in-blazor",
-				Title = "Zero to Hero in Blazor: Building Modern Web Apps in .NET",
-				Description = "Discover how Blazor bridges the gap between client and server with C#.",
-				Tags = new List<string> { "Blazor", ".NET", "Web Development" },
-				CreatedAt = DateTime.UtcNow.AddDays(-12),
-				UpdatedAt = DateTime.UtcNow.AddDays(-11),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*blazor-guide.jpg",
-				AuthorProfile = Profiles[0],
-				Publication = Publications[2]
-			},
-			new Article
-			{
-				Slug = "why-your-brain-loves-lists",
-				Title = "Why Your Brain Loves Lists (And How to Use Them Wisely)",
-				Description = "Lists aren’t just for groceries — they’re a psychological tool for focus and creativity.",
-				Tags = new List<string> { "Psychology", "Habits", "Self-Improvement" },
-				CreatedAt = DateTime.UtcNow.AddDays(-18),
-				UpdatedAt = DateTime.UtcNow.AddDays(-17),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*brain-lists.jpg",
-				AuthorProfile = Profiles[3],
-				Publication = Publications[0]
-			},
-			new Article
-			{
-				Slug = "the-art-of-slow-productivity",
-				Title = "The Art of Slow Productivity: Working Less to Create More",
-				Description = "Rethinking hustle culture — why doing less can lead to deeper work.",
-				Tags = new List<string> { "Work", "Mindfulness", "Productivity" },
-				CreatedAt = DateTime.UtcNow.AddDays(-40),
-				UpdatedAt = DateTime.UtcNow.AddDays(-35),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*slow-productivity.jpg",
-				AuthorProfile = Profiles[4],
-				Publication = Publications[1]
-			},
-			new Article
-			{
-				Slug = "gaming-as-storytelling",
-				Title = "Gaming as Storytelling: Why Games Are the Literature of Our Time",
-				Description = "Modern games aren’t just entertainment — they’re powerful storytelling mediums.",
-				Tags = new List<string> { "Gaming", "Culture", "Storytelling" },
-				CreatedAt = DateTime.UtcNow.AddDays(-16),
-				UpdatedAt = DateTime.UtcNow.AddDays(-14),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*gaming-story.jpg",
-				AuthorProfile = Profiles[2],
-				Publication = Publications[0]
-			},
-			new Article
-			{
-				Slug = "designing-for-dark-mode",
-				Title = "Designing for Dark Mode: More Than Just Inverted Colors",
-				Description = "How contrast, perception, and accessibility shape dark UI design.",
-				Tags = new List<string> { "Design", "UI", "Accessibility" },
-				CreatedAt = DateTime.UtcNow.AddDays(-9),
-				UpdatedAt = DateTime.UtcNow.AddDays(-8),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*dark-mode-design.jpg",
-				AuthorProfile = Profiles[1],
-				Publication = Publications[2]
-			},
-			new Article
-			{
-				Slug = "the-silent-power-of-routines",
-				Title = "The Silent Power of Routines: How Habits Shape Creative Success",
-				Description = "Creativity isn’t chaos — it’s built on consistent structure.",
-				Tags = new List<string> { "Habits", "Creativity", "Self-Discipline" },
-				CreatedAt = DateTime.UtcNow.AddDays(-7),
-				UpdatedAt = DateTime.UtcNow.AddDays(-7),
-				FovoritesCount = 890,
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*routines-power.jpg",
-				AuthorProfile = Profiles[0],
-				Publication = Publications[1]
-			},
-			new Article
-			{
-				Slug = "demystifying-async-await",
-				Title = "Demystifying async/await: The Magic Behind Modern C#",
-				Description = "A deep dive into asynchronous programming made simple.",
-				Tags = new List<string> { "C#", "Programming", "Asynchronous" },
-				CreatedAt = DateTime.UtcNow.AddDays(-14),
-				UpdatedAt = DateTime.UtcNow.AddDays(-10),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*async-await.jpg",
-				AuthorProfile = Profiles[4],
-				Publication = Publications[2]
-			},
-			new Article
-			{
-				Slug = "ai-and-human-creativity",
-				Title = "AI and Human Creativity: Collaboration, Not Competition",
-				Description = "How artists and algorithms can inspire each other to create more.",
-				Tags = new List<string> { "AI", "Art", "Creativity" },
-				CreatedAt = DateTime.UtcNow.AddDays(-21),
-				UpdatedAt = DateTime.UtcNow.AddDays(-18),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*ai-creativity.jpg",
-				AuthorProfile = Profiles[3],
-				Publication = Publications[0]
-			},
-			new Article
-			{
-				Slug = "building-a-minimalist-lifestyle",
-				Title = "Building a Minimalist Lifestyle in a Digital World",
-				Description = "Declutter your apps, feeds, and mind — minimalism for the information age.",
-				Tags = new List<string> { "Lifestyle", "Minimalism", "Digital Detox" },
-				CreatedAt = DateTime.UtcNow.AddDays(-60),
-				UpdatedAt = DateTime.UtcNow.AddDays(-58),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*digital-minimalism.jpg",
-				AuthorProfile = Profiles[1],
-				Publication = Publications[1]
-			},
-			new Article
-			{
-				Slug = "the-rise-of-webassembly",
-				Title = "The Rise of WebAssembly: A New Era for the Web",
-				Description = "From Blazor to Rust — WebAssembly is redefining what’s possible in browsers.",
-				Tags = new List<string> { "WebAssembly", "Blazor", "Web Development" },
-				CreatedAt = DateTime.UtcNow.AddDays(-15),
-				UpdatedAt = DateTime.UtcNow.AddDays(-13),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*wasm-rise.jpg",
-				AuthorProfile = Profiles[0],
-				Publication = null
-			},
-			new Article
-			{
-				Slug = "the-mindful-developer",
-				Title = "The Mindful Developer: Coding Without Burnout",
-				Description = "How mindfulness techniques can transform your workflow and focus.",
-				Tags = new List<string> { "Programming", "Mindfulness", "Work-Life Balance" },
-				CreatedAt = DateTime.UtcNow.AddDays(-32),
-				UpdatedAt = DateTime.UtcNow.AddDays(-31),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*mindful-developer.jpg",
-				AuthorProfile = Profiles[2],
-				Publication = Publications[1]
-			},
-			new Article
-			{
-				Slug = "why-typefaces-matter",
-				Title = "Why Typefaces Matter: The Psychology of Fonts",
-				Description = "Fonts shape emotion and meaning more than we realize.",
-				Tags = new List<string> { "Design", "Typography", "Psychology" },
-				CreatedAt = DateTime.UtcNow.AddDays(-50),
-				UpdatedAt = DateTime.UtcNow.AddDays(-47),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*typography-psych.jpg",
-				AuthorProfile = Profiles[1],
-				Publication = Publications[0]
-			},
-			new Article
-			{
-				Slug = "hacking-your-learning-habits",
-				Title = "Hacking Your Learning Habits: The Science of Skill Acquisition",
-				Description = "Learn faster by aligning your brain’s reward system with your goals.",
-				Tags = new List<string> { "Learning", "Neuroscience", "Productivity" },
-				CreatedAt = DateTime.UtcNow.AddDays(-17),
-				UpdatedAt = DateTime.UtcNow.AddDays(-15),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*learning-hacks.jpg",
-				AuthorProfile = Profiles[4],
-				Publication = null
-			},
-			new Article
-			{
-				Slug = "the-ethics-of-algorithms",
-				Title = "The Ethics of Algorithms: Who Decides What’s Fair?",
-				Description = "Unpacking bias, transparency, and accountability in modern AI systems.",
-				Tags = new List<string> { "AI", "Ethics", "Technology" },
-				CreatedAt = DateTime.UtcNow.AddDays(-45),
-				UpdatedAt = DateTime.UtcNow.AddDays(-43),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*ai-ethics.jpg",
-				AuthorProfile = Profiles[3],
-				Publication = Publications[1]
-			},
-			new Article
-			{
-				Slug = "rediscovering-email",
-				Title = "Rediscovering Email: The Old Tool That Still Works",
-				Description = "Why newsletters and thoughtful emails are making a comeback.",
-				Tags = new List<string> { "Communication", "Productivity", "Writing" },
-				CreatedAt = DateTime.UtcNow.AddDays(-26),
-				UpdatedAt = DateTime.UtcNow.AddDays(-25),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*email-renaissance.jpg",
-				AuthorProfile = Profiles[1],
-				Publication = Publications[0]
-			},
-			new Article
-			{
-				Slug = "beyond-the-todo-list",
-				Title = "Beyond the To-Do List: Systems Thinking for Personal Productivity",
-				Description = "Stop managing tasks — start managing your inputs and outcomes.",
-				Tags = new List<string> { "Productivity", "Systems", "Focus" },
-				CreatedAt = DateTime.UtcNow.AddDays(-13),
-				UpdatedAt = DateTime.UtcNow.AddDays(-12),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*todolist-systems.jpg",
-				AuthorProfile = Profiles[2],
-				Publication = Publications[2]
-			},
-			new Article
-			{
-				Slug = "small-teams-big-impact",
-				Title = "Small Teams, Big Impact: The Power of Focused Collaboration",
-				Description = "How tight-knit teams outperform massive organizations.",
-				Tags = new List<string> { "Business", "Teams", "Leadership" },
-				CreatedAt = DateTime.UtcNow.AddDays(-38),
-				UpdatedAt = DateTime.UtcNow.AddDays(-37),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*small-teams.jpg",
-				AuthorProfile = Profiles[4],
-				Publication = null
-			},
-			new Article
-			{
-				Slug = "breaking-the-scroll-loop",
-				Title = "Breaking the Scroll Loop: Designing for Digital Wellbeing",
-				Description = "The UI tricks that keep us hooked — and how to design against them.",
-				Tags = new List<string> { "UX", "Design", "Wellbeing" },
-				CreatedAt = DateTime.UtcNow.AddDays(-20),
-				UpdatedAt = DateTime.UtcNow.AddDays(-18),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*scroll-loop.jpg",
-				AuthorProfile = Profiles[0],
-				Publication = Publications[0]
-			},
-			new Article
-			{
-				Slug = "mastering-focus-in-a-distracted-world",
-				Title = "Mastering Focus in a Distracted World",
-				Description = "Deep work is a competitive advantage — here’s how to reclaim it.",
-				Tags = new List<string> { "Focus", "Work", "Psychology" },
-				CreatedAt = DateTime.UtcNow.AddDays(-28),
-				UpdatedAt = DateTime.UtcNow.AddDays(-27),
-				Image = "https://miro.medium.com/v2/resize:fit:800/1*deep-focus.jpg",
-				AuthorProfile = Profiles[3],
-				Publication = null
-			}
-		];
-
 		public static async Task PopulateDatabase(IServiceProvider serviceProvider)
 		{
 			using var context = new PlatformContext(serviceProvider.GetRequiredService<DbContextOptions<PlatformContext>>());
@@ -416,7 +124,7 @@ namespace ThoughtHub.Data
 				/**
 				 * This create and saves the users in the database, however, it doesn't
 				 * update our in-memory static List<User> with the Id's generated by the database,
-				 * and does it attach those users to the context.
+				 * and doesn't attach those users to the context.
 				 */
 				await userManager.CreateAsync(user, "12345678ABab$");
 			}
@@ -432,10 +140,355 @@ namespace ThoughtHub.Data
 				Profiles[i].User = null;
 			}
 
-			if (!context.Articles.Any())
+			List<Tag> Tags = new() {
+				new Tag { Name = "AI" },
+				new Tag { Name = "ChatGPT" },
+				new Tag { Name = "Productivity" },
+				new Tag { Name = "UX" },
+				new Tag { Name = "Design" },
+				new Tag { Name = "Psychology" },
+				new Tag { Name = "Focus" },
+				new Tag { Name = "Work" },
+				new Tag { Name = "Wellbeing" },
+				new Tag { Name = "Business" },
+				new Tag { Name = "Teams" },
+				new Tag { Name = "Leadership" },
+				new Tag { Name = "Systems" },
+				new Tag { Name = "Communication" },
+				new Tag { Name = "Writing" },
+				new Tag { Name = "Ethics" },
+				new Tag { Name = "Technology" },
+				new Tag { Name = "Learning" },
+				new Tag { Name = "Neuroscience" },
+				new Tag { Name = "Typography" },
+				new Tag { Name = "Programming" },
+				new Tag { Name = "Mindfulness" },
+				new Tag { Name = "Work-Life Balance" },
+				new Tag { Name = "WebAssembly" },
+				new Tag { Name = "Blazor" },
+				new Tag { Name = "Web Development" },
+				new Tag { Name = "Minimalism" },
+				new Tag { Name = "Digital Detox" },
+				new Tag { Name = "Lifestyle" },
+				new Tag { Name = "Art" },
+				new Tag { Name = "Creativity" },
+				new Tag { Name = "C#" },
+				new Tag { Name = "Asynchronous" },
+				new Tag { Name = "Habits" },
+				new Tag { Name = "Self-Discipline" },
+				new Tag { Name = "UI" },
+				new Tag { Name = "Accessibility" },
+				new Tag { Name = ".NET" },
+				new Tag { Name = "Self-Improvement" },
+				new Tag { Name = "Storytelling" },
+				new Tag { Name = "Culture" },
+				new Tag { Name = "Gaming" },
+				new Tag { Name = "Startups" },
+				new Tag { Name = "Entrepreneurship" },
+				new Tag { Name = "IoT" },
+				new Tag { Name = "Innovation" },
+			};
+
+			// Attaches the entities to the DbContext
+			// Each Tag entity gets EntityState = Added.
+			// EF Core knows that when SaveChangesAsync() is called,
+			// it must issue INSERT statements for these entities.
+			context.Tags.AddRange(Tags);
+
+			List<Article> Articles = [
+			new Article()
 			{
-				context.Articles.AddRange(Articles);
+				Slug = "prompt-like-a-pro",
+				Title = "You’re Using ChatGPT Wrong: How to Prompt Like a Pro",
+				Description = "Smarter prompts lead to smarter responses.",
+				Tags = new([Tags[1], Tags[2], Tags[3]]),
+				CreatedAt = DateTime.UtcNow.AddDays(-10),
+				UpdatedAt = DateTime.UtcNow.AddDays(-5),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*chatgpt-prompt.jpg",
+				AuthorProfile = Profiles[0],
+				Publication = Publications[0]
+			},
+			new Article
+			{
+				Slug = "design-for-humans",
+				Title = "Designing for Humans: The Secret to Great UX",
+				Description = "Practical lessons for crafting user-centered products.",
+				Tags = new([Tags[3], Tags[4], Tags[5]]),
+				CreatedAt = DateTime.UtcNow.AddDays(-30),
+				UpdatedAt = DateTime.UtcNow.AddDays(-20),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*ux-design.jpg",
+				AuthorProfile = Profiles[1],
+				Publication = Publications[0]
+			},
+			new Article
+			{
+				Slug = "startup-lessons",
+				Title = "10 Hard Lessons from My First Startup",
+				Description = "What I wish I knew before launching.",
+				//Tags = new List<string> { "Startups", "Entrepreneurship", "Business" },
+				CreatedAt = DateTime.UtcNow.AddDays(-60),
+				UpdatedAt = DateTime.UtcNow.AddDays(-45),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*startup.jpg",
+				AuthorProfile = Profiles[2],
+				Publication = null
+			},
+			new Article
+			{
+				Slug = "the-future-of-smart-homes",
+				Title = "The Future of Smart Homes: Beyond Voice Assistants",
+				Description = "From predictive lighting to emotion-aware devices — what’s next in home automation?",
+				//Tags = new List<string> { "Technology", "IoT", "Innovation" },
+				CreatedAt = DateTime.UtcNow.AddDays(-30),
+				UpdatedAt = DateTime.UtcNow.AddDays(-25),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*smart-home.jpg",
+				AuthorProfile = Profiles[1],
+				Publication = Publications[0]
+			},
+			new Article
+			{
+				Slug = "embracing-creative-failure",
+				Title = "Embracing Creative Failure: Why Your Worst Ideas Matter",
+				Description = "Behind every breakthrough lies a trail of failed experiments — and that’s okay.",
+				//Tags = new List<string> { "Creativity", "Psychology", "Productivity" },
+				CreatedAt = DateTime.UtcNow.AddDays(-22),
+				UpdatedAt = DateTime.UtcNow.AddDays(-20),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*creative-failure.jpg",
+				AuthorProfile = Profiles[2],
+				Publication = Publications[1]
+			},
+			new Article
+			{
+				Slug = "zero-to-hero-in-blazor",
+				Title = "Zero to Hero in Blazor: Building Modern Web Apps in .NET",
+				Description = "Discover how Blazor bridges the gap between client and server with C#.",
+				//Tags = new List<string> { "Blazor", ".NET", "Web Development" },
+				CreatedAt = DateTime.UtcNow.AddDays(-12),
+				UpdatedAt = DateTime.UtcNow.AddDays(-11),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*blazor-guide.jpg",
+				AuthorProfile = Profiles[0],
+				Publication = Publications[2]
+			},
+			new Article
+			{
+				Slug = "why-your-brain-loves-lists",
+				Title = "Why Your Brain Loves Lists (And How to Use Them Wisely)",
+				Description = "Lists aren’t just for groceries — they’re a psychological tool for focus and creativity.",
+				//Tags = new List<string> { "Psychology", "Habits", "Self-Improvement" },
+				CreatedAt = DateTime.UtcNow.AddDays(-18),
+				UpdatedAt = DateTime.UtcNow.AddDays(-17),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*brain-lists.jpg",
+				AuthorProfile = Profiles[3],
+				Publication = Publications[0]
+			},
+			new Article
+			{
+				Slug = "the-art-of-slow-productivity",
+				Title = "The Art of Slow Productivity: Working Less to Create More",
+				Description = "Rethinking hustle culture — why doing less can lead to deeper work.",
+				//Tags = new List<string> { "Work", "Mindfulness", "Productivity" },
+				CreatedAt = DateTime.UtcNow.AddDays(-40),
+				UpdatedAt = DateTime.UtcNow.AddDays(-35),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*slow-productivity.jpg",
+				AuthorProfile = Profiles[4],
+				Publication = Publications[1]
+			},
+			new Article
+			{
+				Slug = "gaming-as-storytelling",
+				Title = "Gaming as Storytelling: Why Games Are the Literature of Our Time",
+				Description = "Modern games aren’t just entertainment — they’re powerful storytelling mediums.",
+				//Tags = new List<string> { "Gaming", "Culture", "Storytelling" },
+				CreatedAt = DateTime.UtcNow.AddDays(-16),
+				UpdatedAt = DateTime.UtcNow.AddDays(-14),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*gaming-story.jpg",
+				AuthorProfile = Profiles[2],
+				Publication = Publications[0]
+			},
+			new Article
+			{
+				Slug = "designing-for-dark-mode",
+				Title = "Designing for Dark Mode: More Than Just Inverted Colors",
+				Description = "How contrast, perception, and accessibility shape dark UI design.",
+				//Tags = new List<string> { "Design", "UI", "Accessibility" },
+				CreatedAt = DateTime.UtcNow.AddDays(-9),
+				UpdatedAt = DateTime.UtcNow.AddDays(-8),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*dark-mode-design.jpg",
+				AuthorProfile = Profiles[1],
+				Publication = Publications[2]
+			},
+			new Article
+			{
+				Slug = "the-silent-power-of-routines",
+				Title = "The Silent Power of Routines: How Habits Shape Creative Success",
+				Description = "Creativity isn’t chaos — it’s built on consistent structure.",
+				//Tags = new List<string> { "Habits", "Creativity", "Self-Discipline" },
+				CreatedAt = DateTime.UtcNow.AddDays(-7),
+				UpdatedAt = DateTime.UtcNow.AddDays(-7),
+				FovoritesCount = 890,
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*routines-power.jpg",
+				AuthorProfile = Profiles[0],
+				Publication = Publications[1]
+			},
+			new Article
+			{
+				Slug = "demystifying-async-await",
+				Title = "Demystifying async/await: The Magic Behind Modern C#",
+				Description = "A deep dive into asynchronous programming made simple.",
+				//Tags = new List<string> { "C#", "Programming", "Asynchronous" },
+				CreatedAt = DateTime.UtcNow.AddDays(-14),
+				UpdatedAt = DateTime.UtcNow.AddDays(-10),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*async-await.jpg",
+				AuthorProfile = Profiles[4],
+				Publication = Publications[2]
+			},
+			new Article
+			{
+				Slug = "ai-and-human-creativity",
+				Title = "AI and Human Creativity: Collaboration, Not Competition",
+				Description = "How artists and algorithms can inspire each other to create more.",
+				//Tags = new List<string> { "AI", "Art", "Creativity" },
+				CreatedAt = DateTime.UtcNow.AddDays(-21),
+				UpdatedAt = DateTime.UtcNow.AddDays(-18),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*ai-creativity.jpg",
+				AuthorProfile = Profiles[3],
+				Publication = Publications[0]
+			},
+			new Article
+			{
+				Slug = "building-a-minimalist-lifestyle",
+				Title = "Building a Minimalist Lifestyle in a Digital World",
+				Description = "Declutter your apps, feeds, and mind — minimalism for the information age.",
+				//Tags = new List<string> { "Lifestyle", "Minimalism", "Digital Detox" },
+				CreatedAt = DateTime.UtcNow.AddDays(-60),
+				UpdatedAt = DateTime.UtcNow.AddDays(-58),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*digital-minimalism.jpg",
+				AuthorProfile = Profiles[1],
+				Publication = Publications[1]
+			},
+			new Article
+			{
+				Slug = "the-rise-of-webassembly",
+				Title = "The Rise of WebAssembly: A New Era for the Web",
+				Description = "From Blazor to Rust — WebAssembly is redefining what’s possible in browsers.",
+				//Tags = new List<string> { "WebAssembly", "Blazor", "Web Development" },
+				CreatedAt = DateTime.UtcNow.AddDays(-15),
+				UpdatedAt = DateTime.UtcNow.AddDays(-13),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*wasm-rise.jpg",
+				AuthorProfile = Profiles[0],
+				Publication = null
+			},
+			new Article
+			{
+				Slug = "the-mindful-developer",
+				Title = "The Mindful Developer: Coding Without Burnout",
+				Description = "How mindfulness techniques can transform your workflow and focus.",
+				//Tags = new List<string> { "Programming", "Mindfulness", "Work-Life Balance" },
+				CreatedAt = DateTime.UtcNow.AddDays(-32),
+				UpdatedAt = DateTime.UtcNow.AddDays(-31),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*mindful-developer.jpg",
+				AuthorProfile = Profiles[2],
+				Publication = Publications[1]
+			},
+			new Article
+			{
+				Slug = "why-typefaces-matter",
+				Title = "Why Typefaces Matter: The Psychology of Fonts",
+				Description = "Fonts shape emotion and meaning more than we realize.",
+				//Tags = new List<string> { "Design", "Typography", "Psychology" },
+				CreatedAt = DateTime.UtcNow.AddDays(-50),
+				UpdatedAt = DateTime.UtcNow.AddDays(-47),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*typography-psych.jpg",
+				AuthorProfile = Profiles[1],
+				Publication = Publications[0]
+			},
+			new Article
+			{
+				Slug = "hacking-your-learning-habits",
+				Title = "Hacking Your Learning Habits: The Science of Skill Acquisition",
+				Description = "Learn faster by aligning your brain’s reward system with your goals.",
+				//Tags = new List<string> { "Learning", "Neuroscience", "Productivity" },
+				CreatedAt = DateTime.UtcNow.AddDays(-17),
+				UpdatedAt = DateTime.UtcNow.AddDays(-15),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*learning-hacks.jpg",
+				AuthorProfile = Profiles[4],
+				Publication = null
+			},
+			new Article
+			{
+				Slug = "the-ethics-of-algorithms",
+				Title = "The Ethics of Algorithms: Who Decides What’s Fair?",
+				Description = "Unpacking bias, transparency, and accountability in modern AI systems.",
+				//Tags = new List<string> { "AI", "Ethics", "Technology" },
+				CreatedAt = DateTime.UtcNow.AddDays(-45),
+				UpdatedAt = DateTime.UtcNow.AddDays(-43),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*ai-ethics.jpg",
+				AuthorProfile = Profiles[3],
+				Publication = Publications[1]
+			},
+			new Article
+			{
+				Slug = "rediscovering-email",
+				Title = "Rediscovering Email: The Old Tool That Still Works",
+				Description = "Why newsletters and thoughtful emails are making a comeback.",
+				//Tags = new List<string> { "Communication", "Productivity", "Writing" },
+				CreatedAt = DateTime.UtcNow.AddDays(-26),
+				UpdatedAt = DateTime.UtcNow.AddDays(-25),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*email-renaissance.jpg",
+				AuthorProfile = Profiles[1],
+				Publication = Publications[0]
+			},
+			new Article
+			{
+				Slug = "beyond-the-todo-list",
+				Title = "Beyond the To-Do List: Systems Thinking for Personal Productivity",
+				Description = "Stop managing tasks — start managing your inputs and outcomes.",
+				//Tags = new List<string> { "Productivity", "Systems", "Focus" },
+				CreatedAt = DateTime.UtcNow.AddDays(-13),
+				UpdatedAt = DateTime.UtcNow.AddDays(-12),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*todolist-systems.jpg",
+				AuthorProfile = Profiles[2],
+				Publication = Publications[2]
+			},
+			new Article
+			{
+				Slug = "small-teams-big-impact",
+				Title = "Small Teams, Big Impact: The Power of Focused Collaboration",
+				Description = "How tight-knit teams outperform massive organizations.",
+				//Tags = new List<string> { "Business", "Teams", "Leadership" },
+				CreatedAt = DateTime.UtcNow.AddDays(-38),
+				UpdatedAt = DateTime.UtcNow.AddDays(-37),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*small-teams.jpg",
+				AuthorProfile = Profiles[4],
+				Publication = null
+			},
+			new Article
+			{
+				Slug = "breaking-the-scroll-loop",
+				Title = "Breaking the Scroll Loop: Designing for Digital Wellbeing",
+				Description = "The UI tricks that keep us hooked — and how to design against them.",
+				//Tags = new List<string> { "UX", "Design", "Wellbeing" },
+				CreatedAt = DateTime.UtcNow.AddDays(-20),
+				UpdatedAt = DateTime.UtcNow.AddDays(-18),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*scroll-loop.jpg",
+				AuthorProfile = Profiles[0],
+				Publication = Publications[0]
+			},
+			new Article
+			{
+				Slug = "mastering-focus-in-a-distracted-world",
+				Title = "Mastering Focus in a Distracted World",
+				Description = "Deep work is a competitive advantage — here’s how to reclaim it.",
+				Tags = new([Tags[5], Tags[6], Tags[7]]),
+				//Tags = new List<string> { "Focus", "Work", "Psychology" },
+				CreatedAt = DateTime.UtcNow.AddDays(-28),
+				UpdatedAt = DateTime.UtcNow.AddDays(-27),
+				Image = "https://miro.medium.com/v2/resize:fit:800/1*deep-focus.jpg",
+				AuthorProfile = Profiles[3],
+				Publication = null
 			}
+		];
+
+			context.Articles.AddRange(Articles);
 
 			await context.SaveChangesAsync();
 		}

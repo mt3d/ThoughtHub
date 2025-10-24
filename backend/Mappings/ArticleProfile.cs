@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using ThoughtHub.Data.Entities;
+﻿using ThoughtHub.Data.Entities;
 using ThoughtHub.Api.Models;
 using ThoughtHub.Data.Entities.Publications;
 
@@ -24,6 +23,8 @@ namespace ThoughtHub.Mappings
 
 			CreateMap<Publication, PublicationModel>()
 				.ForMember(dest => dest.Url, opt => opt.MapFrom(src => src.Slug));
+
+			CreateMap<Tag, TagModel>();
 		}
 	}
 }
