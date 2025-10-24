@@ -1,6 +1,5 @@
 ﻿using ThoughtHub.Data;
 using ThoughtHub.Data.Entities;
-using ThoughtHub.Data.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

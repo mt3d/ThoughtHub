@@ -1,5 +1,4 @@
-﻿using ThoughtHub.Data.Identity;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace ThoughtHub.Data.Entities
 {

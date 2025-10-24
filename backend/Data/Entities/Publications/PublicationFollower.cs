@@ -1,6 +1,4 @@
-﻿using ThoughtHub.Data.Entities;
-
-namespace ThoughtHub.Data.Entities.Publications
+﻿namespace ThoughtHub.Data.Entities.Publications
 {
 	public class PublicationFollower
 	{

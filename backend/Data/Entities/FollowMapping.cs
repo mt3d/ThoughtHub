@@ -1,6 +1,4 @@
-﻿using ThoughtHub.Data.Identity;
-
-namespace ThoughtHub.Data.Entities
+﻿namespace ThoughtHub.Data.Entities
 {
 	public class FollowMapping
 	{

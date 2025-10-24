@@ -1,6 +1,4 @@
-﻿using ThoughtHub.Data.Entities;
-
-namespace ThoughtHub.Data.Entities.Publications
+﻿namespace ThoughtHub.Data.Entities.Publications
 {
 	/// <summary>
 	/// A Publication in Medium is essentially a mini-organization inside the platform:
