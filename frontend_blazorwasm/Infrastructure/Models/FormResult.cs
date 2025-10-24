@@ -1,4 +1,4 @@
-﻿namespace frontend_blazorwasm.Infrastructure.Models
+﻿namespace ThoughtHub.UI.BlazorWasm.Infrastructure.Models
 {
 	/// <summary>
 	/// Represents the result of a login or registration form.

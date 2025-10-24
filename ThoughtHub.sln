@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "frontend_blazorwasm", "frontend_blazorwasm\frontend_blazorwasm.csproj", "{AA2A2772-F305-40A6-ABF4-018DB06C1725}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThoughtHub.UI.BlazorWasm", "frontend_blazorwasm\ThoughtHub.UI.BlazorWasm.csproj", "{AA2A2772-F305-40A6-ABF4-018DB06C1725}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThoughtHub.Api.Models", "ThoughtHub.Api.Models\ThoughtHub.Api.Models.csproj", "{067FEC39-B337-4EDD-BAA0-200AC1D8769D}"
 EndProject

@@ -1,6 +1,6 @@
-﻿using frontend_blazorwasm.Infrastructure.Models;
+﻿using ThoughtHub.UI.BlazorWasm.Infrastructure.Models;
 
-namespace frontend_blazorwasm.Infrastructure
+namespace ThoughtHub.UI.BlazorWasm.Infrastructure
 {
 	public interface IAccountManagement
 	{

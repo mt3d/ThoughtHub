@@ -1,0 +1,25 @@
+﻿@*     <div class="comments-section">
+
+        @if (TempData["CommentFailedMessage"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["CommentFailedMessage"]
+            </div>
+        }
+
+        <form asp-action="AddComment" method="post" asp-route-slug="@Wrapper.Article.Slug">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="ReturnUrl" value="@Url.Action("Details", "Articles", new { slug = Wrapper.Article.Slug })" />
+
+            <img src="https://miro.medium.com/v2/resize:fill:40:40/1*dmbNkD5D-u45r44go_cf0g.png" alt="@User.Identity?.Name">
+            <textarea name="BodySource" class="form-control" placeholder="What are your thoughts?"></textarea>
+            <button type="submit" class="btn btn-primary mt-2">Respond</button>
+        </form>
+
+        <hr />
+
+        @foreach (CommentDto comment in Wrapper.Article.Comments.Where(c => c.ParentCommentId == null))
+        {
+            <partial name="_CommentPartial" model="comment" />
+        }
+    </div> *@

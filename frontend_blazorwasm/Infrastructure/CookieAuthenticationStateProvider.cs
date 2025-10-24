@@ -1,13 +1,12 @@
-﻿using frontend_blazorwasm.Infrastructure.Models;
+﻿using ThoughtHub.UI.BlazorWasm.Infrastructure.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Net;
-using System.Net.Http;
 using System.Net.Http.Json;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Json;
 
-namespace frontend_blazorwasm.Infrastructure
+namespace ThoughtHub.UI.BlazorWasm.Infrastructure
 {
 	public class CookieAuthenticationStateProvider(IHttpClientFactory httpClientFactory, ILogger<CookieAuthenticationStateProvider> logger)
 			: AuthenticationStateProvider, IAccountManagement

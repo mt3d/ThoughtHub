@@ -1,4 +1,4 @@
-﻿namespace ThoughtHub.Web.BlazorWasm.Infrastructure
+﻿namespace ThoughtHub.UI.BlazorWasm.Infrastructure
 {
 	/// <summary>
 	/// Represents a request for new items.

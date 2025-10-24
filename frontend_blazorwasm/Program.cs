@@ -1,5 +1,5 @@
-using ThoughtHub.Web.BlazorWasm;
-using frontend_blazorwasm.Infrastructure;
+using ThoughtHub.UI.BlazorWasm;
+using ThoughtHub.UI.BlazorWasm.Infrastructure;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;

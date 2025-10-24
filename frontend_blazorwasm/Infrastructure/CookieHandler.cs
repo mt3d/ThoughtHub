@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.WebAssembly.Http;
 
-namespace frontend_blazorwasm.Infrastructure
+namespace ThoughtHub.UI.BlazorWasm.Infrastructure
 {
 	// DelegatingHandler is part of HttpClient's message handler pipeline
 	// It lets you intercept ongoing Http requests or inspect incoming responses

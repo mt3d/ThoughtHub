@@ -1,0 +1,34 @@
+﻿<div class="comment">
+    <img src="@CommentData.Author?.ProfilePic" alt="@CommentData.Author?.FullName">
+    <div class="comment-body">
+        <div class="comment-meta">
+            <span class="comment-author">@CommentData.Author?.FullName</span>
+            <span>@CommentData.UpdatedAt.ToShortDateString()</span>
+        </div>
+        <div class="comment-text">
+            @CommentData.BodySource
+        </div>
+        <div class="comment-actions">
+            <span>Clap (@CommentData.ClapsCount)</span>
+
+            @if (CommentData.Replies?.Any() == true)
+            {
+                <button class="btn btn-link btn-sm toggle-replies">@CommentData.RepliesCount @(CommentData.RepliesCount == 1 ? "reply" : "replies")</button>
+
+                <div id="replies-@CommentData.CommentId" class="collapse ms-4">
+                    @foreach (var reply in CommentData.Replies)
+                    {
+                        <Comment CommentData="@reply" />
+                    }
+                </div>
+            }
+
+            <span>Reply</span>
+        </div>
+    </div>
+</div>
+
+@code
+{
+    public CommentModel CommentData { get; set; } = new();
+}

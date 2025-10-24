@@ -1,4 +1,4 @@
-﻿namespace frontend.Infrastructure
+﻿namespace ThoughtHub.UI.BlazorWasm.Infrastructure
 {
 	public static class NumberFormatter
 	{

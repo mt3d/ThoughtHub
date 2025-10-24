@@ -1,4 +1,4 @@
-﻿namespace ThoughtHub.Web.BlazorWasm.Components.Modals
+﻿namespace ThoughtHub.UI.BlazorWasm.Components.Modals
 {
 	public enum HomeModalMode
 	{
