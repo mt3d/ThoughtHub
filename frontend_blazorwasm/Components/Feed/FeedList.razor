@@ -7,12 +7,10 @@
         <button class="btn btn-sm btn-outline-secondary active">For you</button>
         <button class="btn btn-sm btn-outline-secondary ms-1">Featured</button>
     </div>
-    <div class="small-muted">Top stories · Updated</div>
 </div>
 
 <InfiniteScroll ItemsProvider="GetItems">
     <ItemTemplate Context="item">
-@*         <p>Item @item</p> *@
         <ArticleCard Article="item" />
     </ItemTemplate>
     <LoadingTemplate>
