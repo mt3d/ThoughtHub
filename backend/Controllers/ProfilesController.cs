@@ -9,16 +9,30 @@ namespace ThoughtHub.Controllers
 	public class ProfilesController : Controller
 	{
 		private readonly PlatformContext _context;
-		private readonly IMediaService _mediaService;
+		private readonly IMediaUploadService _mediaService;
 
-		public async Task<IActionResult> UploadProfileImage(IFormFile file)
+		public ProfilesController(
+			PlatformContext context,
+			IMediaUploadService mediaService)
+		{
+			_context = context;
+			_mediaService = mediaService;
+		}
+
+		[HttpPost]
+		[Consumes("multipart/form-data")]
+		public async Task<IActionResult> SetProfileImage(IFormFile file)
 		{
 			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var profileId = (await _context.Profiles.FirstAsync(p => p.UserId == userId)).ProfileId;
+			var profile = (await _context.Profiles.FirstAsync(p => p.UserId == userId));
 
-			var url = _mediaService.UploadImageAsync(profileId, file);
+			var image = await _mediaService.SaveImageAsync(file);
 
-			return Ok(new { imageUrl = url });
+			profile.ProfilePicture = image;
+
+			await _context.SaveChangesAsync();
+
+			return Ok();
 		}
 	}
 }

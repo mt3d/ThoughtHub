@@ -1,6 +1,7 @@
 ﻿using ThoughtHub.Data.Identity;
 using System.Text.Json.Serialization;
 using ThoughtHub.Data.Entities.Publications;
+using ThoughtHub.Data.Entities.Media;
 
 namespace ThoughtHub.Data.Entities
 {
@@ -19,8 +20,9 @@ namespace ThoughtHub.Data.Entities
 
 		public string? Bio { get; set; }
 
-		// TODO: Handle images.
-		//public string? ProfilePic { get; set; }
+		public int? ProfilePictureId { get; set; }
+
+		public Image? ProfilePicture { get; set; }
 
 		[JsonIgnore]
 		public List<FollowMapping> Followers { get; init; } = new();

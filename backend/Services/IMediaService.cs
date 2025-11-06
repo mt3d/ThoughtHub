@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ThoughtHub.Data.Entities.Media;
 
 namespace ThoughtHub.Services
 {
 	public interface IMediaService
 	{
-		string UploadImageAsync(int profileId, IFormFile file);
+		Task<Image> SaveAsync(string filename, Stream content);
 	}
 }

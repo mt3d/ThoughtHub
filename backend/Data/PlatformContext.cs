@@ -3,6 +3,7 @@ using ThoughtHub.Data.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ThoughtHub.Data.Entities.Publications;
+using ThoughtHub.Data.Entities.Media;
 
 namespace ThoughtHub.Data
 {
@@ -22,6 +23,10 @@ namespace ThoughtHub.Data
 		public DbSet<PublicationMember> PublicationMembers => Set<PublicationMember>();
 
 		public DbSet<ReadingHistory> ReadingHistories => Set<ReadingHistory>();
+
+		public DbSet<Image> Images => Set<Image>();
+		public DbSet<ImageVersion> ImageVersions => Set<ImageVersion>();
+		public DbSet<ImageFolder> ImageFolders => Set<ImageFolder>();
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
