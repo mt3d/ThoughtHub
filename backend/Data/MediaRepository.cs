@@ -31,7 +31,7 @@ namespace ThoughtHub.Data
 			}
 
 			image.Filename = model.Filename;
-			image.FolderId = model.FolderId;
+			image.ImageFolderId = model.ImageFolderId;
 
 			var currentVersionsIds = model.Versions.Select(v => v.Id).ToList();
 			var removedVersions = image.Versions.Where(v => !currentVersionsIds.Contains(v.Id)).ToArray();
@@ -45,8 +45,13 @@ namespace ThoughtHub.Data
 			{
 				// TODO: Add only new versions
 			}
-
+			Console.WriteLine($"ImageFolderId = {image.ImageFolderId}");
 			await _context.SaveChangesAsync().ConfigureAwait(false);
+		}
+
+		public Task<Image> GetById(int id)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

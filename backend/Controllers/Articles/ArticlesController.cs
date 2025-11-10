@@ -68,6 +68,37 @@ namespace ThoughtHub.Logic.Articles
 			return new ArticlesWrapper { Articles = articleModels, Count = query.Count() };
 		}
 
+		public class InterestProfile
+		{
+			public Tag Tag { get; set; }
+			public int Weight { get; set; }
+		}
+
+		private async Task<IList<InterestProfile>> GenerateInterestProfile(int profileId)
+		{
+			var profileTagWeights = await context.ReadingHistories
+				.Where(r => r.ProfileId == profileId && r.Progress >= 50)
+				.Include(r => r.Article)
+				.ThenInclude(a => a.Tags)
+				/**
+				 * Originally: r => r.Article.Tags returns IList<Tag>
+				 * 
+				 * Select many flattens queries that return lists of lists.
+				 * But we will get repated tags.
+				 */
+				.SelectMany(r => r.Article.Tags)
+				.GroupBy(tag => tag)
+				.Select(group => new InterestProfile
+				{
+					Tag = group.Key,
+					Weight = group.Count()
+				})
+				.OrderByDescending(x => x.Weight)
+				.ToListAsync();
+
+			return profileTagWeights;
+		}
+
 		/// <summary>
 		/// Get "For you" articles, which are articles recommended based on the user's reading history.
 		/// </summary>

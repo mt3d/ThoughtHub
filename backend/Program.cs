@@ -1,10 +1,12 @@
 using ThoughtHub.Data;
 using ThoughtHub.Data.Identity;
 using ThoughtHub.Infrastructure;
-using ThoughtHub.Mappings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ThoughtHub.Services;
+using ThoughtHub.Storage;
+using ThoughtHub.Api.LocalStorage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +55,10 @@ builder.Services.AddCors(
 			.AllowCredentials()));
 
 builder.Services.AddControllers();
+
+builder.Services.AddScoped<IMediaService, MediaService>();
+builder.Services.AddScoped<IMediaRepository, MediaRepository>();
+builder.Services.AddScoped<IStorage, LocalStorage>();
 
 /*
  * "You define the configuration using profiles. And then you let AutoMapper

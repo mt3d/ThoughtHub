@@ -18,8 +18,8 @@
 
 		public string FileExtension { get; set; }
 
-		public int ImageId { get; set; }
+		public int BaseImageId { get; set; }
 
-		public Image Image { get; set; }
+		public Image BaseImage { get; set; }
 	}
 }

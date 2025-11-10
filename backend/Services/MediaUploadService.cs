@@ -22,7 +22,7 @@ namespace ThoughtHub.Services
 			{
 				using var stream = file.OpenReadStream();
 
-				return await _mediaService.SaveAsync(file.FileName, stream);
+				return await _mediaService.AddAsync(file.FileName, stream);
 			}
 
 			return null;

@@ -17,7 +17,7 @@ namespace ThoughtHub.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.9")
+                .HasAnnotation("ProductVersion", "9.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -319,13 +319,10 @@ namespace ThoughtHub.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FolderId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Height")
                         .HasColumnType("int");
 
-                    b.Property<int>("ImageFolderId")
+                    b.Property<int?>("ImageFolderId")
                         .HasColumnType("int");
 
                     b.Property<string>("PublicUrl")
@@ -347,7 +344,7 @@ namespace ThoughtHub.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FolderId");
+                    b.HasIndex("ImageFolderId");
 
                     b.ToTable("Images");
                 });
@@ -374,12 +371,9 @@ namespace ThoughtHub.Migrations
                     b.Property<int>("ParentFolderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ParentId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentId");
+                    b.HasIndex("ParentFolderId");
 
                     b.ToTable("ImageFolders");
                 });
@@ -392,14 +386,14 @@ namespace ThoughtHub.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("BaseImageId")
+                        .HasColumnType("int");
+
                     b.Property<string>("FileExtension")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Height")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<long>("Size")
@@ -410,7 +404,7 @@ namespace ThoughtHub.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ImageId");
+                    b.HasIndex("BaseImageId");
 
                     b.ToTable("ImageVersions");
                 });
@@ -802,9 +796,8 @@ namespace ThoughtHub.Migrations
                 {
                     b.HasOne("ThoughtHub.Data.Entities.Media.ImageFolder", "Folder")
                         .WithMany("Images")
-                        .HasForeignKey("FolderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ImageFolderId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Folder");
                 });
@@ -813,8 +806,8 @@ namespace ThoughtHub.Migrations
                 {
                     b.HasOne("ThoughtHub.Data.Entities.Media.ImageFolder", "Parent")
                         .WithMany()
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("ParentFolderId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Parent");
@@ -822,13 +815,13 @@ namespace ThoughtHub.Migrations
 
             modelBuilder.Entity("ThoughtHub.Data.Entities.Media.ImageVersion", b =>
                 {
-                    b.HasOne("ThoughtHub.Data.Entities.Media.Image", "Image")
+                    b.HasOne("ThoughtHub.Data.Entities.Media.Image", "BaseImage")
                         .WithMany("Versions")
-                        .HasForeignKey("ImageId")
+                        .HasForeignKey("BaseImageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Image");
+                    b.Navigation("BaseImage");
                 });
 
             modelBuilder.Entity("ThoughtHub.Data.Entities.Profile", b =>

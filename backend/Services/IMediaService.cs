@@ -4,6 +4,10 @@ namespace ThoughtHub.Services
 {
 	public interface IMediaService
 	{
-		Task<Image> SaveAsync(string filename, Stream content);
+		Task<Image> GetByIdAsync(int id);
+
+		Task<Image> AddAsync(string filename, Stream content);
+
+		Task<string?> GetOrCreateVersionAsync(Image image, int? width, int? height);
 	}
 }

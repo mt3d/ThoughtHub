@@ -12,15 +12,15 @@ using ThoughtHub.Data;
 namespace ThoughtHub.Migrations
 {
     [DbContext(typeof(PlatformContext))]
-    [Migration("20251021181633_AddTags")]
-    partial class AddTags
+    [Migration("20251109203951_RecreateEntities")]
+    partial class RecreateEntities
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.9")
+                .HasAnnotation("ProductVersion", "9.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -299,6 +299,119 @@ namespace ThoughtHub.Migrations
                     b.ToTable("FollowMappings");
                 });
 
+            modelBuilder.Entity("ThoughtHub.Data.Entities.Media.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AltText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Filename")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Height")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ImageFolderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PublicUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Size")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Width")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageFolderId");
+
+                    b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("ThoughtHub.Data.Entities.Media.ImageFolder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ParentFolderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentFolderId");
+
+                    b.ToTable("ImageFolders");
+                });
+
+            modelBuilder.Entity("ThoughtHub.Data.Entities.Media.ImageVersion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BaseImageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FileExtension")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Height")
+                        .HasColumnType("int");
+
+                    b.Property<long>("Size")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Width")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BaseImageId");
+
+                    b.ToTable("ImageVersions");
+                });
+
             modelBuilder.Entity("ThoughtHub.Data.Entities.Profile", b =>
                 {
                     b.Property<int>("ProfileId")
@@ -313,10 +426,15 @@ namespace ThoughtHub.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ProfilePictureId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("ProfileId");
+
+                    b.HasIndex("ProfilePictureId");
 
                     b.HasIndex("UserId");
 
@@ -677,11 +795,49 @@ namespace ThoughtHub.Migrations
                     b.Navigation("Follower");
                 });
 
+            modelBuilder.Entity("ThoughtHub.Data.Entities.Media.Image", b =>
+                {
+                    b.HasOne("ThoughtHub.Data.Entities.Media.ImageFolder", "Folder")
+                        .WithMany("Images")
+                        .HasForeignKey("ImageFolderId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Folder");
+                });
+
+            modelBuilder.Entity("ThoughtHub.Data.Entities.Media.ImageFolder", b =>
+                {
+                    b.HasOne("ThoughtHub.Data.Entities.Media.ImageFolder", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentFolderId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Parent");
+                });
+
+            modelBuilder.Entity("ThoughtHub.Data.Entities.Media.ImageVersion", b =>
+                {
+                    b.HasOne("ThoughtHub.Data.Entities.Media.Image", "BaseImage")
+                        .WithMany("Versions")
+                        .HasForeignKey("BaseImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BaseImage");
+                });
+
             modelBuilder.Entity("ThoughtHub.Data.Entities.Profile", b =>
                 {
+                    b.HasOne("ThoughtHub.Data.Entities.Media.Image", "ProfilePicture")
+                        .WithMany()
+                        .HasForeignKey("ProfilePictureId");
+
                     b.HasOne("ThoughtHub.Data.Identity.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("ProfilePicture");
 
                     b.Navigation("User");
                 });
@@ -757,6 +913,16 @@ namespace ThoughtHub.Migrations
             modelBuilder.Entity("ThoughtHub.Data.Entities.Article", b =>
                 {
                     b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("ThoughtHub.Data.Entities.Media.Image", b =>
+                {
+                    b.Navigation("Versions");
+                });
+
+            modelBuilder.Entity("ThoughtHub.Data.Entities.Media.ImageFolder", b =>
+                {
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("ThoughtHub.Data.Entities.Profile", b =>

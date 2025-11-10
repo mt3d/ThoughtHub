@@ -1,9 +1,9 @@
-﻿using ThoughtHub.Data.Entities;
-using ThoughtHub.Data.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ThoughtHub.Data.Entities.Publications;
+using ThoughtHub.Data.Entities;
 using ThoughtHub.Data.Entities.Media;
+using ThoughtHub.Data.Entities.Publications;
+using ThoughtHub.Data.Identity;
 
 namespace ThoughtHub.Data
 {
@@ -124,6 +124,18 @@ namespace ThoughtHub.Data
 			builder.Entity<Tag>()
 				.Property(t => t.Name)
 				.UseCollation("SQL_Latin1_General_CP1_CI_AS"); // TODO: Explain. Use case-insensitive comparisons.
+
+			builder.Entity<ImageFolder>()
+				.HasOne(f => f.Parent)
+				.WithMany() // Each folder can be a parent of many folders.
+				.HasForeignKey(f => f.ParentFolderId)
+				.OnDelete(DeleteBehavior.NoAction);
+
+			builder.Entity<Image>()
+				.HasOne(i => i.Folder)
+				.WithMany(f => f.Images)
+				.HasForeignKey(i => i.ImageFolderId)
+				.OnDelete(DeleteBehavior.NoAction);
 		}
 
 		// TODO: Handle transaction

@@ -9,22 +9,20 @@
 	{
 		public int Id { get; set; }
 
-		public int ImageFolderId { get; set; }
-
 		// TODO: for which version?
 		// TODO: With extension?
-		public string Filename { get; set; }
+		public string Filename { get; set; } = string.Empty;
 
-		public string ContentType { get; set; }
+		public string ContentType { get; set; } = string.Empty;
 
-		public string Title { get; set; }
+		public string Title { get; set; } = string.Empty;
 
-		public string AltText { get; set; }
+		public string AltText { get; set; } = string.Empty;
 
 		public long Size { get; set; }
 
 		// TODO: For which version?
-		public string PublicUrl { get; set; }
+		public string PublicUrl { get; set; } = string.Empty;
 
 		// TODO: Might be removed
 		public int Width { get; set; }
@@ -36,10 +34,10 @@
 
 		public DateTime UpdatedAt { get; set; }
 
-		public int FolderId { get; set; }
+		public int? ImageFolderId { get; set; }
 
-		public ImageFolder Folder { get; set; }
+		public ImageFolder? Folder { get; set; }
 
-		public IList<ImageVersion> Versions { get; set; }
+		public IList<ImageVersion> Versions { get; set; } = new List<ImageVersion>();
 	}
 }
