@@ -7,7 +7,7 @@
 	/// </summary>
 	public class Image
 	{
-		public int Id { get; set; }
+		public Guid Id { get; set; }
 
 		// TODO: for which version?
 		// TODO: With extension?

@@ -20,7 +20,7 @@ namespace ThoughtHub.Data.Entities
 
 		public string? Bio { get; set; }
 
-		public int? ProfilePictureId { get; set; }
+		public Guid? ProfilePictureId { get; set; }
 
 		public Image? ProfilePicture { get; set; }
 

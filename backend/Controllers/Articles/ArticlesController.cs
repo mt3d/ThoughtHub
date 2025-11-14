@@ -9,18 +9,15 @@ using System.Security.Claims;
 
 namespace ThoughtHub.Logic.Articles
 {
-	/*
-	 * A wrapper/envelope is used add additional metadata to the actual payload, such as
-	 * information about the response status, errors, and other contextual details.
-	 * 
-	 * Records are primarily intended for supporting immutable data models.
-	 */
-	public record ArticleWrapper(Article Article);
-
-	public class ArticlesWrapper
+	public class ArticleCreateDto
 	{
-		public List<ArticleModel> Articles { get; set; } = new();
-		public int Count { get; set; }
+		public List<string> TagList = new();
+	}
+
+	public class InterestProfile
+	{
+		public Tag Tag { get; set; }
+		public int Weight { get; set; }
 	}
 
 	[Route("[controller]")]
@@ -41,7 +38,7 @@ namespace ThoughtHub.Logic.Articles
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
-		public async Task<ArticlesWrapper> Get(
+		public async Task<IList<ArticleCardModel>> Get(
 			[FromQuery] string? tag,
 			[FromQuery] string? author,
 			[FromQuery] int? limit,
@@ -54,24 +51,23 @@ namespace ThoughtHub.Logic.Articles
 				.OrderByDescending(a => a.CreatedAt)
 				.Skip(offset ?? 0)
 				.Take(limit ?? 10)
+				//.Select(a => new ArticleCardModel
+				//{
+				//	Id = a.ArticleId,
+				//	Title = a.Title,
+				//	Publication = a.Publication
+				//}).ToListAsync();
 				.Include(a => a.Publication)
-				.Include(a => a.AuthorProfile)
-				.ThenInclude(p => p.User)
-				.AsNoTracking()
+				.Include(a => a.AuthorProfile).ThenInclude(p => p.User)
+				.Include(a => a.AuthorProfile).ThenInclude(p => p.ProfilePicture)
 				.ToListAsync();
 
-			List<ArticleModel> articleModels = mapper.Map<List<ArticleModel>>(articles);
+			List<ArticleCardModel> articleModels = mapper.Map<List<ArticleCardModel>>(articles);
 
 			// TODO: Handle tags
 			// TODO: Handle author
 
-			return new ArticlesWrapper { Articles = articleModels, Count = query.Count() };
-		}
-
-		public class InterestProfile
-		{
-			public Tag Tag { get; set; }
-			public int Weight { get; set; }
+			return articleModels;
 		}
 
 		private async Task<IList<InterestProfile>> GenerateInterestProfile(int profileId)
@@ -99,6 +95,7 @@ namespace ThoughtHub.Logic.Articles
 			return profileTagWeights;
 		}
 
+		// TODO: The models should be different.
 		/// <summary>
 		/// Get "For you" articles, which are articles recommended based on the user's reading history.
 		/// </summary>
@@ -107,7 +104,7 @@ namespace ThoughtHub.Logic.Articles
 		/// <returns></returns>
 		[HttpGet("/for-you")]
 		[Authorize]
-		public async Task<ArticleWrapper> GetForYou([FromQuery] int? limit, [FromQuery] int? offset)
+		public async Task<IList<ArticleCardModel>> GetForYou([FromQuery] int? limit, [FromQuery] int? offset)
 		{
 			// TODO: Find a better way to access current user profile.
 			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -134,7 +131,7 @@ namespace ThoughtHub.Logic.Articles
 		/// <returns></returns>
 		[HttpGet("/featured")]
 		[Authorize]
-		public async Task<ArticleWrapper> GetFeatured([FromQuery] int? limit, [FromQuery] int? offset)
+		public async Task<IList<ArticleCardModel>> GetFeatured([FromQuery] int? limit, [FromQuery] int? offset)
 		{
 			throw new NotImplementedException();
 		}
@@ -293,11 +290,6 @@ namespace ThoughtHub.Logic.Articles
 		public async Task<IActionResult> GetArticlesByTopic(string topic)
 		{
 			throw new NotImplementedException();
-		}
-
-		public class ArticleCreateDto
-		{
-			public List<string> TagList = new();
 		}
 
 		[HttpPost]

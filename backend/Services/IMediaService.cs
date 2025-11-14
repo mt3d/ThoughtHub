@@ -4,7 +4,7 @@ namespace ThoughtHub.Services
 {
 	public interface IMediaService
 	{
-		Task<Image> GetByIdAsync(int id);
+		Task<Image> GetByIdAsync(Guid id);
 
 		Task<Image> AddAsync(string filename, Stream content);
 

@@ -19,7 +19,7 @@
 </InfiniteScroll>
 
 @code {
-    private List<ArticleModel> Articles = new();
+    private List<ArticleCardModel> Articles = new();
 
     [Inject]
     public IHttpClientFactory ClientFactory { get; set; }
@@ -31,20 +31,20 @@
         httpClient = ClientFactory.CreateClient("Auth");
     }
 
-    async Task<IEnumerable<ArticleModel>> GetItems(ItemsRequest request)
+    async Task<IEnumerable<ArticleCardModel>> GetItems(ItemsRequest request)
     {
         int pageSize = 5;
 
         JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
 
-        var fetchedArticles = await httpClient.GetFromJsonAsync<ArticlesWrapper>($"/articles?limit={pageSize}&offset={request.StartIndex}", options);
+        var fetchedArticles = await httpClient.GetFromJsonAsync<IList<ArticleCardModel>>($"/articles?limit={pageSize}&offset={request.StartIndex}", options);
 
-        return fetchedArticles.Articles;
+        return fetchedArticles;
     }
 
-    public class ArticlesWrapper
-    {
-        public List<ArticleModel> Articles { get; set; } = new();
-        public int ArticlesCount { get; set; }
-    }
+    // public class ArticlesWrapper
+    // {
+    //     public List<ArticleModel> Articles { get; set; } = new();
+    //     public int ArticlesCount { get; set; }
+    // }
 }

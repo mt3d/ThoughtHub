@@ -156,13 +156,22 @@ namespace ThoughtHub.Data
 
 			}
 
-			// Match users to profiles.
-			for (int i = 0; i < Profiles.Count; i++)
+			images = context.Images.ToList();
+
+			if (!context.Profiles.Any())
 			{
-				var user = databaseUsers.First(u => u.UserName == Users[i].UserName);
-				Profiles[i].UserId = user.Id;
-				Profiles[i].User = null;
-				Profiles[i].ProfilePicture = images[0];
+				// Match users to profiles.
+				for (int i = 0; i < Profiles.Count; i++)
+				{
+					var user = databaseUsers.First(u => u.UserName == Users[i].UserName);
+					Profiles[i].UserId = user.Id;
+					Profiles[i].User = null;
+
+					if (images.Count > 0)
+					{
+						Profiles[i].ProfilePicture = images[0];
+					}
+				}
 			}
 
 			List<Tag> Tags = new();

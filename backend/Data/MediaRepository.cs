@@ -24,6 +24,7 @@ namespace ThoughtHub.Data
 			{
 				image = new Image
 				{
+					Id = model.Id,
 					CreatedAt = DateTime.Now,
 				};
 
@@ -49,7 +50,7 @@ namespace ThoughtHub.Data
 			await _context.SaveChangesAsync().ConfigureAwait(false);
 		}
 
-		public Task<Image> GetById(int id)
+		public Task<Image> GetById(Guid id)
 		{
 			throw new NotImplementedException();
 		}

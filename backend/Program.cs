@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using ThoughtHub.Services;
 using ThoughtHub.Storage;
 using ThoughtHub.Api.LocalStorage;
+using ThoughtHub.Api.LocalStorage.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,7 +59,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<IMediaService, MediaService>();
 builder.Services.AddScoped<IMediaRepository, MediaRepository>();
-builder.Services.AddScoped<IStorage, LocalStorage>();
+builder.Services.AddLocalFileStorage(builder.Configuration["PlatformUrls:BackendUrl"] + "/uploads/");
 
 /*
  * "You define the configuration using profiles. And then you let AutoMapper
@@ -68,6 +69,9 @@ builder.Services.AddScoped<IStorage, LocalStorage>();
 builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
 
 var app = builder.Build();
+
+app.UseStaticFiles();
+app.UseRouting(); // Necessary
 
 // TODO:EXPLAIN
 app.MapIdentityApi<User>();
@@ -87,7 +91,6 @@ app.MapPost("/logout", async (SignInManager<User> signInManager, [FromBody] obje
 
 		return Results.Ok();
 	}
-
 	return Results.Unauthorized();
 }).RequireAuthorization();
 

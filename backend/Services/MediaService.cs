@@ -17,7 +17,7 @@ namespace ThoughtHub.Services
 			_mediaRepository = mediaRepository;
 		}
 
-		public async Task<Image> GetByIdAsync(int id)
+		public async Task<Image> GetByIdAsync(Guid id)
 		{
 			// TODO: Use cache.
 			return await _mediaRepository.GetById(id).ConfigureAwait(false);
@@ -30,6 +30,10 @@ namespace ThoughtHub.Services
 			// TODO: Check content type.
 
 			Image model = new Image();
+
+			// make sure to init the Id here, so the storage can use when naming the file.
+			model.Id = Guid.NewGuid();
+
 			model.CreatedAt = DateTime.Now;
 			model.Filename = filename.Replace(" ", "_");
 			// TODO: Handle folder
@@ -108,7 +112,8 @@ namespace ThoughtHub.Services
 			return GetImageUrl(image.BaseImage, image.Width, image.Height);
 		}
 
-		private string GetImageUrl(Image image, int? width = null, int? height = null)
+		// TODO: Fix. The dimesnsions are never used.
+		public string GetImageUrl(Image image, int? width = null, int? height = null)
 		{
 			//var name = BuildResourceFileName(image, height, width);
 

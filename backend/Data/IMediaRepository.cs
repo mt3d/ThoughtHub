@@ -4,7 +4,7 @@ namespace ThoughtHub.Data
 {
 	public interface IMediaRepository
 	{
-		Task<Image> GetById(int id);
+		Task<Image> GetById(Guid id);
 
 		Task AddOrUpdate(Image model);
 	}

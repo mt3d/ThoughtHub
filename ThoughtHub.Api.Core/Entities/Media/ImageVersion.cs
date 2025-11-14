@@ -18,7 +18,7 @@
 
 		public string FileExtension { get; set; }
 
-		public int BaseImageId { get; set; }
+		public Guid BaseImageId { get; set; }
 
 		public Image BaseImage { get; set; }
 	}

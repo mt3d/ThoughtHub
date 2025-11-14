@@ -6,7 +6,9 @@ using ThoughtHub.Services;
 
 namespace ThoughtHub.Controllers
 {
-	public class ProfilesController : Controller
+	[Route("[controller]")]
+	[ApiController]
+	public class ProfilesController : ControllerBase
 	{
 		private readonly PlatformContext _context;
 		private readonly IMediaUploadService _mediaService;

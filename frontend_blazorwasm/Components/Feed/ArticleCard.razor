@@ -25,6 +25,11 @@
             }
             else
             {
+                <img src="@Article.Author.ProfilePic"
+                     alt=""
+                     class="rounded-circle me-1"
+                     width="24"
+                     height="24">
                 <a href="/@Article.Author.Url" class="text-decoration-none">@Article.Author.FullName</a>
             }
         </div>
@@ -50,5 +55,5 @@
 
 @code {
     [Parameter]
-    public ArticleModel Article { get; set; }
+    public ArticleCardModel Article { get; set; }
 }

@@ -8,10 +8,12 @@ namespace ThoughtHub.Api.LocalStorage
 	public class LocalStorage : IStorage
 	{
 		private readonly string _basePath = "wwwroot/uploads/";
-		private readonly string _baseUrl = "~/assets/";
+		private readonly string _baseUrl = "~/uploads/";
 		private readonly LocalStorageNaming _naming;
 
-		public LocalStorage(string? baseUrl = null, LocalStorageNaming naming = LocalStorageNaming.UniqueFileNames)
+		public LocalStorage(
+			string? baseUrl = null,
+			LocalStorageNaming naming = LocalStorageNaming.UniqueFileNames)
 		{
 			if (!string.IsNullOrEmpty(baseUrl))
 			{

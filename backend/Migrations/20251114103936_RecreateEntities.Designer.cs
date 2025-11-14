@@ -12,7 +12,7 @@ using ThoughtHub.Data;
 namespace ThoughtHub.Migrations
 {
     [DbContext(typeof(PlatformContext))]
-    [Migration("20251109203951_RecreateEntities")]
+    [Migration("20251114103936_RecreateEntities")]
     partial class RecreateEntities
     {
         /// <inheritdoc />
@@ -301,11 +301,9 @@ namespace ThoughtHub.Migrations
 
             modelBuilder.Entity("ThoughtHub.Data.Entities.Media.Image", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AltText")
                         .IsRequired()
@@ -389,8 +387,8 @@ namespace ThoughtHub.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BaseImageId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("BaseImageId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FileExtension")
                         .IsRequired()
@@ -426,8 +424,8 @@ namespace ThoughtHub.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProfilePictureId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("ProfilePictureId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
