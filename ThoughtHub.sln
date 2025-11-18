@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThoughtHub.Api.LocalStorage
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThoughtHub.Api.Core", "ThoughtHub.Api.Core\ThoughtHub.Api.Core.csproj", "{5F56334D-F5AA-44A2-B8B8-3670F2C1853F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThoughtHub.Api.AzureBlobStorage", "ThoughtHub.Api.AzureBlobStorage\ThoughtHub.Api.AzureBlobStorage.csproj", "{EC6CDBF0-DE7E-41D6-82B1-5B93DEF9A550}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +90,18 @@ Global
 		{5F56334D-F5AA-44A2-B8B8-3670F2C1853F}.Release|x64.Build.0 = Release|Any CPU
 		{5F56334D-F5AA-44A2-B8B8-3670F2C1853F}.Release|x86.ActiveCfg = Release|Any CPU
 		{5F56334D-F5AA-44A2-B8B8-3670F2C1853F}.Release|x86.Build.0 = Release|Any CPU
+		{EC6CDBF0-DE7E-41D6-82B1-5B93DEF9A550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC6CDBF0-DE7E-41D6-82B1-5B93DEF9A550}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC6CDBF0-DE7E-41D6-82B1-5B93DEF9A550}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EC6CDBF0-DE7E-41D6-82B1-5B93DEF9A550}.Debug|x64.Build.0 = Debug|Any CPU
+		{EC6CDBF0-DE7E-41D6-82B1-5B93DEF9A550}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EC6CDBF0-DE7E-41D6-82B1-5B93DEF9A550}.Debug|x86.Build.0 = Debug|Any CPU
+		{EC6CDBF0-DE7E-41D6-82B1-5B93DEF9A550}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC6CDBF0-DE7E-41D6-82B1-5B93DEF9A550}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC6CDBF0-DE7E-41D6-82B1-5B93DEF9A550}.Release|x64.ActiveCfg = Release|Any CPU
+		{EC6CDBF0-DE7E-41D6-82B1-5B93DEF9A550}.Release|x64.Build.0 = Release|Any CPU
+		{EC6CDBF0-DE7E-41D6-82B1-5B93DEF9A550}.Release|x86.ActiveCfg = Release|Any CPU
+		{EC6CDBF0-DE7E-41D6-82B1-5B93DEF9A550}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
