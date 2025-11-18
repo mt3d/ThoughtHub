@@ -17,10 +17,10 @@
                     <SignupControls Label="Create an account to start writing." OnSwitchMode="SwitchMode" />
                     break;
                 case HomeModalMode.SignInEmail:
-                    <SigninEmailControls OnSwitchMode="SwitchMode" />
+                    <SigninEmailControls Close="Close" OnSwitchMode="SwitchMode"/>
                     break;
                 case HomeModalMode.SignupEmail:
-                    <SignupEmailControls OnSwitchMode="SwitchMode" />
+                    <SignupEmailControls OnSwitchMode="SwitchMode" Close="Close"/>
                     break;
             }
         </div>

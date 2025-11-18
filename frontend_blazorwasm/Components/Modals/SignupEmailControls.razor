@@ -79,15 +79,23 @@ else
     [Parameter]
     public EventCallback<HomeModalMode> OnSwitchMode { get; set; }
 
-	private FormResult formResult = new();
+    [Parameter]
+    public EventCallback Close { get; set; }
 
-	[SupplyParameterFromForm]
-	private InputModel Input { get; set; } = new();
+    private FormResult formResult = new();
 
-	public async Task RegisterUserAsync()
-	{
-		formResult = await Account.RegisterAsync(Input.Email, Input.Password);
-	}
+    [SupplyParameterFromForm]
+    private InputModel Input { get; set; } = new();
+
+    public async Task RegisterUserAsync()
+    {
+        formResult = await Account.RegisterAsync(Input.Email, Input.Password);
+
+        if (formResult.Succeeded)
+        {
+            await Close.InvokeAsync();
+        }
+    }
 
 	private sealed class InputModel
 	{

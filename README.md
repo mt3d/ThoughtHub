@@ -14,17 +14,17 @@
 
 2. The default URLs for the frontend and the backend are:
 
-    * `backend` app (`PlatformUrls:BackendUrl`): `http://localhost:5120`
-    * `frontend_blazorwasm` app (`PlatformUrls:BlazorWasmFrontendUrl`): `http://localhost:5220`
+    * `ThoughtHub.Api` app (`PlatformUrls:BackendUrl`): `http://localhost:5120`
+    * `ThoughtHub.Ui.BlazorWasm` app (`PlatformUrls:BlazorWasmFrontendUrl`): `http://localhost:5220`
 
 3. You can use the existing URLs or update them in the appsettings.json file of each project with new `BackendUrl` and `BlazorWasmFrontendUrl` endpoints:
 
-    * `appsettings.json` file in the root of the `backend` app.
-    * `wwwroot/appsettings.json` file in the `frontend_blazorwasm` app.
+    * `ThoughtHub.Api` file in the root of the `backend` app.
+    * `wwwroot/appsettings.json` file in the `ThoughtHub.Ui.BlazorWasm` app.
 
-4. Run the `backend` and `frontend_blazorwasm` apps.
+4. Run the `ThoughtHub.Api` and `ThoughtHub.Ui.BlazorWasm` apps.
 
-5. Navigate to the `frontend_blazorwasm` app at the `BlazorWasmFrontendUrl`.
+5. Navigate to the `ThoughtHub.Ui.BlazorWasm` app at the `BlazorWasmFrontendUrl`.
 
 6. Register a new user or use one of the preregistered test users (all test users share the same password `12345678ABab$`).
     * `jwilkins@example.com`
