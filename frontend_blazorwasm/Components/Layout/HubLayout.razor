@@ -1,0 +1,31 @@
+﻿
+<div class="hub-layout">
+	@if (Header is not null)
+	{
+		<header class="hub-layout-header">
+			@Header
+		</header>
+	}
+
+	<main class="hub-layout-main">
+		@if (NavigationPane is not null && HideNavigationPane is false)
+		{
+			<div class="hub-layout-navigationpane">
+				@NavigationPane
+			</div>
+		}
+
+		<div class="hub-layout-main-content">
+			@Main
+		</div>
+	</main>
+
+	@if (Footer is not null)
+	{
+		<footer class="hub-layout-footer">
+			@Footer
+		</footer>
+	}
+</div>
+
+@* TODO: If the header or footer are sticky, add custom classes to indicate this *@

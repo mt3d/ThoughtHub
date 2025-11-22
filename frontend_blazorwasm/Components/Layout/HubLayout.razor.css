@@ -1,0 +1,32 @@
+﻿
+.hub-layout {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-width: 100%;
+    min-height: 100%;
+    flex-flow: column; /* TODO: Explain */
+    position: relative; /* TODO: Explain */
+}
+
+.hub-layout-header {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.hub-layout-main {
+    flex-grow: 1; /* Explain */
+    display: flex;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.hub-layout-navigationpane {
+    box-sizing: border-box;
+}
+
+.hub-layout-main-content {
+    width: 100%;
+    flex-grow: 1;
+    box-sizing: border-box;
+}

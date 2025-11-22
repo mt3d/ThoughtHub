@@ -1,0 +1,17 @@
+﻿@using ThoughtHub.UI.BlazorWasm.Layout
+@using ThoughtHub.UI.BlazorWasm.Components.NavigationPane
+@using ThoughtHub.UI.BlazorWasm.Components.Layout
+@inherits LayoutComponentBase
+
+<HubLayout>
+	<Header>
+		<HubHeader />
+	</Header>
+	<NavigationPane>
+		<ThoughtHub.UI.BlazorWasm.Components.NavigationPane.NavigationPane />
+	</NavigationPane>
+
+	<Main>
+		@Body
+	</Main>
+</HubLayout>

@@ -1,9 +1,10 @@
 ﻿@page "/@{author}/{authorslug}"
 @page "/{publication}/{publicationslug}"
 @using System.Text.Json
+@using ThoughtHub.UI.BlazorWasm.Layout
+@layout MainLayout
 @* <link href="/css/CommentsStyle.css" rel="stylesheet" /> *@
 
-<MainLayout>
     @if (Article is not null)
     {
         <div class="container mt-3">
@@ -61,7 +62,6 @@
     {
         <ArticleNotFound />
     }
-</MainLayout>
 
 @code
 {
