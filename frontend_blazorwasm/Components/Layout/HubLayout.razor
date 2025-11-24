@@ -1,29 +1,35 @@
 ﻿@inherits HubComponentBase
 
-<div class="@ClassBuilder.Value hub-layout">
+@*
+	TODO: Add ref to root element
+	Add Id
+
+*@
+<div class="@ClassBuilder.Value"
+	style="@StyleBuilder.Value">
 	@if (Header is not null)
 	{
-		<header class="hub-layout-header">
+		<header class="hub-layout-header @Classes?.Header">
 			@Header
 		</header>
 	}
 
-	<main class="hub-layout-main">
+	<main class="hub-layout-main @Classes?.Main">
 		@if (NavigationPane is not null && HideNavigationPane is false)
 		{
-			<div class="hub-layout-navigationpane">
+			<div class="hub-layout-navigationpane @Classes?.NavigationPane">
 				@NavigationPane
 			</div>
 		}
 
-		<div class="hub-layout-main-content">
+		<div class="hub-layout-main-content @Classes?.MainContent">
 			@Main
 		</div>
 	</main>
 
 	@if (Footer is not null)
 	{
-		<footer class="hub-layout-footer">
+		<footer class="hub-layout-footer @Classes?.Footer">
 			@Footer
 		</footer>
 	}

@@ -9,6 +9,26 @@
     position: relative; /* TODO: Explain */
 }
 
+.hub-layout-sticky-header {
+    height: fit-content;
+}
+
+    .hub-layout-sticky-header > .hub-layout-header {
+        top: 0;
+        position: sticky;
+        z-index: 1000; /* TODO: Replace with a variable for themes */
+    }
+
+.hub-layout-sticky-footer {
+    height: fit-content;
+}
+
+    .hub-layout-sticky-footer > .hub-layout-footer {
+        bottom: 0;
+        position: sticky;
+        z-index: 1000; /* TODO: Replace with a variable for themes */
+    }
+
 .hub-layout-header {
     width: 100%;
     box-sizing: border-box;
@@ -28,5 +48,10 @@
 .hub-layout-main-content {
     width: 100%;
     flex-grow: 1;
+    box-sizing: border-box;
+}
+
+.hub-layout-footer {
+    width: 100%;
     box-sizing: border-box;
 }
