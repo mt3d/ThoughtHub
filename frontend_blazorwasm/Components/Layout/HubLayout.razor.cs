@@ -2,8 +2,13 @@
 
 namespace ThoughtHub.UI.BlazorWasm.Components.Layout
 {
-	public partial class HubLayout
+	public partial class HubLayout : HubComponentBase
 	{
+		/// <summary>
+		/// Stores the custom CSS classes for the different parts of the layout.
+		/// </summary>
+		public HubLayoutClasses Classes { get; set; }
+
 		[Parameter]
 		public RenderFragment? Header { get; set; }
 
@@ -30,5 +35,18 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Layout
 
 		[Parameter]
 		public bool StickyHeader { get; set; }
+
+		protected override string RootElementClass => "hub-layout";
+
+		/// <summary>
+		/// This is used for conditional registering of some css classes.
+		/// </summary>
+		protected override void RegisterCssClasses()
+		{
+			ClassBuilder
+				.Register(() => Classes?.Root)
+				.Register(() => StickyHeader ? "hub-layout-sticky-header" : string.Empty)
+				.Register(() => StickyFooter ? "hub-layout-sticky-footer" : string.Empty);
+		}
 	}
 }
