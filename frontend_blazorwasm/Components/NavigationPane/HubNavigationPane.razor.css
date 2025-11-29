@@ -1,0 +1,79 @@
+
+/* TODO: Explain how the animation works in some detail */
+
+.hub-navigation-pane {
+    top: 0;
+    position: sticky;
+    width: 240px;
+    height: calc(-57px + 100vh);
+    transition: width 0.5s ease;
+}
+
+    .hub-navigation-pane .hub-navigation-pane-content {
+        width: 240px;
+        transition: transform 0.5s ease;
+        transform: translateX(0);
+    }
+
+    .hub-navigation-pane.hub-navigation-pane-closed .hub-navigation-pane-content {
+        transform: translateX(-240px);
+    }
+
+    .hub-navigation-pane.hub-navigation-pane-closed {
+        width: 0px;
+    }
+
+    /* TODO: Fix RTL */
+    .hub-navigation-pane.hub-navigation-pane-closed.hub-rtl {
+        transform: translateX(100%);
+    }
+
+    .hub-navigation-pane.hub-rtl {
+        right: 0;
+        left: unset;
+    }
+
+/* Old classes. TODO: Remove the unused ones. */
+
+.bi {
+    display: inline-block;
+    position: relative;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.75rem;
+    top: -1px;
+    background-size: cover;
+}
+
+
+.nav-item {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+.nav-item:first-of-type {
+    padding-top: 1rem;
+}
+
+.nav-item:last-of-type {
+    padding-bottom: 1rem;
+}
+
+.nav-item ::deep a {
+    color: #d7d7d7;
+    border-radius: 4px;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    line-height: 3rem;
+}
+
+.nav-item ::deep a.active {
+    background-color: rgba(255,255,255,0.37);
+    color: white;
+}
+
+.nav-item ::deep a:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}

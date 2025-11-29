@@ -3,12 +3,25 @@
 @using ThoughtHub.UI.BlazorWasm.Components.Layout
 @inherits LayoutComponentBase
 
+@code {
+	/// <summary>
+	/// This field connects the Header with the NavigationPane, so that
+	/// the pane can be displayed or hid using a button in the header.
+	/// 
+	/// Open is used for smaller displays, where the pane is displayed over the other elements.
+	/// </summary>
+	private bool _isNavigationPaneOpen;
+
+	// Toggle is used for desktop, where the pane takes space.
+	private bool _isNavigationPaneToggled;
+}
+
 <HubLayout StickyHeader=true>
 	<Header>
-		<HubHeader />
+		<HubHeader OnNavigationPaneToggle="() => _isNavigationPaneOpen = !_isNavigationPaneOpen"/>
 	</Header>
 	<NavigationPane>
-		<ThoughtHub.UI.BlazorWasm.Components.NavigationPane.NavigationPane />
+		<HubNavigationPane @bind-IsOpen="_isNavigationPaneOpen"/>
 	</NavigationPane>
 
 	<Main>

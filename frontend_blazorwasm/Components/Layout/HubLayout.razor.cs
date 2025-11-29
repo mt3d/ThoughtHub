@@ -19,7 +19,7 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Layout
 		public RenderFragment? Main { get; set; }
 
 		[Parameter]
-		public bool HideNavigationPane { get; set; }
+		public bool RemoveNavigationPane { get; set; }
 
 		[Parameter]
 		public RenderFragment? NavigationPane { get; set; }
