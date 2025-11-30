@@ -2,7 +2,7 @@
 /* TODO: Explain how the animation works in some detail */
 
 .hub-navigation-pane {
-    top: 0;
+    top: 60px; /* The height of the header */
     position: sticky;
     width: 240px;
     height: calc(-57px + 100vh);
