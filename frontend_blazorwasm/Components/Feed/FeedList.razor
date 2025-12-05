@@ -1,21 +1,29 @@
 ﻿@using System.Text.Json
 @using ThoughtHub.UI.BlazorWasm.Infrastructure
+@using ThoughtHub.UI.BlazorWasm.Components.Tab
 
-<div class="d-flex justify-content-between align-items-center mb-3">
+@* <div class="d-flex justify-content-between align-items-center mb-3">
     <div>
         <button class="btn btn-sm btn-outline-secondary active">For you</button>
         <button class="btn btn-sm btn-outline-secondary ms-1">Featured</button>
     </div>
-</div>
+</div> *@
 
-<InfiniteScroll ItemsProvider="GetItems">
-    <ItemTemplate Context="item">
-        <ArticleCard Article="item" />
-    </ItemTemplate>
-    <LoadingTemplate>
-        <FeedSkeleton CardCount="5" />
-    </LoadingTemplate>
-</InfiniteScroll>
+<HubTab>
+    <HubTabItem HeaderText="For you">
+        <InfiniteScroll ItemsProvider="GetItems">
+            <ItemTemplate Context="item">
+                <ArticleCard Article="item" />
+            </ItemTemplate>
+            <LoadingTemplate>
+                <FeedSkeleton CardCount="5" />
+            </LoadingTemplate>
+        </InfiniteScroll>
+    </HubTabItem>
+    <HubTabItem HeaderText="Featured">
+
+    </HubTabItem>
+</HubTab>
 
 @code {
     private List<ArticleCardModel> Articles = new();

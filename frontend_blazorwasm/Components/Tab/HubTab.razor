@@ -1,0 +1,25 @@
+﻿@inherits HubComponentBase
+
+<div style="@StyleBuilder.Value" class="@ClassBuilder.Value">
+
+	<CascadingValue Value="this" IsFixed="true">
+		<div class="hub-tab-header-content">
+			@ChildContent
+		</div>
+	</CascadingValue>
+
+	@* Should all tabs be rendered and then hidden with css? *@
+	@if (RenderAll)
+	{
+		
+	}
+	else
+	{
+		<div role="tabpanel"
+			 style=""
+			 class="hub-tab-content"
+		>
+			 @(_selectedItem?.Body ?? _selectedItem?.ChildContent)
+		 </div>
+	}
+</div>

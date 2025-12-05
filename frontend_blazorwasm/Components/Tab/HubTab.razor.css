@@ -1,0 +1,27 @@
+﻿
+.hub-tab {
+    display: flex;
+    gap: 1rem;
+}
+
+.hub-tab-header-content {
+    display: flex;
+    white-space: nowrap;
+    justify-content: flex-start;
+}
+
+.hub-tab-top {
+    flex-flow: column;
+}
+
+.hub-tab-bottom {
+    flex-flow: column-reverse;
+}
+
+.hub-tab-start {
+    flex-flow: row;
+}
+
+.hub-tab-bottom {
+    flex-flow: row-reverse;
+}
