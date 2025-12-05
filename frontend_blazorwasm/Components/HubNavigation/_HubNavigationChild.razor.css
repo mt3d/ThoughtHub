@@ -1,0 +1,26 @@
+﻿.hub-navigation-separator {
+    height: 0;
+    border: 1px solid var(--hub-color-border-secondary);
+}
+
+.hub-navigation-item {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    cursor: pointer;
+    overflow: hidden;
+    font-weight: 400;
+    user-select: none;
+    /* 		color: $clr-fg-pri;
+ */ align-items: center;
+    white-space: nowrap;
+    flex-flow: row nowrap;
+    text-overflow: ellipsis;
+    font-size: 16px;
+}
+
+.hub-navigation-main-content {
+    flex-grow: 1;
+    display: flex;
+    gap: 2px;
+}

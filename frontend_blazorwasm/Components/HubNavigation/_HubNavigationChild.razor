@@ -35,19 +35,20 @@
 				RenderLink="renderlink"
 				Class=@($"hub-navigation-item-container")
 				Style="@($"padding-inline-start:{padding}px")">
+				<div class="hub-navigation-main-content">
+					@* TODO: Render the chevron *@
 
-				@* TODO: Render the chevron *@
+					@* Render the content of the item *@
+					<div class="hub-navigation-item">
+						@* Render the icon *@
+						@if (iconName is not null)
+						{
+							<i style="" class="bi bi-@iconName" />
+						}
 
-				@* Render the content of the item *@
-				<div class="hub-navigation-item">
-					@* Render the icon *@
-					@if (iconName is not null)
-					{
-						<i style="" class="bi bi-@iconName" />
-					}
-
-					@* Render the text *@
-					<span style="" class="hub-navigation-item-text">@text</span>
+						@* Render the text *@
+						<span style="" class="hub-navigation-item-text">@text</span>
+					</div>
 				</div>
 
 				@* TODO: Display the description if available *@
@@ -56,26 +57,3 @@
 		}
 	}
 </li>
-
-<style>
-	.hub-navigation-separator {
-		height: 0;
-		border: 1px solid var(--hub-color-border-secondary);
-	}
-
-	.hub-navigation-item {
-		width: 100%;
-		display: flex;
-		gap: 8px;
-		cursor: pointer;
-		overflow: hidden;
-		font-weight: 400;
-		user-select: none;
-/* 		color: $clr-fg-pri;
- */		align-items: center;
-		white-space: nowrap;
-		flex-flow: row nowrap;
-		text-overflow: ellipsis;
-		font-size: 16px;
-	}
-</style>
