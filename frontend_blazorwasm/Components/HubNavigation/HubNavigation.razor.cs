@@ -63,5 +63,15 @@ namespace ThoughtHub.UI.BlazorWasm.Components.HubNavigation
 
 			return null;
 		}
+
+		internal bool GetIsSeparator(TItem item)
+		{
+			if (item is HubNavigationItem navItem)
+			{
+				return navItem.IsSeparator;
+			}
+
+			return false;
+		}
 	}
 }

@@ -13,6 +13,8 @@
     --hub-navigation-color-text: var(--hub-color-primary);
     --hub-navigation-color-hover: var(--hub-color-primary-hover);
     --hub-navigation-color-active: var(--hub-color-primary-active);
+    /* Secondary border colors */
+    --hub-color-border-secondary: rgb(242, 242, 242)
 }
 
 html, body {

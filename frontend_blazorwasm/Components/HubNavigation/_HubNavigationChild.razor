@@ -5,6 +5,7 @@
 	@{
 		var url = ParentNav.GetUrl(Item);
 		var text = ParentNav.GetText(Item);
+		var isSeparator = ParentNav.GetIsSeparator(Item);
 		var renderlink = url is not null;
 		var href = url; // Disable href is the element is selected
 		var iconName = ParentNav.GetIconName(Item);
@@ -16,10 +17,9 @@
 	}
 	else
 	{
-		@* TODO: Check if the item is a separator *@
-		@if (false)
+		@if (isSeparator)
 		{
-
+			<div class="hub-navigation-separator" />
 		}
 		else
 		{
@@ -58,6 +58,11 @@
 </li>
 
 <style>
+	.hub-navigation-separator {
+		height: 0;
+		border: 1px solid var(--hub-color-border-secondary);
+	}
+
 	.hub-navigation-item {
 		width: 100%;
 		display: flex;

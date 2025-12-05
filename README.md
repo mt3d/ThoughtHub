@@ -5,8 +5,8 @@
 **Disclaimer:** This project is created **for educational and learning purposes only**.
 
 ## Organization
-- Backend (ASP.NET Core API)
-- Frontend (Standalone Blazor WebAssembly app)
+- ThoughtHub.Api: The main backend API built with ASP.NET Core API
+- ThoughtHub.Ui.BlazorWasm: A frontend built as a Standalone Blazor WebAssembly app
 
 ## Building & Running
 
@@ -33,3 +33,43 @@
 	* `lchen@example.com`
 	* `mrivera@example.com`
 	* `sofiam@example.com`
+
+
+## Roadmap
+Medium.com is a huge website, and trying to fully recreate it would takes hundreds of hours. Below is a list of some of the features available in Medium.com, separated into small steps that could be built indiviually.
+
+### Content Model
+
+### Text Editor
+- A full text editor with structured blocks
+	- Parahtaphs
+	- Headings
+	- Images
+	- embeds
+	- quotes
+	- code blocks
+- Deterministic serialization into HTML or Markdown
+- Preservation of formatting consistency across browsers and devices
+
+### Real-time autosave engine
+- An engine that:
+	- writes draft deltas at controlled intervals
+	- merges competing changes
+	- guards against race conditions when users edit the same draft on multiple devices
+
+
+### Recommendation Engine
+- A recommendation engine that computes related articles using multiple signals:
+	- Topic similarity
+	- Reading history
+	- Collaborative filtering
+	- Reading time estimation
+	- Recency scoring
+
+### Tagging System
+- A tagging system with:
+	- Hierarchical relationships
+	- Tag synonyms
+	- Moderation rules
+	- Deterministic alogrithm for topic ranking
+- The system should avoids the growth of duplicate or misspelled tags
