@@ -1,17 +1,12 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.Components.Authorization
 @using ThoughtHub.UI.BlazorWasm.Components.Feed
-@using ThoughtHub.UI.BlazorWasm.Layout
 
 <AuthorizeView>
     <Authorized>
-        <LayoutView Layout=@typeof(MainLayout)>
-            <Feed />
-        </LayoutView>
+        <Feed />
     </Authorized>
     <NotAuthorized>
-        <LayoutView Layout="@typeof(SignedOutLayout)">
-            <Welcome />
-        </LayoutView>
+        <Welcome />
     </NotAuthorized>
 </AuthorizeView>

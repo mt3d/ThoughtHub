@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
+@using ThoughtHub.UI.BlazorWasm.Layout
+@using ThoughtHub.UI.BlazorWasm.Components.Page
 
 <CascadingBlazoredModal Position="ModalPosition.Middle"
                         OverlayCustomClass="custom-modal-overlay"
@@ -6,12 +8,12 @@
     <CascadingAuthenticationState>
         <Router AppAssembly="@typeof(App).Assembly">
             <Found Context="routeData">
-                <RouteView RouteData="@routeData"/>
-                <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+                <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
             </Found>
             <NotFound>
-                <PageTitle>Not found</PageTitle>
-                <p role="alert">Sorry, there's nothing at this address.</p>
+                <LayoutView Layout="@typeof(MainLayout)">
+                    <ArticleNotFound />
+                </LayoutView>
             </NotFound>
         </Router>
     </CascadingAuthenticationState>
