@@ -1,67 +1,76 @@
-﻿@page "/@{author}/{authorslug}"
-@page "/{publication}/{publicationslug}"
+﻿@page "/@{author}/{slug}"
+@page "/{publication}/{slug}"
 @using System.Text.Json
 @using ThoughtHub.UI.BlazorWasm.Layout
 @layout MainLayout
-@* <link href="/css/CommentsStyle.css" rel="stylesheet" /> *@
 
-    @if (Article is not null)
-    {
-        <div class="container mt-3">
-            <!-- Publication & Author -->
-@*              <div class="d-flex align-items-center mb-3">
-                @if (!string.IsNullOrEmpty(Article.Publication.Name))
-                {
-                    <a href="@Article.Publication.Url" class="d-flex align-items-center me-3 text-decoration-none">
-                        <img src="" class="rounded-circle me-2" width="24" height="24" />
-                        <span class="fw-bold">Article.Publication.Name</span>
-                    </a>
-                }
-                <span class="text-muted me-1">by</span>
-                <a href="/@Article.Author.Url" class="fw-bold text-decoration-none">@Article.Author.FullName</a>
-            </div> *@
-
-            <!-- Title -->
-            <h1 class="mb-2">@Article.Title</h1>
-
-            <!-- Subtitle / Description -->
-            <p class="text-secondary fs-5 mb-3">@Article.Description</p>
-
-            <!-- Meta Info -->
-            <div class="mb-4 text-muted">
-                <span>@Article.UpdatedAt.ToString("MMM d")</span>
-                <span class="ms-3"> @Article.ClapsCount Claps</span>
-                <span class="ms-3"> @Article.CommentsCount Comments</span>
-            </div>
-
-            <!-- Article Image -->
-            @if (!string.IsNullOrEmpty(Article.Image))
+<div style="display: flex; justify-content: center;">
+    <div style="max-width: 680px; margin: 0px 24px;" class="container mt-3">
+        @if (_isLoading)
+        {
+            <ArticleSkeleton />
+        }
+        else if (_notFound)
+        {
+            <ArticleNotFound />
+        }
+        else
+        {
+            @if (Article is not null)
             {
-                <img src="@Article.Image" alt="@Article.Title" class="img-fluid mb-4" />
+                    <!-- Publication & Author -->
+            @*              <div class="d-flex align-items-center mb-3">
+                        @if (!string.IsNullOrEmpty(Article.Publication.Name))
+                        {
+                            <a href="@Article.Publication.Url" class="d-flex align-items-center me-3 text-decoration-none">
+                                <img src="" class="rounded-circle me-2" width="24" height="24" />
+                                <span class="fw-bold">Article.Publication.Name</span>
+                            </a>
+                        }
+                        <span class="text-muted me-1">by</span>
+                        <a href="/@Article.Author.Url" class="fw-bold text-decoration-none">@Article.Author.FullName</a>
+                    </div> *@
+
+                    <!-- Title -->
+                    <h1 class="mb-2">@Article.Title</h1>
+
+                    <!-- Subtitle / Description -->
+                    <p class="text-secondary fs-5 mb-3">@Article.Description</p>
+
+                    <!-- Meta Info -->
+                    <div class="mb-4 text-muted">
+                        <span>@Article.UpdatedAt.ToString("MMM d")</span>
+                        <span class="ms-3"> @Article.ClapsCount Claps</span>
+                        <span class="ms-3"> @Article.CommentsCount Comments</span>
+                    </div>
+
+                    <!-- Article Image -->
+                    @if (!string.IsNullOrEmpty(Article.Image))
+                    {
+                        <img src="@Article.Image" alt="@Article.Title" class="img-fluid mb-4" />
+                    }
+
+                    <!-- Article Body (if stored in HTML) -->
+                    <div class="article-body mb-5">
+                        @*         @Html.Raw(Wrapper.Article.BodyHtml) *@
+                        @Article.BodySource
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="mb-4">
+                        @foreach (var tag in Article.Tags)
+                        {
+                            <span class="badge bg-secondary me-1">#@tag.Name</span>
+                        }
+                    </div>
+
+            @*             <PublicationAuthorCard />
+                        <CommentSection />
+            *@        
             }
-
-            <!-- Article Body (if stored in HTML) -->
-            <div class="article-body mb-5">
-                @*         @Html.Raw(Wrapper.Article.BodyHtml) *@
-                @Article.BodySource
-            </div>
-
-            <!-- Tags -->
-            <div class="mb-4">
-                @foreach (var tag in Article.Tags)
-                {
-                    <span class="badge bg-secondary me-1">#@tag.Name</span>
-                }
-            </div>
-
-@*             <PublicationAuthorCard />
-             <CommentSection />
- *@        </div>
-    }
-    else
-    {
-        <ArticleNotFound />
-    }
+        }
+    </div>
+</div>
 
 @code
 {
@@ -72,10 +81,7 @@
     public string? publication { get; set; }
 
     [Parameter]
-    public string? authorslug { get; set; } = string.Empty;
-
-    [Parameter]
-    public string? publicationslug { get; set; } = string.Empty;
+    public string? slug { get; set; } = string.Empty;
 
     [Inject]
     public IHttpClientFactory ClientFactory { get; set; }
@@ -83,6 +89,9 @@
     private HttpClient httpClient;
 
     public ArticleModel? Article { get; set; }
+
+    private bool _isLoading = true;
+    private bool _notFound = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -93,33 +102,37 @@
     {
         if (author is null && publication is null)
         {
-            // TODO: Handle invalid route
             return;
         }
 
+        try
+        {
+            await LoadArticleAsync(author, publication, slug);
+
+            if (Article is null)
+            {
+                _notFound = true;
+            }
+        }
+        catch
+        {
+            _notFound = true;
+        }
+
+        _isLoading = false;
+    }
+
+    public async Task LoadArticleAsync(string? author, string? publication, string slug)
+    {
+        JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
+
         if (author is not null)
         {
-            await LoadAuthorArticle(author, authorslug);
+            Article = await httpClient.GetFromJsonAsync<ArticleModel>($"/@{author}/{slug}", options);
         }
-        else if (publication is not null)
+        else
         {
-            await LoadPublicationArticle(publication, publicationslug);
+            Article = await httpClient.GetFromJsonAsync<ArticleModel>($"/{publication}/{slug}", options);
         }
-    }
-
-    public async Task LoadAuthorArticle(string author, string slug)
-    {
-        // TODO: Handle 404 Not Found.
-        JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
-
-        Article = await httpClient.GetFromJsonAsync<ArticleModel>($"/@{author}/{slug}", options);
-    }
-
-    public async Task LoadPublicationArticle(string author, string slug)
-    {
-        // TODO: Handle 404 Not Found.
-        JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
-
-        Article = await httpClient.GetFromJsonAsync<ArticleModel>($"/{publication}/{slug}", options);
     }
 }
