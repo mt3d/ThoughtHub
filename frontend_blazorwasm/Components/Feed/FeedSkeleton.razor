@@ -1,0 +1,32 @@
+﻿@* FeedSkeletonLoader.razor *@
+<div class="feed-skeleton-container">
+    @for (int i = 0; i < CardCount; i++)
+    {
+        <div class="skeleton-card">
+            <div class="skeleton-card-content">
+                <!-- Author section -->
+                <div class="skeleton-author">
+                    <div class="skeleton-avatar"></div>
+                    <div class="skeleton-author-info">
+                        <div class="skeleton-name"></div>
+                        <div class="skeleton-date"></div>
+                    </div>
+                </div>
+
+                <!-- Title and description -->
+                <div class="skeleton-text-section">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-description"></div>
+                    <div class="skeleton-description shorter"></div>
+                </div>
+            </div>
+
+            <!-- Image placeholder -->
+            <div class="skeleton-image"></div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public int CardCount { get; set; } = 5;
+}

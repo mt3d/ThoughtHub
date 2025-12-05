@@ -1,7 +1,6 @@
 ﻿@using System.Text.Json
 @using ThoughtHub.UI.BlazorWasm.Infrastructure
 
-<!-- Feed controls -->
 <div class="d-flex justify-content-between align-items-center mb-3">
     <div>
         <button class="btn btn-sm btn-outline-secondary active">For you</button>
@@ -14,7 +13,7 @@
         <ArticleCard Article="item" />
     </ItemTemplate>
     <LoadingTemplate>
-        <div>Loading...</div>
+        <FeedSkeleton CardCount="5" />
     </LoadingTemplate>
 </InfiniteScroll>
 
@@ -31,7 +30,7 @@
         httpClient = ClientFactory.CreateClient("Auth");
     }
 
-    async Task<IEnumerable<ArticleCardModel>> GetItems(ItemsRequest request)
+    async Task<IEnumerable<ArticleCardModel>?> GetItems(ItemsRequest request)
     {
         int pageSize = 5;
 
@@ -41,10 +40,4 @@
 
         return fetchedArticles;
     }
-
-    // public class ArticlesWrapper
-    // {
-    //     public List<ArticleModel> Articles { get; set; } = new();
-    //     public int ArticlesCount { get; set; }
-    // }
 }
