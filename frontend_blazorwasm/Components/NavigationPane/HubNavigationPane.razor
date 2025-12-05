@@ -1,12 +1,11 @@
 ﻿@using ThoughtHub.UI.BlazorWasm.Components.HubNavigation
 @inherits HubComponentBase
+@typeparam TItem
 
 <div class="border-end @ClassBuilder.Value"
     style="@StyleBuilder.Value">
 
     <div class="hub-navigation-pane-content">
-
-        <HubNavigation />
-
+        <HubNavigation Items="Items" />
     </div>
 </div>

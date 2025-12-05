@@ -1,3 +1,20 @@
+:root {
+    --hub-color-primary: #1A86D8;
+    --hub-color-primary-hover: #197FCD;
+    --hub-color-primary-active: #1779C2;
+    --hub-color-primary-dark: #096FBD;
+    --hub-color-primary-dark-hover: #0969B4;
+    --hub-color-primary-dark-active: #0864AA;
+    --hub-color-primary-light: #A3CFEF;
+    --hub-color-primary-light-hover: #8CC3EC;
+    --hub-color-primary-light-active: #76B6E8;
+    --hub-color-primary-text: #FFFFFF;
+    /* Primary accent colors */
+    --hub-navigation-color-text: var(--hub-color-primary);
+    --hub-navigation-color-hover: var(--hub-color-primary-hover);
+    --hub-navigation-color-active: var(--hub-color-primary-active);
+}
+
 html, body {
     font-family: 'Inter', "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1rem;

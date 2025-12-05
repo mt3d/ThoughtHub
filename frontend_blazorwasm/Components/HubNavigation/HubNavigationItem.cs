@@ -1,13 +1,13 @@
-﻿namespace ThoughtHub.UI.BlazorWasm.Components.NavPanel
+﻿namespace ThoughtHub.UI.BlazorWasm.Components.HubNavigation
 {
-	public class NavItem
+	public class HubNavigationItem
 	{
 		/// <summary>
 		/// Custom css class
 		/// </summary>
 		public string? Class { get; set; }
 
-		public List<NavItem> ChildItems { get; set; }
+		public List<HubNavigationItem> ChildItems { get; set; } = new();
 
 		public string? Description { get; set; }
 

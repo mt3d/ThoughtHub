@@ -1,4 +1,5 @@
-﻿@using ThoughtHub.UI.BlazorWasm.Layout
+﻿@using ThoughtHub.UI.BlazorWasm.Components.HubNavigation
+@using ThoughtHub.UI.BlazorWasm.Layout
 @using ThoughtHub.UI.BlazorWasm.Components.NavigationPane
 @using ThoughtHub.UI.BlazorWasm.Components.Layout
 @inherits LayoutComponentBase
@@ -14,6 +15,16 @@
 
 	// Toggle is used for desktop, where the pane takes space.
 	private bool _isNavigationPaneToggled;
+
+	private readonly List<HubNavigationItem> _navItems =
+	[
+		new() { Text = "Home" , Url = "/", IconName = "house-door" },
+		new() { Text = "Library" , Url = "me/lists", IconName = "bookmarks" },
+		new() { Text = "Profile" , Url = "", IconName = "person" },
+		new() { Text = "Stories" , Url = "/me/stories", IconName = "file-text" },
+		new() { Text = "Stats" , Url = "me/stats", IconName = "graph-up" },
+		new() { Text = "Following" , Url = "me/following", IconName = "people" },
+	];
 }
 
 <HubLayout StickyHeader=true>
@@ -21,7 +32,7 @@
 		<HubHeader OnNavigationPaneToggle="() => _isNavigationPaneOpen = !_isNavigationPaneOpen"/>
 	</Header>
 	<NavigationPane>
-		<HubNavigationPane @bind-IsOpen="_isNavigationPaneOpen"/>
+		<HubNavigationPane @bind-IsOpen="_isNavigationPaneOpen" Items="_navItems"/>
 	</NavigationPane>
 
 	<Main>

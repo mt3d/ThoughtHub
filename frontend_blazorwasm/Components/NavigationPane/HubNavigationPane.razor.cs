@@ -2,8 +2,11 @@
 
 namespace ThoughtHub.UI.BlazorWasm.Components.NavigationPane
 {
-	public partial class HubNavigationPane : HubComponentBase
+	public partial class HubNavigationPane<TItem> : HubComponentBase where TItem : class
 	{
+		[Parameter]
+		public IList<TItem> Items { get; set; } = [];
+
 		// TODO: Class builder should be reset after changing this value.
 		[Parameter]
 		public bool IsOpen { get; set; }
