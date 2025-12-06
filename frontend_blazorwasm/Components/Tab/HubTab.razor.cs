@@ -64,7 +64,7 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Tab
 		internal async void SelectItem(HubTabItem item)
 		{
 			_selectedItem?.SetIsSelected(false);
-			item.SetIsSelected(false);
+			item.SetIsSelected(true);
 
 			_selectedItem = item;
 			await AssignSelectedKey(item.Key);

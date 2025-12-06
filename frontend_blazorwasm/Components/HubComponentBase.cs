@@ -14,7 +14,7 @@ namespace ThoughtHub.UI.BlazorWasm.Components
 		public string? Class { get; set; }
 
 		[Parameter]
-		public bool IsEnabled { get; set; }
+		public bool IsEnabled { get; set; } = true;
 
 		private ComponentDirection? _dir;
 		[Parameter]
