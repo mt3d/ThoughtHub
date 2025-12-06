@@ -1,0 +1,35 @@
+﻿.featured-empty {
+    padding: 80px 24px;
+    text-align: center;
+    margin: 0 auto;
+    max-width: 520px;
+    font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.featured-heading {
+    margin-bottom: 16px;
+}
+
+    .featured-heading h2 {
+        font-size: 16px;
+        color: #242424;
+        line-height: 20px;
+    }
+
+.featured-subheading {
+    margin-bottom: 32px;
+}
+
+    .featured-subheading h3 {
+        font-size: 16px;
+        font-weight: 400;
+        color: #242424;
+        line-height: 20px;
+    }
+
+.featured-link a {
+    font-size: 14px;
+    text-decoration: underline;
+    color: #242424;
+    line-height: 20px;
+}
