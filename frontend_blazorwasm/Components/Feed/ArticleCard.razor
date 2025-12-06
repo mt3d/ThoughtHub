@@ -1,38 +1,22 @@
 ﻿<article class="card border-0 shadow-sm mb-4 article-card">
     <div class="card-body">
 
-        <!-- Publication + Author -->
-         <div class="d-flex align-items-center mb-2 text-muted small">
             @if (Article.Publication != null)
             {
-                <div>
-                    <img src=""
-                         alt=""
-                         class="rounded-circle me-1"
-                         width="24"
-                         height="24">
-                </div>
-                <div>In</div>
-                <div>
-                    <a href="@Article.Publication.Url"
-                       class="d-flex align-items-center me-2 text-decoration-none text-muted">@Article.Publication.Name
-                    </a>
-                </div>
-                <div>by</div>
-                <div>
-                    <a href="/@Article.Author.Url" class="text-decoration-none">@Article.Author.FullName</a>
-                </div>
+                <ArticleCardAuthor DisplayPublication
+                                   PublicationName="@Article.Publication.Name"
+                                   PublicationUrl="@Article.Publication.Url"
+                                   AuthorName="@Article.Author.FullName"
+                                   AuthorUrl="@Article.Author.Url"
+                                   />
             }
             else
             {
-                <img src="@Article.Author.ProfilePic"
-                     alt=""
-                     class="rounded-circle me-1"
-                     width="24"
-                     height="24">
-                <a href="/@Article.Author.Url" class="text-decoration-none">@Article.Author.FullName</a>
+                <ArticleCardAuthor AuthorName="@Article.Author.FullName"
+                                   AuthorUrl="@Article.Author.Url"
+                                   AuthorImageUrl="@Article.Author.ProfilePic"
+                                   />
             }
-        </div>
 
         <!-- Title + Description -->
         <a class="text-decoration-none text-dark d-flex" href="@Article.Url">

@@ -1,0 +1,87 @@
+﻿
+a {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.meta {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.meta-icon {
+    margin-right: 8px;
+}
+
+.icon-wrap {
+    position: relative;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    background: #f2f2f2;
+}
+
+.icon-outline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.05) inset;
+}
+
+.meta-label {
+    font-size: 13px;
+    line-height: 20px;
+    color: #6b6b6b;
+    margin: 0 4px;
+    white-space: nowrap;
+}
+
+.meta-publication,
+.meta-author {
+    white-space: nowrap;
+}
+
+.meta-link:hover {
+    text-decoration: underline;
+}
+
+.meta-text {
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 400;
+    color: #242424;
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+}
+
+.avatar {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #f2f2f2;
+    box-sizing: border-box;
+}
+
+.avatar-outline {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.05) inset;
+}
