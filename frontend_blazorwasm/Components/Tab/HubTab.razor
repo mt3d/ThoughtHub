@@ -3,7 +3,7 @@
 <div style="@StyleBuilder.Value" class="@ClassBuilder.Value">
 
 	<CascadingValue Value="this" IsFixed="true">
-		<div class="hub-tab-header-content">
+		<div style="@Styles?.Header" class="hub-tab-header-content @Classes?.Header">
 			@ChildContent
 		</div>
 	</CascadingValue>

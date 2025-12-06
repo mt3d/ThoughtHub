@@ -8,6 +8,12 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Tab
 		private List<HubTabItem> _items = [];
 
 		[Parameter]
+		public HubTabClassesStyles Classes { get; set; }
+
+		[Parameter]
+		public HubTabClassesStyles Styles { get; set; }
+
+		[Parameter]
 		public RenderFragment? ChildContent { get; set; }
 
 		[Parameter]
@@ -16,31 +22,13 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Tab
 		[Parameter]
 		public HubTabPosition? Position { get; set; }
 
-		protected override string RootElementClass => "hub-tab";
-
+		[Parameter]
 		public string? SelectedKey { get; set; }
+
+		[Parameter]
 		public EventCallback<string?> SelectedKeyChanged { get; set; }
 
-		internal void RegisterItem(HubTabItem item)
-		{
-			if (SelectedKey is null)
-			{
-				if (_items.Count == 0)
-				{
-					item.SetIsSelected(true);
-					_selectedItem = item;
-					StateHasChanged();
-				}
-			}
-			else if (SelectedKey == item.Key)
-			{
-				item.SetIsSelected(true);
-				_selectedItem = item;
-				StateHasChanged();
-			}
-
-			_items.Add(item);
-		}
+		protected override string RootElementClass => "hub-tab";
 
 		protected override void RegisterCssClasses()
 		{
@@ -72,6 +60,27 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Tab
 			// TODO: Raise a tab change event.
 
 			StateHasChanged();
+		}
+
+		internal void RegisterItem(HubTabItem item)
+		{
+			if (SelectedKey is null)
+			{
+				if (_items.Count == 0)
+				{
+					item.SetIsSelected(true);
+					_selectedItem = item;
+					StateHasChanged();
+				}
+			}
+			else if (SelectedKey == item.Key)
+			{
+				item.SetIsSelected(true);
+				_selectedItem = item;
+				StateHasChanged();
+			}
+
+			_items.Add(item);
 		}
 
 		private async Task AssignSelectedKey(string? value)
