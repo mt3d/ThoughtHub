@@ -3,15 +3,14 @@
 	public class MainSeeder
 	{
 		private readonly ProfileSeeder _profileSeeder;
-		//private readonly ImageSeeder _imageSeeder;
-		//private readonly IImageGenerator _imageGenerator;
+		private readonly TagSeeder _tagSeeder;
 
 		public MainSeeder(
-			ProfileSeeder profileSeeder)
-			//ImageSeeder imageSeeder,
-			//IImageGenerator imageGenerator)
+			ProfileSeeder profileSeeder,
+			TagSeeder tagSeeder)
 		{
 			_profileSeeder = profileSeeder;
+			_tagSeeder = tagSeeder;
 		}
 
 		public async Task SeedAllAsync(int articleCount = 1000)
@@ -19,6 +18,7 @@
 			Console.WriteLine("Starting complete database seeding...");
 
 			await _profileSeeder.SeedAsync(10);
+			await _tagSeeder.SeedAsync();
 
 			Console.WriteLine("Seeding completed.");
 		}
