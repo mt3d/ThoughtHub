@@ -41,7 +41,7 @@ namespace ThoughtHub.Controllers
 				UpdatedAt = DateTime.UtcNow
 			};
 
-			await context.Comments.AddAsync(comment);
+			context.Comments.Add(comment);
 			await context.SaveChangesAsync();
 
 			return Ok(comment);

@@ -25,35 +25,10 @@ namespace ThoughtHub.Seeding
 
 		public async Task SeedAsync(int count)
 		{
-			if (await _context.Profiles.AnyAsync())
-			{
-				Console.WriteLine("Users already exists. Skipping user seeding.");
-				return;
-			}
-
-			await EnsureUsersExist(count);
-
-			var users = await _userManager.Users.ToListAsync();
-			var profiles = new List<Profile>();
 			var faker = new Faker();
 
-			foreach (var user in users)
-			{
-				var profile = await GenerateProfileAsync(faker, user);
-				profiles.Add(profile);
-			}
-
-			await _context.Profiles.AddRangeAsync(profiles);
-			await _context.SaveChangesAsync();
-		}
-
-		private async Task EnsureUsersExist(int count)
-		{
-			// TODO: Move inside te profile creation loop.
 			for (int i = 0; i < count; i++)
 			{
-				var faker = new Faker();
-
 				var fullName = faker.Name.FullName();
 
 				var user = new User
@@ -70,26 +45,18 @@ namespace ThoughtHub.Seeding
 				 */
 				var result = await _userManager.CreateAsync(user, "Password123!");
 
-				if (!result.Succeeded)
+				var profile = new Profile()
 				{
-					Console.WriteLine($"Failed to create user: {string.Join(", ", result.Errors)}");
-				}
+					UserId = user.Id,
+					FullName = fullName,
+					Bio = GenerateBio(faker),
+					ProfilePictureId = await _imageCreator.CreateProfileImageAsync($"{user.UserName}_profile_pic.png")
+				};
+
+				_context.Profiles.Add(profile);
 			}
-		}
 
-		private async Task<Profile> GenerateProfileAsync(Faker faker, User user)
-		{
-			var fullName = faker.Name.FullName();
-
-			var profile = new Profile()
-			{
-				UserId = user.Id,
-				FullName = fullName,
-				Bio = GenerateBio(faker),
-				ProfilePictureId = await _imageCreator.CreateProfileImageAsync($"{user.UserName}_profile_pic.png")
-			};
-
-			return profile;
+			await _context.SaveChangesAsync();
 		}
 
 		private string GenerateBio(Faker faker)

@@ -49,6 +49,10 @@ namespace ThoughtHub.Seeding
 				{
 					article.UpdatedAt = faker.Date.Between(article.CreatedAt, DateTime.Now);
 				}
+				else
+				{
+					article.UpdatedAt = article.CreatedAt;
+				}
 
 				if (faker.Random.Bool())
 				{

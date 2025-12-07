@@ -28,7 +28,7 @@ namespace ThoughtHub.Data
 					CreatedAt = DateTime.Now,
 				};
 
-				await _context.Images.AddAsync(image);
+				_context.Images.Add(image);
 			}
 
 			image.Filename = model.Filename;
