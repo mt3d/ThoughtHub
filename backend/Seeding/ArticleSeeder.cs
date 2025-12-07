@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using ThoughtHub.Data;
 using ThoughtHub.Data.Entities;
-using ThoughtHub.Services;
 
 namespace ThoughtHub.Seeding
 {

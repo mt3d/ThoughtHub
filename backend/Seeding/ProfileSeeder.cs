@@ -25,6 +25,36 @@ namespace ThoughtHub.Seeding
 
 		public async Task SeedAsync(int count)
 		{
+			await SeedFixedProfile();
+			await SeedRandomProfiles(count - 1);
+		}
+
+		public async Task SeedFixedProfile()
+		{
+			var faker = new Faker();
+			var fullName = "Mark Jameson";
+			var user = new User
+			{
+				UserName = "mark_jameson",
+				Email = "mark_jameson@example.com",
+				EmailConfirmed = true
+			};
+			var result = await _userManager.CreateAsync(user, "Password123!");
+
+			var profile = new Profile()
+			{
+				UserId = user.Id,
+				FullName = fullName,
+				Bio = GenerateBio(faker),
+				ProfilePictureId = await _imageCreator.CreateProfileImageAsync($"{user.UserName}_profile_pic.png")
+			};
+
+			_context.Profiles.Add(profile);
+			await _context.SaveChangesAsync();
+		}
+
+		public async Task SeedRandomProfiles(int count)
+		{
 			var faker = new Faker();
 
 			for (int i = 0; i < count; i++)
