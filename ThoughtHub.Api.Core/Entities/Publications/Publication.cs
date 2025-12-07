@@ -1,4 +1,6 @@
-﻿namespace ThoughtHub.Data.Entities.Publications
+﻿using ThoughtHub.Data.Entities.Media;
+
+namespace ThoughtHub.Data.Entities.Publications
 {
 	/// <summary>
 	/// A Publication in Medium is essentially a mini-organization inside the platform:
@@ -79,9 +81,9 @@
 		/// </summary>
 		public DateTime UpdatedAt { get; set; }
 
+		public Image? PublicationImage { get; set; }
 
-		// TOOD:
-		// public string Image { get; set; } = string.Empty;
+		public Guid? PublicationImageId { get; set; }
 
 		// TODO: Add social media Urls
 		// pulbic List<SocialMediaLink> SocialLinks = new();

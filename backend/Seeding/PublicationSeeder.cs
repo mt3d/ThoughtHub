@@ -9,10 +9,12 @@ namespace ThoughtHub.Seeding
 	public class PublicationSeeder
 	{
 		private readonly PlatformContext _context;
+		private readonly ImageCreator _imageCreator;
 
-		public PublicationSeeder(PlatformContext context)
+		public PublicationSeeder(PlatformContext context, ImageCreator imageCreator)
 		{
 			_context = context;
+			_imageCreator = imageCreator;
 		}
 
 		public async Task SeedAsync(int count)
@@ -31,7 +33,8 @@ namespace ThoughtHub.Seeding
 					Name = name,
 					Slug = slug,
 					OwnerId = faker.PickRandom(profiles).ProfileId,
-					CreatedAt = faker.Date.Past()
+					CreatedAt = faker.Date.Past(),
+					PublicationImageId = await _imageCreator.CreatePublicationImageAsync($"{slug}_publication_image.png")
 					// TODO: Add random members, followers, description, tagline, and update time
 				});
 			}

@@ -54,13 +54,11 @@ namespace ThoughtHub.Mappings
 			CreateMap<Data.Entities.Profile, AuthorModel>()
 				.ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FullName))
 				.ForMember(dest => dest.Url, opt => opt.MapFrom(src => src.User.UserName))
-				.ForMember(dest => dest.ProfilePic, opt =>
-				{
-					opt.MapFrom(src => src.ProfilePicture);
-				});
+				.ForMember(dest => dest.ProfilePic, opt => opt.MapFrom(src => src.ProfilePicture));
 
 			CreateMap<Publication, PublicationModel>()
-				.ForMember(dest => dest.Url, opt => opt.MapFrom(src => src.Slug));
+				.ForMember(dest => dest.Url, opt => opt.MapFrom(src => src.Slug))
+				.ForMember(dest => dest.PublicationImageUrl, opt => opt.MapFrom(src => src.PublicationImage));
 
 			CreateMap<Tag, TagModel>();
 		}

@@ -31,6 +31,19 @@ namespace ThoughtHub.Seeding
 			return image.Id;
 		}
 
+		public async Task<Guid> CreatePublicationImageAsync(string name)
+		{
+			using var stream = new MemoryStream();
+
+			var seed = Guid.NewGuid().ToString();
+			var icon = Identicon.FromValue(seed, 256);
+			icon.SaveAsPng(stream);
+			stream.Position = 0;
+
+			var image = await _mediaService.AddAsync(name, stream);
+			return image.Id;
+		}
+
 		public async Task<Guid> CreateArticleImageAsync(string imageName, string title)
 		{
 			using var img = new Image<Rgba32>(800, 600);

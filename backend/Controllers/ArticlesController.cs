@@ -57,7 +57,7 @@ namespace ThoughtHub.Controllers
 				//	Title = a.Title,
 				//	Publication = a.Publication
 				//}).ToListAsync();
-				.Include(a => a.Publication)
+				.Include(a => a.Publication).ThenInclude(p => p.PublicationImage)
 				.Include(a => a.AuthorProfile).ThenInclude(p => p.User)
 				.Include(a => a.AuthorProfile).ThenInclude(p => p.ProfilePicture)
 				.Include(a => a.ArticleImage)
