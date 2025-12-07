@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using System.Security.Claims;
 
-namespace ThoughtHub.Logic.Articles
+namespace ThoughtHub.Controllers
 {
 	public class ArticleCreateDto
 	{
@@ -261,7 +261,7 @@ namespace ThoughtHub.Logic.Articles
 				.Include(a => a.Publication)
 				.Include(a => a.Tags)
 				.FirstOrDefaultAsync(a =>
-					(a.Publication != null && a.Publication.Slug == publication)
+					a.Publication != null && a.Publication.Slug == publication
 					&& a.Slug == slug);
 
 			if (article == null)

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace ThoughtHub.Logic.Comments
+namespace ThoughtHub.Controllers
 {
 	public class CommentsController : ControllerBase
 	{
