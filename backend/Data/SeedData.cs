@@ -10,23 +10,6 @@ namespace ThoughtHub.Data
 {
 	public static class SeedData
 	{
-		private static readonly List<Publication> Publications = [
-			new Publication
-			{
-				Name = "Data Science Collective",
-				Slug = "data-science-collective",
-			},
-			new Publication
-			{
-				Name = "UX Collective",
-				Slug = "ux-collective",
-			},
-			new Publication
-			{
-				Name = "Startup Stories",
-				Slug = "startup-stories",
-			}
-		];
 
 		public static async Task PopulateDatabase(IServiceProvider serviceProvider)
 		{
@@ -351,8 +334,6 @@ namespace ThoughtHub.Data
 			//	context.Articles.AddRange(Articles);
 
 			//}
-
-			await context.SaveChangesAsync();
 		}
 	}
 }
