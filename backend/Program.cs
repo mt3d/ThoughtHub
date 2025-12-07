@@ -1,15 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using ThoughtHub.Api.LocalStorage;
 using ThoughtHub.Api.LocalStorage.Extensions;
 using ThoughtHub.Data;
 using ThoughtHub.Data.Identity;
 using ThoughtHub.Infrastructure;
 using ThoughtHub.Seeding;
 using ThoughtHub.Services;
-using ThoughtHub.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,6 +61,7 @@ builder.Services.AddScoped<IMediaRepository, MediaRepository>();
 builder.Services.AddLocalFileStorage(builder.Configuration["PlatformUrls:BackendUrl"] + "/uploads/");
 
 // TODO: Only if development.
+builder.Services.AddScoped<ImageCreator>();
 builder.Services.AddScoped<ProfileSeeder>();
 builder.Services.AddScoped<TagSeeder>();
 builder.Services.AddScoped<PublicationSeeder>();

@@ -1,12 +1,9 @@
 ﻿using Bogus;
-using Jdenticon;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ThoughtHub.Data;
 using ThoughtHub.Data.Entities;
-using ThoughtHub.Data.Entities.Media;
 using ThoughtHub.Data.Identity;
-using ThoughtHub.Services;
 
 namespace ThoughtHub.Seeding
 {
@@ -14,16 +11,16 @@ namespace ThoughtHub.Seeding
 	{
 		private readonly PlatformContext _context;
 		private readonly UserManager<User> _userManager;
-		private readonly IMediaService _mediaService;
+		private readonly ImageCreator _imageCreator;
 
 		public ProfileSeeder(
 			PlatformContext context,
 			UserManager<User> userManager,
-			IMediaService mediaService)
+			ImageCreator imageCreator)
 		{
 			_context = context;
 			_userManager = userManager;
-			_mediaService = mediaService;
+			_imageCreator = imageCreator;
 		}
 
 		public async Task SeedAsync(int count)
@@ -89,24 +86,10 @@ namespace ThoughtHub.Seeding
 				UserId = user.Id,
 				FullName = fullName,
 				Bio = GenerateBio(faker),
-				ProfilePictureId = await CreateProfileImageAsync($"{user.UserName}_profile_pic.png")
+				ProfilePictureId = await _imageCreator.CreateProfileImageAsync($"{user.UserName}_profile_pic.png")
 			};
 
 			return profile;
-		}
-
-		// TODO: Move to an interface
-		private async Task<Guid> CreateProfileImageAsync(string name)
-		{
-			using var stream = new MemoryStream();
-
-			var seed = Guid.NewGuid().ToString();
-			var icon = Identicon.FromValue(seed, 256);
-			icon.SaveAsPng(stream);
-			stream.Position = 0;
-
-			var image = await _mediaService.AddAsync(name, stream);
-			return image.Id;
 		}
 
 		private string GenerateBio(Faker faker)
