@@ -60,6 +60,7 @@ namespace ThoughtHub.Controllers
 				.Include(a => a.Publication)
 				.Include(a => a.AuthorProfile).ThenInclude(p => p.User)
 				.Include(a => a.AuthorProfile).ThenInclude(p => p.ProfilePicture)
+				.Include(a => a.ArticleImage)
 				.ToListAsync();
 
 			List<ArticleCardModel> articleModels = mapper.Map<List<ArticleCardModel>>(articles);

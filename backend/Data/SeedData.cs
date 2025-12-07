@@ -38,19 +38,7 @@ namespace ThoughtHub.Data
 
 			//if (!context.Articles.Any())
 			//{
-			//	List<Article> Articles = [
-			//	new Article()
-			//{
-			//	Slug = "prompt-like-a-pro",
-			//	Title = "You’re Using ChatGPT Wrong: How to Prompt Like a Pro",
-			//	Description = "Smarter prompts lead to smarter responses.",
-			//	Tags = new([Tags[1], Tags[2], Tags[3]]),
-			//	CreatedAt = DateTime.UtcNow.AddDays(-10),
-			//	UpdatedAt = DateTime.UtcNow.AddDays(-5),
-			//	Image = "https://miro.medium.com/v2/resize:fit:800/1*chatgpt-prompt.jpg",
-			//	AuthorProfile = Profiles[0],
-			//	Publication = Publications[0]
-			//},
+
 			//new Article
 			//{
 			//	Slug = "design-for-humans",

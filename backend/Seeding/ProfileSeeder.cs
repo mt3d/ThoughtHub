@@ -40,7 +40,7 @@ namespace ThoughtHub.Seeding
 			var profiles = new List<Profile>();
 			var faker = new Faker();
 
-			foreach (var user in users.Take(count)) // added flexibility
+			foreach (var user in users)
 			{
 				var profile = await GenerateProfileAsync(faker, user);
 				profiles.Add(profile);
@@ -52,19 +52,8 @@ namespace ThoughtHub.Seeding
 
 		private async Task EnsureUsersExist(int count)
 		{
-			var existingCount = await _userManager.Users.CountAsync();
-
-			if (existingCount >= count)
-			{
-				Console.WriteLine($"Found {existingCount} existing users.");
-				return;
-			}
-
-			var usersToCreate = count - existingCount;
-			Console.WriteLine($"Creating {usersToCreate} users.");
-
 			// TODO: Move inside te profile creation loop.
-			for (int i = 0; i < usersToCreate; i++)
+			for (int i = 0; i < count; i++)
 			{
 				var faker = new Faker();
 
@@ -109,16 +98,15 @@ namespace ThoughtHub.Seeding
 		// TODO: Move to an interface
 		private async Task<Guid> CreateProfileImageAsync(string name)
 		{
-			using (var stream = new MemoryStream())
-			{
-				var seed = Guid.NewGuid().ToString();
-				var icon = Identicon.FromValue(seed, 256);
-				icon.SaveAsPng(stream);
-				stream.Position = 0;
+			using var stream = new MemoryStream();
 
-				var image = await _mediaService.AddAsync(name, stream);
-				return image.Id;
-			}
+			var seed = Guid.NewGuid().ToString();
+			var icon = Identicon.FromValue(seed, 256);
+			icon.SaveAsPng(stream);
+			stream.Position = 0;
+
+			var image = await _mediaService.AddAsync(name, stream);
+			return image.Id;
 		}
 
 		private string GenerateBio(Faker faker)

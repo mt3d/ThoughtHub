@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using ThoughtHub.Data.Entities.Media;
 using ThoughtHub.Data.Entities.Publications;
 
 namespace ThoughtHub.Data.Entities
@@ -27,7 +28,9 @@ namespace ThoughtHub.Data.Entities
 
 		public int FovoritesCount { get; set; } // Dynamically generated
 
-		public string Image { get; set; } = string.Empty;
+		public Image ArticleImage { get; set; }
+
+		public Guid ArticleImageId { get; set; }
 
 		public int ClapsCount { get; set; } // Dynamically generated
 

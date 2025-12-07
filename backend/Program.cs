@@ -67,6 +67,7 @@ builder.Services.AddLocalFileStorage(builder.Configuration["PlatformUrls:Backend
 builder.Services.AddScoped<ProfileSeeder>();
 builder.Services.AddScoped<TagSeeder>();
 builder.Services.AddScoped<PublicationSeeder>();
+builder.Services.AddScoped<ArticleSeeder>();
 builder.Services.AddScoped<MainSeeder>();
 
 /*

@@ -48,7 +48,8 @@ namespace ThoughtHub.Mappings
 						: $"{src.Publication.Slug}/{src.Slug}")
 				)
 				.ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.AuthorProfile))
-				.ForMember(dest => dest.Publication, opt => opt.MapFrom(src => src.Publication));
+				.ForMember(dest => dest.Publication, opt => opt.MapFrom(src => src.Publication))
+				.ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.ArticleImage));
 
 			CreateMap<Data.Entities.Profile, AuthorModel>()
 				.ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FullName))
@@ -56,7 +57,7 @@ namespace ThoughtHub.Mappings
 				.ForMember(dest => dest.ProfilePic, opt =>
 				{
 					opt.MapFrom(src => src.ProfilePicture);
-				}); // TODO: Fix
+				});
 
 			CreateMap<Publication, PublicationModel>()
 				.ForMember(dest => dest.Url, opt => opt.MapFrom(src => src.Slug));

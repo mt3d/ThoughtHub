@@ -42,12 +42,12 @@
 		/// <summary>
 		/// Gets or sets the ID of the publication's owner.
 		/// </summary>
-		public int OwnerId { get; set; } = new();
+		public int OwnerId { get; set; }
 
 		/// <summary>
 		/// Gets or sets the owner of the publication.
 		/// </summary>
-		public Profile Owner { get; set; } = new();
+		public Profile Owner { get; set; }
 
 		/// <summary>
 		/// Gets or sets rows inside the joint table of Publication-Profile membership relationship.
