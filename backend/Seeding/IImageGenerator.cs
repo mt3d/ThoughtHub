@@ -1,4 +1,4 @@
-﻿namespace ThoughtHub.Tools.DataSeeder
+﻿namespace ThoughtHub.Seeding
 {
 	public interface IImageGenerator
 	{

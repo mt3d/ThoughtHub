@@ -1,23 +1,29 @@
 ﻿using Bogus;
+using Jdenticon;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ThoughtHub.Data;
 using ThoughtHub.Data.Entities;
+using ThoughtHub.Data.Entities.Media;
 using ThoughtHub.Data.Identity;
+using ThoughtHub.Services;
 
-namespace ThoughtHub.Tools.DataSeeder
+namespace ThoughtHub.Seeding
 {
 	public class ProfileSeeder
 	{
 		private readonly PlatformContext _context;
 		private readonly UserManager<User> _userManager;
+		private readonly IMediaService _mediaService;
 
 		public ProfileSeeder(
 			PlatformContext context,
-			UserManager<User> userManager)
+			UserManager<User> userManager,
+			IMediaService mediaService)
 		{
 			_context = context;
 			_userManager = userManager;
+			_mediaService = mediaService;
 		}
 
 		public async Task SeedAsync(int count)
@@ -57,6 +63,7 @@ namespace ThoughtHub.Tools.DataSeeder
 			var usersToCreate = count - existingCount;
 			Console.WriteLine($"Creating {usersToCreate} users.");
 
+			// TODO: Move inside te profile creation loop.
 			for (int i = 0; i < usersToCreate; i++)
 			{
 				var faker = new Faker();
@@ -70,6 +77,11 @@ namespace ThoughtHub.Tools.DataSeeder
 					EmailConfirmed = true
 				};
 
+				/**
+				 * Important: When you seed users manually using UserStore (instead of
+				 * using UserManager.CreateAsync), Identity doesn’t automatically fill
+				 * normalized fields for you.
+				 */
 				var result = await _userManager.CreateAsync(user, "Password123!");
 
 				if (!result.Succeeded)
@@ -87,10 +99,26 @@ namespace ThoughtHub.Tools.DataSeeder
 			{
 				UserId = user.Id,
 				FullName = fullName,
-				Bio = GenerateBio(faker)
+				Bio = GenerateBio(faker),
+				ProfilePictureId = await CreateProfileImageAsync($"{user.UserName}_profile_pic.png")
 			};
 
 			return profile;
+		}
+
+		// TODO: Move to an interface
+		private async Task<Guid> CreateProfileImageAsync(string name)
+		{
+			using (var stream = new MemoryStream())
+			{
+				var seed = Guid.NewGuid().ToString();
+				var icon = Identicon.FromValue(seed, 256);
+				icon.SaveAsPng(stream);
+				stream.Position = 0;
+
+				var image = await _mediaService.AddAsync(name, stream);
+				return image.Id;
+			}
 		}
 
 		private string GenerateBio(Faker faker)

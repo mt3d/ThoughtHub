@@ -1,13 +1,15 @@
-using ThoughtHub.Data;
-using ThoughtHub.Data.Identity;
-using ThoughtHub.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ThoughtHub.Services;
-using ThoughtHub.Storage;
+using Microsoft.Extensions.Hosting;
 using ThoughtHub.Api.LocalStorage;
 using ThoughtHub.Api.LocalStorage.Extensions;
+using ThoughtHub.Data;
+using ThoughtHub.Data.Identity;
+using ThoughtHub.Infrastructure;
+using ThoughtHub.Seeding;
+using ThoughtHub.Services;
+using ThoughtHub.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -61,6 +63,10 @@ builder.Services.AddScoped<IMediaService, MediaService>();
 builder.Services.AddScoped<IMediaRepository, MediaRepository>();
 builder.Services.AddLocalFileStorage(builder.Configuration["PlatformUrls:BackendUrl"] + "/uploads/");
 
+// TODO: Only if development.
+builder.Services.AddScoped<ProfileSeeder>();
+builder.Services.AddScoped<MainSeeder>();
+
 /*
  * "You define the configuration using profiles. And then you let AutoMapper
  * know in what assemblies are those profiles defined by calling the IServiceCollection
@@ -102,8 +108,35 @@ if (app.Environment.IsDevelopment())
 	//app.UseSwaggerUI();
 	//app.MapOpenApi();
 
-	await using var scope = app.Services.CreateAsyncScope();
-	await SeedData.PopulateDatabase(scope.ServiceProvider);
+	try
+	{
+		//var seedtype = args.Length > 0 ? args[0] : "all";
+		//var count = args.Length > 1 && int.TryParse(args[1], out int c) ? c : 1000;
+
+		await using var scope = app.Services.CreateAsyncScope();
+
+		var context = scope.ServiceProvider.GetRequiredService<PlatformContext>();
+		await context.Database.EnsureDeletedAsync();
+		await context.Database.EnsureCreatedAsync();
+
+		MainSeeder seeder = scope.ServiceProvider.GetRequiredService<MainSeeder>();
+		await seeder.SeedAllAsync();
+
+		//switch (seedtype.ToLower())
+		//{
+		//	case "all":
+		//	default:
+		//		await seeder.SeedAllAsync(count);
+		//		break;
+		//}
+	}
+	catch (Exception ex)
+	{
+		Console.WriteLine($"An error occurred during seeding: {ex.Message}");
+		Environment.Exit(1);
+	}
+
+
 }
 
 app.Run();

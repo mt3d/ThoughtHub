@@ -1,6 +1,6 @@
 ﻿using Jdenticon;
 
-namespace ThoughtHub.Tools.DataSeeder
+namespace ThoughtHub.Seeding
 {
 	public class JdenticonImageGenerator : IImageGenerator
 	{
