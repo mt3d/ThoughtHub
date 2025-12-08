@@ -16,6 +16,7 @@ namespace ThoughtHub.Data
 		public DbSet<ArticleRevision> ArticleRevisions => Set<ArticleRevision>();
 		public DbSet<ArticleBlock> ArticleBlocks => Set<ArticleBlock>();
 		public DbSet<Block> Blocks => Set<Block>();
+		public DbSet<BlockField> BlockFields => Set<BlockField>();
 
 		public DbSet<Tag> Tags => Set<Tag>();
 		public DbSet<Comment> Comments => Set<Comment>();

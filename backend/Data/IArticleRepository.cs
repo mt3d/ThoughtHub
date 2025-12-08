@@ -1,4 +1,6 @@
-﻿namespace ThoughtHub.Data
+﻿using ThoughtHub.Api.Models.Content;
+
+namespace ThoughtHub.Data
 {
 	public interface IArticleRepository
 	{

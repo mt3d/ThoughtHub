@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using ThoughtHub.Api.Core.Entities;
 using ThoughtHub.Api.Core.Entities.Article;
+using ThoughtHub.Api.Models.Content;
 
 namespace ThoughtHub.Data
 {
@@ -46,6 +47,7 @@ namespace ThoughtHub.Data
 
 			var article = await articleQuery
 				// TODO: Include blocks, fields, and tags
+				.Include(p => p.Blocks).ThenInclude(b => b.Block) // TODO: Include block's fields
 				.FirstOrDefaultAsync(a => a.ArticleId == model.Id)
 				.ConfigureAwait(false);
 
@@ -74,6 +76,11 @@ namespace ThoughtHub.Data
 			// TODO: Set key for fields
 
 			// TODO: Transform blocks
+			var blockModels = model.BlockModels;
+
+			if (blockModels != null)
+			{
+			}
 
 			// TODO: Remove the old tags
 			// TODO: Add the new tags

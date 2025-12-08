@@ -1,4 +1,4 @@
-﻿namespace ThoughtHub.Data
+﻿namespace ThoughtHub.Api.Models.Content
 {
 	public class ArticleM
 	{
@@ -9,6 +9,8 @@
 		public string Slug { get; set; }
 
 		public string Title { get; set; }
+
+		public IList<BlockModel> BlockModels { get; set; }
 	}
 
 	public class TagM
