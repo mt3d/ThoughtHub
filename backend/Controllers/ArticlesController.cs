@@ -314,5 +314,63 @@ namespace ThoughtHub.Controllers
 		{
 			throw new NotImplementedException();
 		}
+
+		[Route("Save")]
+		[HttpPost]
+		[Authorize] // TODO: Check permissions for posting articles
+		public async Task<ArticleEditModel> Save(ArticleEditModel model)
+		{
+			if (string.IsNullOrEmpty(model.Published))
+			{
+				model.Published = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+			}
+
+			var result = await Save(model, false);
+
+			// TODO: Update all clients
+
+			return result;
+		}
+
+		public class ArticleEditModel : ContentEditModel
+		{
+			// TODO: ImageField
+
+			public string Slug { get; set; }
+
+			public string MetaTitle { get; set; }
+
+			public string OgTitle { get; set; }
+
+			public string Published { get; set; }
+
+			public int CommentCount { get; set; }
+
+			// TODO: Add selected tags
+			// TODO: Add tags
+
+
+		}
+
+		public abstract class ContentEditModel
+		{
+			public Guid Id { get; set; }
+
+			public string Title { get; set; }
+		}
+
+		private async Task<ArticleEditModel> Save(ArticleEditModel model, bool draft = false)
+		{
+			try
+			{
+
+			}
+			catch
+			{
+
+			}
+
+			throw new NotImplementedException();
+		}
 	}
 }
