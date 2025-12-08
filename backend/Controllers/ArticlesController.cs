@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using System.Security.Claims;
+using ThoughtHub.Api.Models.Content;
 
 namespace ThoughtHub.Controllers
 {
@@ -330,33 +331,6 @@ namespace ThoughtHub.Controllers
 			// TODO: Update all clients
 
 			return result;
-		}
-
-		public class ArticleEditModel : ContentEditModel
-		{
-			// TODO: ImageField
-
-			public string Slug { get; set; }
-
-			public string MetaTitle { get; set; }
-
-			public string OgTitle { get; set; }
-
-			public string Published { get; set; }
-
-			public int CommentCount { get; set; }
-
-			// TODO: Add selected tags
-			// TODO: Add tags
-
-
-		}
-
-		public abstract class ContentEditModel
-		{
-			public Guid Id { get; set; }
-
-			public string Title { get; set; }
 		}
 
 		private async Task<ArticleEditModel> Save(ArticleEditModel model, bool draft = false)
