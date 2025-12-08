@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ThoughtHub.Api.Core.Entities;
 using ThoughtHub.Data.Entities;
 using ThoughtHub.Data.Entities.Media;
 using ThoughtHub.Data.Entities.Publications;
@@ -12,6 +13,8 @@ namespace ThoughtHub.Data
 		public PlatformContext(DbContextOptions<PlatformContext> options) : base(options) { }
 
 		public DbSet<Article> Articles => Set<Article>();
+		public DbSet<ArticleRevision> ArticleRevisions => Set<ArticleRevision>();
+
 		public DbSet<Tag> Tags => Set<Tag>();
 		public DbSet<Comment> Comments => Set<Comment>();
 

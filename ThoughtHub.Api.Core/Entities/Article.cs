@@ -6,7 +6,7 @@ namespace ThoughtHub.Data.Entities
 {
 	public class Article
 	{
-		public int ArticleId { get; set; }
+		public Guid ArticleId { get; set; }
 
 		public string? Slug { get; set; }
 

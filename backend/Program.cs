@@ -111,33 +111,34 @@ if (app.Environment.IsDevelopment())
 
 	try
 	{
-		//var seedtype = args.Length > 0 ? args[0] : "all";
-		//var count = args.Length > 1 && int.TryParse(args[1], out int c) ? c : 1000;
+		if (args.Length > 0 && args[0] == "seed")
+		{
+			//var seedtype = args.Length > 0 ? args[0] : "all";
+			//var count = args.Length > 1 && int.TryParse(args[1], out int c) ? c : 1000;
 
-		await using var scope = app.Services.CreateAsyncScope();
+			await using var scope = app.Services.CreateAsyncScope();
 
-		var context = scope.ServiceProvider.GetRequiredService<PlatformContext>();
-		await context.Database.EnsureDeletedAsync();
-		await context.Database.EnsureCreatedAsync();
+			var context = scope.ServiceProvider.GetRequiredService<PlatformContext>();
+			await context.Database.EnsureDeletedAsync();
+			await context.Database.EnsureCreatedAsync();
 
-		MainSeeder seeder = scope.ServiceProvider.GetRequiredService<MainSeeder>();
-		await seeder.SeedAllAsync();
+			MainSeeder seeder = scope.ServiceProvider.GetRequiredService<MainSeeder>();
+			await seeder.SeedAllAsync();
 
-		//switch (seedtype.ToLower())
-		//{
-		//	case "all":
-		//	default:
-		//		await seeder.SeedAllAsync(count);
-		//		break;
-		//}
+			//switch (seedtype.ToLower())
+			//{
+			//	case "all":
+			//	default:
+			//		await seeder.SeedAllAsync(count);
+			//		break;
+			//}
+		}
 	}
 	catch (Exception ex)
 	{
 		Console.WriteLine($"An error occurred during seeding: {ex.Message}");
 		Environment.Exit(1);
 	}
-
-
 }
 
 app.Run();

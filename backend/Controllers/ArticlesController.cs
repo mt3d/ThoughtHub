@@ -151,7 +151,7 @@ namespace ThoughtHub.Controllers
 
 		[HttpPost("/updateprogress")]
 		[Authorize]
-		public async Task<IActionResult> UpdateReadingProgress(int articleId, double progress, int readSeconds)
+		public async Task<IActionResult> UpdateReadingProgress(Guid articleId, double progress, int readSeconds)
 		{
 			// TODO: Find a better way to access current user profile.
 			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
