@@ -14,12 +14,6 @@ namespace ThoughtHub.Controllers
 		public List<string> TagList = new();
 	}
 
-	public class InterestProfile
-	{
-		public Tag Tag { get; set; }
-		public int Weight { get; set; }
-	}
-
 	[Route("[controller]")]
 	[ApiController]
 	public class ArticlesController : ControllerBase
@@ -44,19 +38,13 @@ namespace ThoughtHub.Controllers
 			[FromQuery] int? limit,
 			[FromQuery] int? offset)
 		{
-			// TODO: Include Authors, ArticleFavorites, and Article Tags
+			// TODO: Include ArticleFavorites, and Article Tags
 			var query = context.Articles.AsNoTracking();
 
 			var articles = await query
 				.OrderByDescending(a => a.CreatedAt)
 				.Skip(offset ?? 0)
 				.Take(limit ?? 10)
-				//.Select(a => new ArticleCardModel
-				//{
-				//	Id = a.ArticleId,
-				//	Title = a.Title,
-				//	Publication = a.Publication
-				//}).ToListAsync();
 				.Include(a => a.Publication).ThenInclude(p => p.PublicationImage)
 				.Include(a => a.AuthorProfile).ThenInclude(p => p.User)
 				.Include(a => a.AuthorProfile).ThenInclude(p => p.ProfilePicture)
@@ -69,31 +57,6 @@ namespace ThoughtHub.Controllers
 			// TODO: Handle author
 
 			return articleModels;
-		}
-
-		private async Task<IList<InterestProfile>> GenerateInterestProfile(int profileId)
-		{
-			var profileTagWeights = await context.ReadingHistories
-				.Where(r => r.ProfileId == profileId && r.Progress >= 50)
-				.Include(r => r.Article)
-				.ThenInclude(a => a.Tags)
-				/**
-				 * Originally: r => r.Article.Tags returns IList<Tag>
-				 * 
-				 * Select many flattens queries that return lists of lists.
-				 * But we will get repated tags.
-				 */
-				.SelectMany(r => r.Article.Tags)
-				.GroupBy(tag => tag)
-				.Select(group => new InterestProfile
-				{
-					Tag = group.Key,
-					Weight = group.Count()
-				})
-				.OrderByDescending(x => x.Weight)
-				.ToListAsync();
-
-			return profileTagWeights;
 		}
 
 		// TODO: The models should be different.
