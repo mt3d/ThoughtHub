@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using Microsoft.EntityFrameworkCore;
+using ThoughtHub.Api.Core.Entities.Article;
 using ThoughtHub.Data;
-using ThoughtHub.Data.Entities;
 
 namespace ThoughtHub.Seeding
 {

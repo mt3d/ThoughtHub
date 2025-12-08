@@ -1,4 +1,5 @@
-﻿using ThoughtHub.Data.Entities.Media;
+﻿using ThoughtHub.Api.Core.Entities.Article;
+using ThoughtHub.Data.Entities.Media;
 
 namespace ThoughtHub.Data.Entities.Publications
 {

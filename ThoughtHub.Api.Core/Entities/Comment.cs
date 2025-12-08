@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using ThoughtHub.Api.Core.Entities.Article;
 
 namespace ThoughtHub.Data.Entities
 {

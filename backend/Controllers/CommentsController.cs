@@ -3,6 +3,7 @@ using ThoughtHub.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ThoughtHub.Api.Core.Entities.Article;
 
 namespace ThoughtHub.Controllers
 {

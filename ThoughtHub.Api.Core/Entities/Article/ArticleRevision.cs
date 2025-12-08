@@ -1,6 +1,4 @@
-﻿using ThoughtHub.Data.Entities;
-
-namespace ThoughtHub.Api.Core.Entities
+﻿namespace ThoughtHub.Api.Core.Entities.Article
 {
 	public class ArticleRevision
 	{

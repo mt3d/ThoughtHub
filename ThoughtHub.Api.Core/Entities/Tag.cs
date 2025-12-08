@@ -1,4 +1,6 @@
-﻿namespace ThoughtHub.Data.Entities
+﻿using ThoughtHub.Api.Core.Entities.Article;
+
+namespace ThoughtHub.Data.Entities
 {
 	public class Tag
 	{

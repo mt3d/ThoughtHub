@@ -1,0 +1,18 @@
+﻿namespace ThoughtHub.Api.Core.Entities.Article
+{
+	public sealed class Block
+	{
+		public Guid Id { get; set; }
+
+		public string ClrType { get; set; }
+
+
+		public string Title { get; set; }
+
+		public bool IsReusable { get; set; }
+
+		public DateTime CreatedAt { get; set; }
+
+		public DateTime UpdatedAt { get; set; }
+	}
+}

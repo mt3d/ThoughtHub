@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ThoughtHub.Api.Core.Entities.Article;
 using ThoughtHub.Api.Models;
 using ThoughtHub.Data.Entities;
 using ThoughtHub.Data.Entities.Media;

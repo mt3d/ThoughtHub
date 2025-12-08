@@ -2,6 +2,7 @@
 using System.Text.Json.Serialization;
 using ThoughtHub.Data.Entities.Publications;
 using ThoughtHub.Data.Entities.Media;
+using ThoughtHub.Api.Core.Entities.Article;
 
 namespace ThoughtHub.Data.Entities
 {

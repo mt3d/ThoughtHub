@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using ThoughtHub.Api.Core.Entities;
-using ThoughtHub.Data.Entities;
+using ThoughtHub.Api.Core.Entities.Article;
 
 namespace ThoughtHub.Data
 {

@@ -1,8 +1,9 @@
 ﻿using System.Text.Json.Serialization;
+using ThoughtHub.Data.Entities;
 using ThoughtHub.Data.Entities.Media;
 using ThoughtHub.Data.Entities.Publications;
 
-namespace ThoughtHub.Data.Entities
+namespace ThoughtHub.Api.Core.Entities.Article
 {
 	public class Article
 	{
@@ -17,8 +18,7 @@ namespace ThoughtHub.Data.Entities
 		/// </summary>
 		public string? Description { get; set; }
 
-		// TODO: A body is not just a string. There are complex formatting and links.
-		public string? Body { get; set; }
+		public IList<ArticleBlock> Blocks { get; set; } = new List<ArticleBlock>();
 
 		public int? AuthorProfileId { get; set; }
 

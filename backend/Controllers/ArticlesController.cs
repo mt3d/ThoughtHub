@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using System.Security.Claims;
 using ThoughtHub.Api.Models.Content;
+using ThoughtHub.Api.Core.Entities.Article;
 
 namespace ThoughtHub.Controllers
 {
