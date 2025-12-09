@@ -14,6 +14,7 @@
 
 		public int CommentCount { get; set; }
 
+		public IList<BlockModel> Blocks { get; set; } = new List<BlockModel>();
 		// TODO: Add selected tags
 		// TODO: Add tags
 

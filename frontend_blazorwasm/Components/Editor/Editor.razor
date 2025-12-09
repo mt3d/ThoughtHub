@@ -1,1 +1,206 @@
 ﻿@page "/new-story"
+@using ThoughtHub.UI.BlazorWasm.Layout
+@layout EditorLayout
+
+<div class="editor-header">
+    <div class="header-wrapper">
+        <div class="header-content d-flex justify-content-around">
+            <div class="header-left d-flex">
+                <div class="website-title">
+                    <a href="/" data-log-event="home">
+                        <span>
+                            <svg width="120" height="26">
+                            </svg>
+                        </span>
+                        <span>Homepage</span>
+                    </a>
+                </div>
+                <div>
+                    <span>
+                        Draft in Muhammad Altahan
+                        <span>Saved</span>
+                    </span>
+                </div>
+            </div>
+            <div class="header-right d-flex">
+                <div class="publish-button">
+                    <button>
+                        <span>Publish</span>
+                    </button>
+                </div>
+                <div>
+                    <button>
+                        <span>
+                            <svg width="25" height="25">
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+                <div class="notifications-profile">
+                    <button title="Notifications" aria-label="Notifications">
+                        <span>
+                            <svg width="25" height="25">
+                            </svg>
+                        </span>
+                    </button>
+                    <button aria-haspopup="true">
+                        <div>
+                            <img src="" alt="">
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid editor-content">
+
+    <!-- Title -->
+	<div class="card">
+		<div class="card-body">
+			<div class="form-group title">
+				<dvi class="row">
+					<div class="col">
+						<input type="text" class="form-control form-control-lg" placeholder="Your article title" />
+					</div>
+				</dvi>
+                <div class="row mt-3">
+                    <div class="col-sm-6">
+                        <div class="form-group mb-0">
+                            <label style="display:none">Tags</label>
+                            @* TODO: Display selected tags*@
+                            <select id="selectedTags" class="form-control select2" multiple="multiple">
+                                @* TODO: Add a loop*@
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+			</div>
+		</div>
+	</div>
+
+    <!-- Blocks -->
+    <div class="card">
+        <div class="card-body">
+            <div id="content-blocks" class="blocks">
+
+                @* TODO: call BlockPicker.Open(), the callback is AddBlock, the index should be 0*@
+                <a href="#" class="block-add unsortable">
+                    <hr>
+                    <i class="bi bi-plus-circle"></i>
+                </a>
+
+                @foreach (var block in ArticleModel.Blocks)
+                {
+                    <div v-for="(block, index) in blocks" v-bind:key="block.meta.uid">
+
+                    <div :class="'block ' + block.meta.component + (block.meta.isCollapsed ? ' collapsed' : '') + (block.meta.width === 'full' ? ' block-full' : '')">
+@*                         <div :id="'tb-' + block.meta.uid" class="component-toolbar"></div>
+ *@                        <div class="block-header">
+                            <div class="title">
+@*                                 <i :class="block.meta.icon"></i><strong>{{ block.meta.name }}</strong> <span v-if="!block.meta.isGroup && block.meta.isCollapsed">- {{ block.meta.title }}</span> *@
+                            </div>
+
+                            <div class="actions">
+                                @* Collapse the block Collapse(Block) *@
+                                <span class="btn btn-sm">
+                                    @* TODO: Check if the block is collapsed*@
+                                    @if (true)
+                                    {
+                                        <i class="bi bi-chevron-up"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-chevron-down"></i>
+                                    }
+                                </span>
+                                <span class="btn btn-sm handle">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                </span>
+
+                                @* TODO: Call RemoveBlock(Block reference) *@
+                                <button class="btn btn-sm danger block-remove" tabindex="-1">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
+
+                        </div>
+
+                        @* Render the blocks *@
+
+                    </div>
+
+                    @* TODO: call BlockPicker.Open(), the callback is AddBlock, the index should be 0*@
+                    <a href="#" class="block-add">
+                        <hr>
+                        <i class="bi bi-plus-circle"></i>
+                    </a>
+                </div>
+                }
+
+                @if (ArticleModel.Blocks.Count == 0)
+                {
+                    <div class="empty-info">
+                        <p>Click on the button above to add your first block of content</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .block-add {
+        display: block;
+        position: relative;
+        height: 10px;
+        width: 150px;
+        padding: 1rem;
+        margin: .125rem auto;
+        transition: all ease-in-out .2s
+    }
+
+        .block-add hr {
+            margin: 0;
+            border-top-width: 2px;
+            border-color: transparent;
+            transition: border-color ease-in-out .2s
+        }
+
+        .block-add i {
+            background: #fff;
+            color: #e9ecef;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -18px;
+            margin-left: -18px;
+            font-size: 28px;
+            border: 4px solid #fff;
+            border-radius: 50%;
+            z-index: 1000;
+            transition: color ease-in-out .2s
+        }
+
+    a.block-add.active,
+    a.block-add:focus-within,
+    a.block-add:hover {
+        width: 100%;
+        max-width: 960px;
+        outline: 0
+    }
+
+        a.block-add.active hr,
+        a.block-add:focus-within hr,
+        a.block-add:hover hr {
+            border-color: #495057
+        }
+
+        a.block-add.active i,
+        a.block-add:focus-within i,
+        a.block-add:hover i {
+            color: #495057
+        }
+</style>
