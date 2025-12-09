@@ -1,7 +1,15 @@
-﻿namespace ThoughtHub.Api.Models.Content
+﻿using ThoughtHub.Api.Models.Content;
+
+namespace ThoughtHub.Api.Models.Editor
 {
 	public class ArticleEditModel : ContentEditModel
 	{
+		public Guid Id { get; set; }
+
+		public string Title { get; set; }
+
+		public bool IsScheduled { get; set; }
+
 		// TODO: ImageField
 
 		public string Slug { get; set; }
@@ -14,7 +22,7 @@
 
 		public int CommentCount { get; set; }
 
-		public IList<BlockModel> Blocks { get; set; } = new List<BlockModel>();
+		public IList<BlockEditModel> Blocks { get; set; } = new List<BlockEditModel>();
 		// TODO: Add selected tags
 		// TODO: Add tags
 

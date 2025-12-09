@@ -1,4 +1,4 @@
-﻿namespace ThoughtHub.Api.Models.Content
+﻿namespace ThoughtHub.Api.Models.Editor
 {
 	public abstract class ContentEditModel
 	{

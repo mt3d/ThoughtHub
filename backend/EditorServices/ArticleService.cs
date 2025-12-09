@@ -1,4 +1,4 @@
-﻿using ThoughtHub.Api.Models.Content;
+﻿using ThoughtHub.Api.Models.Editor;
 
 namespace ThoughtHub.EditorServices
 {

@@ -3,6 +3,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using ThoughtHub.Api.Models;
 using ThoughtHub.Api.Models.Content;
+using ThoughtHub.Api.Models.Editor;
 
 namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 {
@@ -19,7 +20,10 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 		{
 			httpClient = ClientFactory?.CreateClient("Auth");
 
-			ArticleModel = new ArticleEditModel();
+			ArticleModel = new ArticleEditModel()
+			{
+
+			};
 
 			return base.OnInitializedAsync();
 		}
@@ -28,7 +32,7 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 		{
 			try
 			{
-				var block = await httpClient.GetFromJsonAsync<BlockModel>($"/content/block/{type}", options);
+				var block = await httpClient.GetFromJsonAsync<BlockEditModel>($"/content/block/{type}", options);
 
 				if (block != null)
 				{
@@ -59,7 +63,7 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 			ArticleModel.Blocks.Insert(to, block);
 		}
 
-		public void RemoveBlock(BlockModel block)
+		public void RemoveBlock(BlockEditModel block)
 		{
 			if (block == null)
 			{
@@ -67,6 +71,11 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 			}
 
 			ArticleModel.Blocks.Remove(block);
+		}
+
+		public void OpenBlockPicker(int position)
+		{
+
 		}
 	}
 }

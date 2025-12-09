@@ -62,7 +62,7 @@
 			<div class="form-group title">
 				<dvi class="row">
 					<div class="col">
-						<input type="text" class="form-control form-control-lg" placeholder="Your article title" />
+						<input @bind="ArticleModel.Title" type="text" class="form-control form-control-lg" placeholder="Your article title" />
 					</div>
 				</dvi>
                 <div class="row mt-3">
@@ -87,57 +87,60 @@
             <div id="content-blocks" class="blocks">
 
                 @* TODO: call BlockPicker.Open(), the callback is AddBlock, the index should be 0*@
-                <a href="#" class="block-add unsortable">
+                <a href="#" class="block-add unsortable" @onclick:preventDefault @onclick="() => OpenBlockPicker(0)">
                     <hr>
                     <i class="bi bi-plus-circle"></i>
                 </a>
 
-                @foreach (var block in ArticleModel.Blocks)
+                @for (int index = 0; index < ArticleModel.Blocks.Count; index++)
                 {
-                    <div v-for="(block, index) in blocks" v-bind:key="block.meta.uid">
+                        var block = ArticleModel.Blocks[index];
 
-                    <div :class="'block ' + block.meta.component + (block.meta.isCollapsed ? ' collapsed' : '') + (block.meta.width === 'full' ? ' block-full' : '')">
-@*                         <div :id="'tb-' + block.meta.uid" class="component-toolbar"></div>
- *@                        <div class="block-header">
-                            <div class="title">
-@*                                 <i :class="block.meta.icon"></i><strong>{{ block.meta.name }}</strong> <span v-if="!block.meta.isGroup && block.meta.isCollapsed">- {{ block.meta.title }}</span> *@
+                        <div :class="'block ' + block.meta.component + (block.meta.isCollapsed ? ' collapsed' : '') + (block.meta.width === 'full' ? ' block-full' : '')">
+    @*                         <div :id="'tb-' + block.meta.uid" class="component-toolbar"></div>
+
+     *@                        <div class="block-header">
+                                <div class="title">
+                                     <i class="@block.Icon"></i>
+                                     @* TODO: Explain *@
+                                     <strong>@block.Name</strong> <span @key="index"> @if (block.IsCollapsed) { <text>- @block.Title</text> }</span>
+                                </div>
+
+                                <div class="actions">
+                                    @* Collapse the block Collapse(Block) *@
+                                    <span class="btn btn-sm">
+                                        @* TODO: Check if the block is collapsed*@
+                                        @if (true)
+                                        {
+                                            <i class="bi bi-chevron-up"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-chevron-down"></i>
+                                        }
+                                    </span>
+                                    <span class="btn btn-sm handle">
+                                            <i class="bi bi-three-dots-vertical"></i>
+                                    </span>
+
+                                    @* TODO: Call RemoveBlock(Block reference) *@
+                                    <button class="btn btn-sm danger block-remove" tabindex="-1">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+
                             </div>
 
-                            <div class="actions">
-                                @* Collapse the block Collapse(Block) *@
-                                <span class="btn btn-sm">
-                                    @* TODO: Check if the block is collapsed*@
-                                    @if (true)
-                                    {
-                                        <i class="bi bi-chevron-up"></i>
-                                    }
-                                    else
-                                    {
-                                        <i class="bi bi-chevron-down"></i>
-                                    }
-                                </span>
-                                <span class="btn btn-sm handle">
-                                        <i class="bi bi-three-dots-vertical"></i>
-                                </span>
-
-                                @* TODO: Call RemoveBlock(Block reference) *@
-                                <button class="btn btn-sm danger block-remove" tabindex="-1">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
+                            @* Render the blocks *@
 
                         </div>
 
-                        @* Render the blocks *@
-
-                    </div>
-
-                    @* TODO: call BlockPicker.Open(), the callback is AddBlock, the index should be 0*@
-                    <a href="#" class="block-add">
-                        <hr>
-                        <i class="bi bi-plus-circle"></i>
-                    </a>
-                </div>
+                        @* TODO: call BlockPicker.Open(), the callback is AddBlock, the index should be 0*@
+                        <a href="#" class="block-add">
+                            <hr>
+                            <i class="bi bi-plus-circle"></i>
+                        </a>
+@*                     </div> *@                
                 }
 
                 @if (ArticleModel.Blocks.Count == 0)

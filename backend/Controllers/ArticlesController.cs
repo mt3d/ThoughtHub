@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using System.Security.Claims;
-using ThoughtHub.Api.Models.Content;
 using ThoughtHub.Api.Core.Entities.Article;
 using ThoughtHub.EditorServices;
+using ThoughtHub.Api.Models.Editor;
 
 namespace ThoughtHub.Controllers
 {
