@@ -1,19 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using ThoughtHub.Api.Core.Entities;
 using ThoughtHub.Api.Core.Entities.Article;
 using ThoughtHub.Api.Models.Content;
+using ThoughtHub.Services;
 
 namespace ThoughtHub.Data
 {
 	public class ArticleRepository : IArticleRepository
 	{
 		private readonly PlatformContext _context;
+		private readonly IContentService _contentService;
 
-		public ArticleRepository(PlatformContext context)
+		public ArticleRepository(
+			PlatformContext context,
+			IContentService contentService)
 		{
 			_context = context;
+			_contentService = contentService;
 		}
 
 		public Task Save(ArticleM model)
@@ -47,7 +51,7 @@ namespace ThoughtHub.Data
 
 			var article = await articleQuery
 				// TODO: Include blocks, fields, and tags
-				.Include(p => p.Blocks).ThenInclude(b => b.Block) // TODO: Include block's fields
+				.Include(p => p.Blocks).ThenInclude(b => b.Block).ThenInclude(b => b.Fields)
 				.FirstOrDefaultAsync(a => a.ArticleId == model.Id)
 				.ConfigureAwait(false);
 
@@ -80,6 +84,44 @@ namespace ThoughtHub.Data
 
 			if (blockModels != null)
 			{
+				var blocks = _contentService.TransformBlocks(blockModels);
+
+				// a list of block IDs that the editor sent in the new model
+				// Anything not in current is considered removed by the user.
+				var current = blocks.Select(b => b.Id).ToArray();
+
+				var removed = article.Blocks
+					.Where(b => !current.Contains(b.BlockId))
+					.Select(b => b.Block);
+				// TODO: Remove child blocks in the future.
+
+				if (!isDraft)
+				{
+					_context.Blocks.RemoveRange(removed);
+				}
+
+				article.Blocks.Clear();
+
+				for (int i = 0; i < blocks.Count; i++)
+				{
+					var block = AddBlock(blocks[i], isDraft);
+
+					var articleBlock = new ArticleBlock
+					{
+						Id = Guid.NewGuid(),
+						BlockId = block.Id,
+						Block = block,
+						ArticleId = article.ArticleId,
+						SortOrder = i
+					};
+
+					if (!isDraft)
+					{
+						_context.ArticleBlocks.Add(articleBlock);
+					}
+
+					article.Blocks.Add(articleBlock);
+				}
 			}
 
 			// TODO: Remove the old tags
@@ -115,6 +157,83 @@ namespace ThoughtHub.Data
 				await _context.SaveChangesAsync().ConfigureAwait(false);
 			}
 		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <remarks>
+		/// This method doesn't commit the returned block to the database.
+		/// It just adds to the DbContext.
+		/// </remarks>
+		private Block AddBlock(Block blockToSave, bool isDraft)
+		{
+			IQueryable<Block> blockQuery = _context.Blocks;
+			if (isDraft)
+			{
+				blockQuery = blockQuery.AsNoTracking();
+			}
+
+			var block = blockQuery
+				.Include(b => b.Fields)
+				.FirstOrDefault(b => b.Id == blockToSave.Id);
+
+			if (block == null)
+			{
+				block = new Block()
+				{
+					Id = blockToSave.Id != Guid.Empty ? blockToSave.Id : Guid.NewGuid(),
+					CreatedAt = DateTime.Now
+				};
+
+				if (!isDraft)
+				{
+					_context.Blocks.Add(block);
+				}
+			}
+			block.ClrType = blockToSave.ClrType;
+			block.Title = blockToSave.Title;
+			block.UpdatedAt = blockToSave.UpdatedAt;
+
+			UpdateFields(blockToSave, block, isDraft);
+
+			return block;
+		}
+
+		private void UpdateFields(Block newBlock, Block currentBlock, bool isDraft)
+		{
+			var currentFieldIds = newBlock.Fields.Select(f => f.FieldId).Distinct(); // TODO: Why distinct?
+			var removedFields = currentBlock.Fields.Where(f => !currentFieldIds.Contains(f.FieldId));
+
+			if (!isDraft)
+			{
+				_context.BlockFields.RemoveRange(removedFields);
+			}
+
+			foreach (var newField in newBlock.Fields)
+			{
+				var field = currentBlock.Fields.FirstOrDefault(f => f.FieldId == newField.FieldId);
+
+				if (field == null)
+				{
+					field = new BlockField()
+					{
+						Id = newField.Id != Guid.Empty ? newField.Id : Guid.NewGuid(),
+						BlockId = currentBlock.Id,
+						FieldId = newField.FieldId
+					};
+
+					if (!isDraft)
+					{
+						_context.BlockFields.Add(field);
+					}
+					currentBlock.Fields.Add(field);
+				}
+				field.SortOrder = newField.SortOrder;
+				field.ClrType = newField.ClrType;
+				field.SerializedValue = newField.SerializedValue;
+			}
+		}
+
 	}
 
 	public static class Utils
