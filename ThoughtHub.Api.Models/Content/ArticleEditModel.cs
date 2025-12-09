@@ -16,5 +16,14 @@
 
 		// TODO: Add selected tags
 		// TODO: Add tags
+
+		public StatusMessage Status { get; set; }
+	}
+
+	public class StatusMessage
+	{
+		public string Type { get; set; }
+
+		public string Body { get; set; }
 	}
 }

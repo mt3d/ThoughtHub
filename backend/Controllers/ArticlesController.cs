@@ -8,6 +8,7 @@ using AutoMapper;
 using System.Security.Claims;
 using ThoughtHub.Api.Models.Content;
 using ThoughtHub.Api.Core.Entities.Article;
+using ThoughtHub.EditorServices;
 
 namespace ThoughtHub.Controllers
 {
@@ -22,11 +23,16 @@ namespace ThoughtHub.Controllers
 	{
 		private PlatformContext context;
 		private IMapper mapper;
+		private readonly ArticleService _service;
 
-		public ArticlesController(PlatformContext context, IMapper mapper)
+		public ArticlesController(
+			PlatformContext context,
+			IMapper mapper,
+			ArticleService service)
 		{
 			this.context = context;
 			this.mapper = mapper;
+			_service = service;
 		}
 
 		/// <summary>
@@ -334,18 +340,33 @@ namespace ThoughtHub.Controllers
 			return result;
 		}
 
+		// Save for drafts, publish for anything else, can be used to unpublish articles.
 		private async Task<ArticleEditModel> Save(ArticleEditModel model, bool draft = false)
 		{
 			try
 			{
-
+				await _service.Save(model, draft);
 			}
-			catch
+			catch // TODO: Catch any validation exceptions
 			{
+				model.Status = new StatusMessage
+				{
+					// TODO: Edit once exceptions are created.
+					Type = "Erorr",
+					Body = "Error"
+				};
 
+				return model; // Will be returned as json
 			}
 
-			throw new NotImplementedException();
+			var result = await _service.GetById(model.Id);
+			result.Status = new StatusMessage
+			{
+				Type = "Success",
+				Body = "The article was successfully saved"
+			};
+
+			return result;
 		}
 	}
 }
