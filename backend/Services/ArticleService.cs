@@ -5,9 +5,9 @@ namespace ThoughtHub.Services
 {
 	public class ArticleService : IArticleService
 	{
-		private readonly ArticleRepository _repo;
+		private readonly IArticleRepository _repo;
 
-		public ArticleService(ArticleRepository repo)
+		public ArticleService(IArticleRepository repo)
 		{
 			_repo = repo;
 		}

@@ -59,6 +59,10 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IMediaService, MediaService>();
 builder.Services.AddScoped<IMediaRepository, MediaRepository>();
 builder.Services.AddLocalFileStorage(builder.Configuration["PlatformUrls:BackendUrl"] + "/uploads/");
+builder.Services.AddScoped<IContentService, ContentService>();
+builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
+builder.Services.AddScoped<IArticleService, ThoughtHub.Services.ArticleService>();
+builder.Services.AddScoped<ThoughtHub.EditorServices.ArticleService>();
 
 // TODO: Only if development.
 builder.Services.AddScoped<ImageCreator>();

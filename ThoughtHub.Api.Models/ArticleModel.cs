@@ -2,7 +2,7 @@
 {
 	public class ArticleModel
 	{
-		public int ArticleId { get; set; }
+		public Guid Id { get; set; }
 
 		// TODO: This is never referenced. Remove.
 		public string Slug { get; set; } = string.Empty;
