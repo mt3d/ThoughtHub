@@ -41,5 +41,22 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 				Console.WriteLine($"error: {ex.Message}");
 			}
 		}
+
+		public void MoveBlock(int from, int to)
+		{
+			if (from < 0 || from >= ArticleModel.Blocks.Count)
+			{
+				return;
+			}
+
+			if (to < 0 || to > ArticleModel.Blocks.Count)
+			{
+				return;
+			}
+
+			var block = ArticleModel.Blocks[from];
+			ArticleModel.Blocks.RemoveAt(from);
+			ArticleModel.Blocks.Insert(to, block);
+		}
 	}
 }
