@@ -20,12 +20,12 @@ namespace ThoughtHub.Data
 			_contentService = contentService;
 		}
 
-		public Task Save(ArticleM model)
+		public Task SaveAsync(ArticleM model)
 		{
-			return Save(model, false);
+			return SaveAsync(model, false);
 		}
 
-		private async Task Save(ArticleM model, bool isDraft)
+		private async Task SaveAsync(ArticleM model, bool isDraft)
 		{
 			// Handle tags
 			foreach (var tag in model.Tags)
