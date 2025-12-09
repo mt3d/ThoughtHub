@@ -58,5 +58,15 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 			ArticleModel.Blocks.RemoveAt(from);
 			ArticleModel.Blocks.Insert(to, block);
 		}
+
+		public void RemoveBlock(BlockModel block)
+		{
+			if (block == null)
+			{
+				return;
+			}
+
+			ArticleModel.Blocks.Remove(block);
+		}
 	}
 }
