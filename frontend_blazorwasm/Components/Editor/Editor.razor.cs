@@ -12,5 +12,10 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 
 			return base.OnInitializedAsync();
 		}
+
+		public async Task AddBlockAsync(string type, int position)
+		{
+
+		}
 	}
 }
