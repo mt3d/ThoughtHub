@@ -57,7 +57,7 @@ namespace ThoughtHub.Data.Entities
 		/// No need to include any information about the article when returning comments.
 		/// </summary>
 		[JsonIgnore]
-		public int ArticleId { get; set; }
+		public Guid ArticleId { get; set; }
 
 		/// <summary>
 		/// The parent article.

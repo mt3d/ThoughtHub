@@ -24,13 +24,13 @@ namespace ThoughtHub.Migrations
 
             modelBuilder.Entity("ArticleTag", b =>
                 {
-                    b.Property<Guid>("ArticlesArticleId")
+                    b.Property<Guid>("ArticlesId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("TagsTagId")
                         .HasColumnType("int");
 
-                    b.HasKey("ArticlesArticleId", "TagsTagId");
+                    b.HasKey("ArticlesId", "TagsTagId");
 
                     b.HasIndex("TagsTagId");
 
@@ -170,32 +170,9 @@ namespace ThoughtHub.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ThoughtHub.Api.Core.Entities.ArticleRevision", b =>
+            modelBuilder.Entity("ThoughtHub.Api.Core.Entities.Article.Article", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ArticleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Data")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArticleId");
-
-                    b.ToTable("ArticleRevisions");
-                });
-
-            modelBuilder.Entity("ThoughtHub.Data.Entities.Article", b =>
-                {
-                    b.Property<Guid>("ArticleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -204,9 +181,6 @@ namespace ThoughtHub.Migrations
 
                     b.Property<int?>("AuthorProfileId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Body")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ClapsCount")
                         .HasColumnType("int");
@@ -235,7 +209,7 @@ namespace ThoughtHub.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("ArticleId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ArticleImageId");
 
@@ -246,6 +220,112 @@ namespace ThoughtHub.Migrations
                     b.ToTable("Articles");
                 });
 
+            modelBuilder.Entity("ThoughtHub.Api.Core.Entities.Article.ArticleBlock", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ArticleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BlockId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("BlockId");
+
+                    b.ToTable("ArticleBlocks");
+                });
+
+            modelBuilder.Entity("ThoughtHub.Api.Core.Entities.Article.ArticleRevision", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ArticleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Data")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("ArticleRevisions");
+                });
+
+            modelBuilder.Entity("ThoughtHub.Api.Core.Entities.Article.Block", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ClrType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsReusable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Blocks");
+                });
+
+            modelBuilder.Entity("ThoughtHub.Api.Core.Entities.Article.BlockField", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BlockId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ClrType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FieldId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SerializedValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlockId");
+
+                    b.ToTable("BlockFields");
+                });
+
             modelBuilder.Entity("ThoughtHub.Data.Entities.Comment", b =>
                 {
                     b.Property<int>("CommentId")
@@ -254,10 +334,7 @@ namespace ThoughtHub.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"));
 
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("ArticleId1")
+                    b.Property<Guid>("ArticleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AuthorId")
@@ -297,7 +374,7 @@ namespace ThoughtHub.Migrations
 
                     b.HasKey("CommentId");
 
-                    b.HasIndex("ArticleId1");
+                    b.HasIndex("ArticleId");
 
                     b.HasIndex("AuthorId");
 
@@ -696,9 +773,9 @@ namespace ThoughtHub.Migrations
 
             modelBuilder.Entity("ArticleTag", b =>
                 {
-                    b.HasOne("ThoughtHub.Data.Entities.Article", null)
+                    b.HasOne("ThoughtHub.Api.Core.Entities.Article.Article", null)
                         .WithMany()
-                        .HasForeignKey("ArticlesArticleId")
+                        .HasForeignKey("ArticlesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -760,18 +837,7 @@ namespace ThoughtHub.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ThoughtHub.Api.Core.Entities.ArticleRevision", b =>
-                {
-                    b.HasOne("ThoughtHub.Data.Entities.Article", "Article")
-                        .WithMany()
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Article");
-                });
-
-            modelBuilder.Entity("ThoughtHub.Data.Entities.Article", b =>
+            modelBuilder.Entity("ThoughtHub.Api.Core.Entities.Article.Article", b =>
                 {
                     b.HasOne("ThoughtHub.Data.Entities.Media.Image", "ArticleImage")
                         .WithMany()
@@ -795,11 +861,54 @@ namespace ThoughtHub.Migrations
                     b.Navigation("Publication");
                 });
 
+            modelBuilder.Entity("ThoughtHub.Api.Core.Entities.Article.ArticleBlock", b =>
+                {
+                    b.HasOne("ThoughtHub.Api.Core.Entities.Article.Article", "Article")
+                        .WithMany("Blocks")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ThoughtHub.Api.Core.Entities.Article.Block", "Block")
+                        .WithMany()
+                        .HasForeignKey("BlockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Block");
+                });
+
+            modelBuilder.Entity("ThoughtHub.Api.Core.Entities.Article.ArticleRevision", b =>
+                {
+                    b.HasOne("ThoughtHub.Api.Core.Entities.Article.Article", "Article")
+                        .WithMany()
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+                });
+
+            modelBuilder.Entity("ThoughtHub.Api.Core.Entities.Article.BlockField", b =>
+                {
+                    b.HasOne("ThoughtHub.Api.Core.Entities.Article.Block", "Block")
+                        .WithMany("Fields")
+                        .HasForeignKey("BlockId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Block");
+                });
+
             modelBuilder.Entity("ThoughtHub.Data.Entities.Comment", b =>
                 {
-                    b.HasOne("ThoughtHub.Data.Entities.Article", "Article")
+                    b.HasOne("ThoughtHub.Api.Core.Entities.Article.Article", "Article")
                         .WithMany("Comments")
-                        .HasForeignKey("ArticleId1");
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ThoughtHub.Data.Entities.Profile", "Author")
                         .WithMany()
@@ -941,7 +1050,7 @@ namespace ThoughtHub.Migrations
 
             modelBuilder.Entity("ThoughtHub.Data.Entities.ReadingHistory", b =>
                 {
-                    b.HasOne("ThoughtHub.Data.Entities.Article", "Article")
+                    b.HasOne("ThoughtHub.Api.Core.Entities.Article.Article", "Article")
                         .WithMany()
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -958,9 +1067,16 @@ namespace ThoughtHub.Migrations
                     b.Navigation("Profile");
                 });
 
-            modelBuilder.Entity("ThoughtHub.Data.Entities.Article", b =>
+            modelBuilder.Entity("ThoughtHub.Api.Core.Entities.Article.Article", b =>
                 {
+                    b.Navigation("Blocks");
+
                     b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("ThoughtHub.Api.Core.Entities.Article.Block", b =>
+                {
+                    b.Navigation("Fields");
                 });
 
             modelBuilder.Entity("ThoughtHub.Data.Entities.Media.Image", b =>

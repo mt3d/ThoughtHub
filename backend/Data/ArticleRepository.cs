@@ -52,18 +52,18 @@ namespace ThoughtHub.Data
 			var article = await articleQuery
 				// TODO: Include blocks, fields, and tags
 				.Include(p => p.Blocks).ThenInclude(b => b.Block).ThenInclude(b => b.Fields)
-				.FirstOrDefaultAsync(a => a.ArticleId == model.Id)
+				.FirstOrDefaultAsync(a => a.Id == model.Id)
 				.ConfigureAwait(false);
 
 			if (article == null)
 			{
 				article = new Article
 				{
-					ArticleId = model.Id != Guid.Empty ? model.Id : Guid.NewGuid(),
+					Id = model.Id != Guid.Empty ? model.Id : Guid.NewGuid(),
 					CreatedAt = DateTime.Now, // TODO: UtcNow?
 					UpdatedAt = DateTime.Now
 				};
-				model.Id = article.ArticleId;
+				model.Id = article.Id;
 
 				if (!isDraft)
 				{
@@ -111,7 +111,7 @@ namespace ThoughtHub.Data
 						Id = Guid.NewGuid(),
 						BlockId = block.Id,
 						Block = block,
-						ArticleId = article.ArticleId,
+						ArticleId = article.Id,
 						SortOrder = i
 					};
 
@@ -137,7 +137,7 @@ namespace ThoughtHub.Data
 			{
 				var draft = await _context.ArticleRevisions
 					// TODO: Explain
-					.FirstOrDefaultAsync(r => r.ArticleId == article.ArticleId && r.CreatedAt > DateTime.MinValue)
+					.FirstOrDefaultAsync(r => r.ArticleId == article.Id && r.CreatedAt > DateTime.MinValue)
 					.ConfigureAwait(false);
 
 				if (draft == null)
@@ -145,7 +145,7 @@ namespace ThoughtHub.Data
 					draft = new ArticleRevision
 					{
 						Id = Guid.NewGuid(),
-						ArticleId = article.ArticleId
+						ArticleId = article.Id
 					};
 
 					await _context.ArticleRevisions.AddAsync(draft).ConfigureAwait(false);

@@ -51,6 +51,22 @@ namespace ThoughtHub.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Blocks",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ClrType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsReusable = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blocks", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ImageFolders",
                 columns: table => new
                 {
@@ -191,6 +207,28 @@ namespace ThoughtHub.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BlockFields",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BlockId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FieldId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SortOrder = table.Column<int>(type: "int", nullable: false),
+                    ClrType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SerializedValue = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BlockFields", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BlockFields_Blocks_BlockId",
+                        column: x => x.BlockId,
+                        principalTable: "Blocks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Images",
                 columns: table => new
                 {
@@ -302,11 +340,17 @@ namespace ThoughtHub.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OwnerId = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PublicationImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Publications", x => x.PublicationId);
+                    table.ForeignKey(
+                        name: "FK_Publications_Images_PublicationImageId",
+                        column: x => x.PublicationImageId,
+                        principalTable: "Images",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Publications_Profiles_OwnerId",
                         column: x => x.OwnerId,
@@ -319,15 +363,13 @@ namespace ThoughtHub.Migrations
                 name: "Articles",
                 columns: table => new
                 {
-                    ArticleId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Slug = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Body = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AuthorProfileId = table.Column<int>(type: "int", nullable: true),
                     FovoritesCount = table.Column<int>(type: "int", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ArticleImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ClapsCount = table.Column<int>(type: "int", nullable: false),
                     CommentsCount = table.Column<int>(type: "int", nullable: false),
                     PublicationId = table.Column<int>(type: "int", nullable: true),
@@ -336,7 +378,13 @@ namespace ThoughtHub.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Articles", x => x.ArticleId);
+                    table.PrimaryKey("PK_Articles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Articles_Images_ArticleImageId",
+                        column: x => x.ArticleImageId,
+                        principalTable: "Images",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Articles_Profiles_AuthorProfileId",
                         column: x => x.AuthorProfileId,
@@ -406,20 +454,66 @@ namespace ThoughtHub.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ArticleBlocks",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ArticleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BlockId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SortOrder = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticleBlocks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ArticleBlocks_Articles_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Articles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ArticleBlocks_Blocks_BlockId",
+                        column: x => x.BlockId,
+                        principalTable: "Blocks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ArticleRevisions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Data = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ArticleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticleRevisions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ArticleRevisions_Articles_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Articles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ArticleTag",
                 columns: table => new
                 {
-                    ArticlesArticleId = table.Column<int>(type: "int", nullable: false),
+                    ArticlesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TagsTagId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArticleTag", x => new { x.ArticlesArticleId, x.TagsTagId });
+                    table.PrimaryKey("PK_ArticleTag", x => new { x.ArticlesId, x.TagsTagId });
                     table.ForeignKey(
-                        name: "FK_ArticleTag_Articles_ArticlesArticleId",
-                        column: x => x.ArticlesArticleId,
+                        name: "FK_ArticleTag_Articles_ArticlesId",
+                        column: x => x.ArticlesId,
                         principalTable: "Articles",
-                        principalColumn: "ArticleId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ArticleTag_Tags_TagsTagId",
@@ -441,7 +535,7 @@ namespace ThoughtHub.Migrations
                     BodySource = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ClapsCount = table.Column<int>(type: "int", nullable: false),
                     RepliesCount = table.Column<int>(type: "int", nullable: false),
-                    ArticleId = table.Column<int>(type: "int", nullable: false),
+                    ArticleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsEdited = table.Column<bool>(type: "bit", nullable: false),
@@ -455,7 +549,7 @@ namespace ThoughtHub.Migrations
                         name: "FK_Comments_Articles_ArticleId",
                         column: x => x.ArticleId,
                         principalTable: "Articles",
-                        principalColumn: "ArticleId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Comments_Comments_ParentCommentId",
@@ -477,7 +571,7 @@ namespace ThoughtHub.Migrations
                     ReadingHistoryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProfileId = table.Column<int>(type: "int", nullable: false),
-                    ArticleId = table.Column<int>(type: "int", nullable: false),
+                    ArticleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstReadAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastReadAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ReadCount = table.Column<int>(type: "int", nullable: false),
@@ -492,7 +586,7 @@ namespace ThoughtHub.Migrations
                         name: "FK_ReadingHistories_Articles_ArticleId",
                         column: x => x.ArticleId,
                         principalTable: "Articles",
-                        principalColumn: "ArticleId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ReadingHistories_Profiles_ProfileId",
@@ -501,6 +595,26 @@ namespace ThoughtHub.Migrations
                         principalColumn: "ProfileId",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticleBlocks_ArticleId",
+                table: "ArticleBlocks",
+                column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticleBlocks_BlockId",
+                table: "ArticleBlocks",
+                column: "BlockId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticleRevisions_ArticleId",
+                table: "ArticleRevisions",
+                column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Articles_ArticleImageId",
+                table: "Articles",
+                column: "ArticleImageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Articles_AuthorProfileId",
@@ -555,6 +669,11 @@ namespace ThoughtHub.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BlockFields_BlockId",
+                table: "BlockFields",
+                column: "BlockId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_ArticleId",
@@ -627,6 +746,11 @@ namespace ThoughtHub.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Publications_PublicationImageId",
+                table: "Publications",
+                column: "PublicationImageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Publications_Slug",
                 table: "Publications",
                 column: "Slug",
@@ -654,6 +778,12 @@ namespace ThoughtHub.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ArticleBlocks");
+
+            migrationBuilder.DropTable(
+                name: "ArticleRevisions");
+
+            migrationBuilder.DropTable(
                 name: "ArticleTag");
 
             migrationBuilder.DropTable(
@@ -670,6 +800,9 @@ namespace ThoughtHub.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "BlockFields");
 
             migrationBuilder.DropTable(
                 name: "Comments");
@@ -694,6 +827,9 @@ namespace ThoughtHub.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Blocks");
 
             migrationBuilder.DropTable(
                 name: "Articles");

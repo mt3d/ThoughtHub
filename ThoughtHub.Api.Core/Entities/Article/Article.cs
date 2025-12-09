@@ -7,7 +7,7 @@ namespace ThoughtHub.Api.Core.Entities.Article
 {
 	public class Article
 	{
-		public Guid ArticleId { get; set; }
+		public Guid Id { get; set; }
 
 		public string? Slug { get; set; }
 

@@ -134,14 +134,14 @@ namespace ThoughtHub.Controllers
 			var profile = await context.Profiles.FirstAsync(p => p.UserId == userId);
 
 			var history = await context.ReadingHistories
-				.FirstOrDefaultAsync(r => r.ProfileId == profile.ProfileId && r.ArticleId == article.ArticleId);
+				.FirstOrDefaultAsync(r => r.ProfileId == profile.ProfileId && r.ArticleId == article.Id);
 
 			if (history == null)
 			{
 				history = new ReadingHistory
 				{
 					ProfileId = profile.ProfileId,
-					ArticleId = article.ArticleId,
+					ArticleId = article.Id,
 					FirstReadAt = DateTime.UtcNow,
 				};
 
