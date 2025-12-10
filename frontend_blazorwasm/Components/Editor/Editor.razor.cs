@@ -31,6 +31,11 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 			return base.OnInitializedAsync();
 		}
 
+		private async Task OnBlockPicked((string type, int index) result)
+		{
+			await AddBlockAsync(result.type, result.index);
+		}
+
 		public async Task AddBlockAsync(string type, int position)
 		{
 			try
@@ -85,6 +90,8 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 			{
 				var list = await httpClient.GetFromJsonAsync<BlockListModel>("/content/blocktypes");
 
+				Console.WriteLine(list.Categories.ToString());
+
 				if (list is not null)
 				{
 					if (list.TypeCount == 1)
@@ -104,11 +111,6 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 			{
 				Console.WriteLine($"error: {ex.Message}");
 			}
-		}
-
-		private async Task OnBlockPicked((string type, int index) result)
-		{
-			await AddBlockAsync(result.type, result.index);
 		}
 
 		private string GetBlockClasses(BlockEditModel block)

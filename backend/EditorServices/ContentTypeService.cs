@@ -1,6 +1,6 @@
 ﻿using ThoughtHub.Api.Models.Content;
 using ThoughtHub.Api.Models.Editor;
-using ThoughtHub.Services;
+using ThoughtHub.Runtime;
 
 namespace ThoughtHub.EditorServices
 {
@@ -30,17 +30,17 @@ namespace ThoughtHub.EditorServices
 					Name = category
 				};
 
-				var items = _registry.GetByCategory(category).OrderBy(i => i.Name).ToList();
+				var blockDescriptors = _registry.GetByCategory(category).OrderBy(i => i.Name).ToList();
 
 				// TODO: Handle parent relationships
 
-				foreach (var block in items)
+				foreach (var descriptor in blockDescriptors)
 				{
 					listCategory.Items.Add(new BlockListModel.BlockListItem
 					{
-						Name = block.Name,
-						Icon = block.Icon,
-						Type = block.Type
+						Name = descriptor.Name,
+						Icon = descriptor.Icon,
+						Type = descriptor.TypeName
 					});
 				}
 

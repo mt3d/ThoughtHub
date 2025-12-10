@@ -19,7 +19,7 @@
 			public IList<BlockListItem> Items { get; set; } = new List<BlockListItem>();
 		}
 
-		public IList<BlockListCategory> Categories = new List<BlockListCategory>();
+		public IList<BlockListCategory> Categories { get; set; } = new List<BlockListCategory>();
 
 		public int TypeCount { get; set; }
 	}
