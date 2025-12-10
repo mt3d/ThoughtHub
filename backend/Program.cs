@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ThoughtHub.Api.LocalStorage.Extensions;
+using ThoughtHub.Api.Models.Blocks;
 using ThoughtHub.Data;
 using ThoughtHub.Data.Identity;
 using ThoughtHub.EditorServices;
@@ -65,7 +66,14 @@ builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
 builder.Services.AddScoped<IArticleService, ThoughtHub.Services.ArticleService>();
 builder.Services.AddScoped<ThoughtHub.EditorServices.ArticleService>();
 builder.Services.AddScoped<ContentTypeService>();
-builder.Services.AddScoped<BlocksRegistry>();
+
+// TODO: Find out if there's a better way.
+var blocksRegistry = new BlocksRegistry();
+blocksRegistry.Register<HtmlBlock>();
+blocksRegistry.Register<TextBlock>();
+blocksRegistry.Register<ImageBlock>();
+
+builder.Services.AddSingleton(blocksRegistry);
 
 // TODO: Only if development.
 builder.Services.AddScoped<ImageCreator>();

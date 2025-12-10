@@ -3,15 +3,15 @@
 	public abstract class BlockModel
 	{
 
-		public string Name { get; set; }
+		public virtual string Name { get; set; }
 
-		public string Category { get; set; }
+		public virtual string Category { get; set; }
 
-		public string Icon { get; set; }
+		public virtual string Icon { get; set; }
 
-		public bool IsGeneric { get; set; }
+		public virtual bool IsGeneric { get; set; }
 
-		public string Component { get; set; }
+		public virtual string Component { get; set; }
 
 
 
