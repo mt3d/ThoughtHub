@@ -2,14 +2,8 @@
 
 namespace ThoughtHub.Api.Models.Blocks
 {
+	[BlockType(Name = "Image", Category = "Media", Icon = "bi bi-image", Component = "image-block")]
 	public class ImageBlock : BlockModel
 	{
-		//public override string Name => "Image";
-
-		//public override string Category => "Media";
-
-		//public override string Icon => "bi bi-image";
-
-		//public override string Component => "image-block";
 	}
 }

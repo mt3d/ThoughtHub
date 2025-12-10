@@ -2,14 +2,8 @@
 
 namespace ThoughtHub.Api.Models.Blocks
 {
+	[BlockType(Name = "Text", Category = "Content", Icon = "bi bi-fonts", Component = "text-block")]
 	public class TextBlock : BlockModel
 	{
-		//public override string Name => "Text";
-
-		//public override string Category => "Content";
-
-		//public override string Icon => "bi bi-fonts";
-
-		//public override string Component => "text-block";
 	}
 }

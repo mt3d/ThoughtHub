@@ -1,4 +1,5 @@
-﻿using ThoughtHub.Api.Core.Entities.Article;
+﻿using System.Reflection;
+using ThoughtHub.Api.Core.Entities.Article;
 using ThoughtHub.Api.Models.Content;
 
 namespace ThoughtHub.Runtime
@@ -26,6 +27,19 @@ namespace ThoughtHub.Runtime
 
 				descriptor.Type = type;
 				descriptor.TypeName = type.ToString();
+
+				var attr = typeof(TBlockChild).GetCustomAttribute<BlockTypeAttribute>();
+				if (attr != null)
+				{
+					descriptor.Name = attr.Name;
+					descriptor.Category = attr.Category;
+					descriptor.Icon = attr.Icon;
+					descriptor.Component = !string.IsNullOrEmpty(attr.Component) ? attr.Component : "missing-block";
+				}
+				else
+				{
+					throw new CustomAttributeFormatException("The BlockTypeDescriptor is mandatory.");
+				}
 
 				_blockDescriptors.Add(descriptor);
 			}

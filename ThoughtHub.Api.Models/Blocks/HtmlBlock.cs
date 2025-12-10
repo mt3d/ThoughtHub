@@ -2,14 +2,8 @@
 
 namespace ThoughtHub.Api.Models.Blocks
 {
+	[BlockType(Name = "Html", Category = "Content", Icon = "bi bi-paragraph", Component = "html-block")]
 	public class HtmlBlock : BlockModel
 	{
-		//public override string Name => "Html";
-
-		//public override string Category => "Content";
-
-		//public override string Icon => "bi bi-paragraph";
-
-		//public override string Component => "html-block";
 	}
 }
