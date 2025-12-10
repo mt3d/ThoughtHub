@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.Modal;
+using Blazored.Modal.Services;
+using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
+using System.Reflection;
 using System.Text.Json;
 using ThoughtHub.Api.Models;
 using ThoughtHub.Api.Models.Content;
@@ -73,9 +76,39 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 			ArticleModel.Blocks.Remove(block);
 		}
 
-		public void OpenBlockPicker(int position)
-		{
+		[CascadingParameter]
+		public IModalService Modal { get; set; } = default!;
 
+		public async Task OpenBlockPicker(int position)
+		{
+			try
+			{
+				var list = await httpClient.GetFromJsonAsync<BlockListModel>("/content/blocktypes");
+
+				if (list is not null)
+				{
+					if (list.TypeCount == 1)
+					{
+
+					}
+					else
+					{
+						var modal = Modal.Show<BlockPickerModal>("Select block", new ModalParameters()
+							.Add(nameof(BlockPickerModal.Index), position)
+							.Add(nameof(BlockPickerModal.Categories), list.Categories)
+							.Add(nameof(BlockPickerModal.OnSelected), EventCallback.Factory.Create<(string, int)>(this, OnBlockPicked)));
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine($"error: {ex.Message}");
+			}
+		}
+
+		private async Task OnBlockPicked((string type, int index) result)
+		{
+			await AddBlockAsync(result.type, result.index);
 		}
 
 		private string GetBlockClasses(BlockEditModel block)

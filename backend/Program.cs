@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ThoughtHub.Api.LocalStorage.Extensions;
 using ThoughtHub.Data;
 using ThoughtHub.Data.Identity;
+using ThoughtHub.EditorServices;
 using ThoughtHub.Infrastructure;
 using ThoughtHub.Seeding;
 using ThoughtHub.Services;
@@ -63,6 +64,8 @@ builder.Services.AddScoped<IContentService, ContentService>();
 builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
 builder.Services.AddScoped<IArticleService, ThoughtHub.Services.ArticleService>();
 builder.Services.AddScoped<ThoughtHub.EditorServices.ArticleService>();
+builder.Services.AddScoped<ContentTypeService>();
+builder.Services.AddScoped<BlocksRegistry>();
 
 // TODO: Only if development.
 builder.Services.AddScoped<ImageCreator>();

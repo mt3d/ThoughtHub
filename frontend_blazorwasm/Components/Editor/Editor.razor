@@ -54,7 +54,7 @@
     </div>
 </div>
 
-<div class="container-fluid d-flex editor-content justify-content-center">
+<div class="container-fluid d-flex flex-column editor-content align-content-center">
 
     <!-- Title -->
 	<div class="card">
@@ -94,52 +94,52 @@
 
                 @for (int index = 0; index < ArticleModel.Blocks.Count; index++)
                 {
-                        var block = ArticleModel.Blocks[index];
+                    var block = ArticleModel.Blocks[index];
 
-                        <div class="@GetBlockClasses(block)">
-    @*                         <div :id="'tb-' + block.meta.uid" class="component-toolbar"></div>
+                    <div class="@GetBlockClasses(block)">
+@*                         <div :id="'tb-' + block.meta.uid" class="component-toolbar"></div>
 
-     *@                        <div class="block-header">
-                                <div class="title">
-                                     <i class="@block.Icon"></i>
-                                     @* TODO: Explain *@
-                                     <strong>@block.Name</strong> <span @key="index"> @if (block.IsCollapsed) { <text>- @block.Title</text> }</span>
-                                </div>
-
-                                <div class="actions">
-                                    @* Collapse the block Collapse(Block) *@
-                                    <span class="btn btn-sm">
-                                        @* TODO: Check if the block is collapsed*@
-                                        @if (true)
-                                        {
-                                            <i class="bi bi-chevron-up"></i>
-                                        }
-                                        else
-                                        {
-                                            <i class="bi bi-chevron-down"></i>
-                                        }
-                                    </span>
-                                    <span class="btn btn-sm handle">
-                                            <i class="bi bi-three-dots-vertical"></i>
-                                    </span>
-
-                                    @* TODO: Call RemoveBlock(Block reference) *@
-                                    <button class="btn btn-sm danger block-remove" tabindex="-1">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </div>
-
+    *@                        <div class="block-header">
+                            <div class="title">
+                                    <i class="@block.Icon"></i>
+                                    @* TODO: Explain *@
+                                    <strong>@block.Name</strong> <span @key="index"> @if (block.IsCollapsed) { <text>- @block.Title</text> }</span>
                             </div>
 
-                            @* Render the blocks *@
+                            <div class="actions">
+                                @* Collapse the block Collapse(Block) *@
+                                <span class="btn btn-sm">
+                                    @* TODO: Check if the block is collapsed*@
+                                    @if (true)
+                                    {
+                                        <i class="bi bi-chevron-up"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-chevron-down"></i>
+                                    }
+                                </span>
+                                <span class="btn btn-sm handle">
+                                        <i class="bi bi-three-dots-vertical"></i>
+                                </span>
+
+                                @* TODO: Call RemoveBlock(Block reference) *@
+                                <button class="btn btn-sm danger block-remove" tabindex="-1">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
 
                         </div>
 
-                        @* TODO: call BlockPicker.Open(), the callback is AddBlock, the index should be 0*@
-                        <a href="#" class="block-add">
-                            <hr>
-                            <i class="bi bi-plus-circle"></i>
-                        </a>
+                        @* Render the blocks *@
+
+                    </div>
+
+                    @* TODO: call BlockPicker.Open(), the callback is AddBlock, the index should be 0*@
+                    <a href="#" class="block-add">
+                        <hr>
+                        <i class="bi bi-plus-circle"></i>
+                    </a>
 @*                     </div> *@                
                 }
 

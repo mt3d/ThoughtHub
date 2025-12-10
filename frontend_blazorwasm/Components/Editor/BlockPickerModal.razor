@@ -1,0 +1,84 @@
+﻿@using ThoughtHub.Api.Models.Editor
+<h3>BlockPickerModal</h3>
+
+<div class="p-3">
+	<input @bind="filter"
+		class="form-control"
+		placeholder="Search..."
+		@onkeydown="HandleSubmitKey" />
+
+	@foreach(var category in FilteredCategories)
+	{
+		<div class="blocktype-category mt-3">@category.Name</div>
+
+		<div class="bloctype-list">
+			@foreach (var item in FilterBlockTypes(category))
+			{
+				<div class="blocktype">
+					<button class="btn btn-block" @onclick="(() => Select(item))">
+						<i class="@item.Icon"></i>
+						<span>@item.Name</span>
+					</button>
+				</div>
+			}
+		</div>
+	}
+</div>
+
+@code {
+	public IHttpClientFactory? ClientFactory { get; set; }
+	private HttpClient? httpClient;
+
+	protected override Task OnInitializedAsync()
+	{
+		httpClient = ClientFactory?.CreateClient("Auth");
+
+		return base.OnInitializedAsync();
+	}
+
+	[Parameter]
+	public EventCallback<(string type, int index)> OnSelected { get; set; }
+
+	[Parameter]
+	public int Index { get; set; }
+
+	[Parameter]
+	public List<BlockListModel.BlockListCategory> Categories { get; set; } = new();
+
+	private IEnumerable<BlockListModel.BlockListCategory> FilteredCategories => Categories.Where(c => FilterBlockTypes(c).Any());
+
+	private string filter = "";
+
+	private IEnumerable<BlockListModel.BlockListItem> FilterBlockTypes(BlockListModel.BlockListCategory category)
+	{
+		if (string.IsNullOrWhiteSpace(filter))
+		{
+			return category.Items;
+		}
+
+		return category.Items.Where(i => i.Name.Contains(filter, StringComparison.OrdinalIgnoreCase));
+	}
+
+	private async Task HandleSubmitKey(KeyboardEventArgs eventArgs)
+	{
+		if (eventArgs.Key == "Enter")
+		{
+			var cats = FilteredCategories.ToList();
+
+			if (cats.Count == 1)
+			{
+				var items = FilterBlockTypes(cats[0]).ToList();
+
+				if (items.Count == 1)
+				{
+					// TODO: Select the item
+				}
+			}
+		}
+	}
+
+	private async Task Select(BlockListModel.BlockListItem item)
+	{
+		await OnSelected.InvokeAsync((item.Type, Index));
+	}
+}
