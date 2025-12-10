@@ -77,5 +77,22 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 		{
 
 		}
+
+		private string GetBlockClasses(BlockEditModel block)
+		{
+			var classes = $"block + {block.Component}";
+
+			if (block.IsCollapsed)
+			{
+				classes += " collapsed";
+			}
+
+			if (block.EditorWidth == "full")
+			{
+				classes += " block-full";
+			}
+
+			return classes;
+		}
 	}
 }

@@ -54,7 +54,7 @@
     </div>
 </div>
 
-<div class="container-fluid editor-content">
+<div class="container-fluid d-flex editor-content justify-content-center">
 
     <!-- Title -->
 	<div class="card">
@@ -96,7 +96,7 @@
                 {
                         var block = ArticleModel.Blocks[index];
 
-                        <div :class="'block ' + block.meta.component + (block.meta.isCollapsed ? ' collapsed' : '') + (block.meta.width === 'full' ? ' block-full' : '')">
+                        <div class="@GetBlockClasses(block)">
     @*                         <div :id="'tb-' + block.meta.uid" class="component-toolbar"></div>
 
      *@                        <div class="block-header">
@@ -155,6 +155,12 @@
 </div>
 
 <style>
+    .card {
+        max-width: 740px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
     .block-add {
         display: block;
         position: relative;
