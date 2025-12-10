@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ThoughtHub.Api.Models.Editor;
 using ThoughtHub.EditorServices;
 
 namespace ThoughtHub.Controllers
@@ -12,6 +13,13 @@ namespace ThoughtHub.Controllers
 		public ContentController(ContentTypeService contentTypeService)
 		{
 			_contentTypeService = contentTypeService;
+		}
+
+		[Route("blocktypes/{parentType?}")]
+		[HttpGet]
+		public BlockListModel GetBlocksForArticle(string? parentType = null)
+		{
+			return _contentTypeService.GetArticleBlockTypes(parentType);
 		}
 
 		[Route("block/{type}")]
