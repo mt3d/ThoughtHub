@@ -20,4 +20,8 @@
     <ProjectReference Include="..\ThoughtHub.Api.Models\ThoughtHub.Api.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Components\Blocks\" />
+  </ItemGroup>
+
 </Project>

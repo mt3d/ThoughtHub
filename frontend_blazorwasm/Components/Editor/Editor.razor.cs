@@ -7,7 +7,7 @@ using System.Text.Json;
 using ThoughtHub.Api.Models;
 using ThoughtHub.Api.Models.Content;
 using ThoughtHub.Api.Models.Editor;
-using ThoughtHub.UI.BlazorWasm.Components.Blocks;
+using ThoughtHub.UI.BlazorWasm.Components.EditorBlocks;
 
 namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 {
@@ -19,6 +19,9 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 		private JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
 
 		public ArticleEditModel ArticleModel { get; set; }
+
+		[CascadingParameter]
+		public IModalService Modal { get; set; } = default!;
 
 		protected override Task OnInitializedAsync()
 		{
@@ -34,7 +37,7 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 
 		private static readonly Dictionary<string, Type> BlockComponents = new()
 		{
-			["text-block"] = typeof(TextBlock)
+			["text-block"] = typeof(EditorTextBlock)
 		};
 
 		private Type? GetComponentType(string name)
@@ -93,9 +96,6 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 
 			ArticleModel.Blocks.Remove(block);
 		}
-
-		[CascadingParameter]
-		public IModalService Modal { get; set; } = default!;
 
 		public async Task OpenBlockPicker(int position)
 		{
