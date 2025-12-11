@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ThoughtHub.Api.Core.Entities.Article;
 using ThoughtHub.Api.Models;
+using ThoughtHub.Api.Models.Content;
 using ThoughtHub.Data.Entities;
 using ThoughtHub.Data.Entities.Media;
 using ThoughtHub.Data.Entities.Publications;
@@ -41,6 +42,8 @@ namespace ThoughtHub.Mappings
 				)
 				.ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.AuthorProfile))
 				.ForMember(dest => dest.Publication, opt => opt.MapFrom(src => src.Publication));
+
+			CreateMap<Article, ArticleM>();
 
 			CreateMap<Article, ArticleCardModel>()
 				.ForMember(dest => dest.Url, opt => opt.MapFrom(src =>

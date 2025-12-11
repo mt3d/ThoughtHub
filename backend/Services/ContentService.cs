@@ -1,17 +1,72 @@
-﻿using System.Reflection;
+﻿using AutoMapper;
+using System.Reflection;
 using System.Text.Json;
 using ThoughtHub.Api.Core.Entities.Article;
 using ThoughtHub.Api.Models.Content;
 using ThoughtHub.Data;
+using ThoughtHub.Runtime;
 
 namespace ThoughtHub.Services
 {
 	public class ContentService : IContentService
 	{
+		private readonly BlocksRegistry _blocksRegistry;
+		private readonly IMapper _mapper;
+
+		public ContentService(BlocksRegistry blocksRegistry)
+		{
+			_blocksRegistry = blocksRegistry;
+		}
+
+		public ArticleM TransformArticleEntityIntoModel(Article article)
+		{
+			var model = new ArticleM();
+
+			// TODO: Initialized model?
+
+			// Map basic properties
+			_mapper.Map(article, model);
+
+			// TODO: Transform comments
+
+			// Transform blocks
+
+			if (article.Blocks.Count > 0)
+			{
+				foreach (var articleBlock in article.Blocks.OrderBy(b => b.SortOrder))
+				{
+					// Handle parents
+				}
+
+				model.BlockModels = TransformBlockEntitiesIntoModels(article.Blocks.OrderBy(b => b.SortOrder).Select(b => b.Block));
+			}
+
+			return model;
+		}
+
+		public Article Transform(ArticleM model)
+		{
+			var article = new Article();
+
+			if (model.Id != Guid.Empty)
+			{
+				article.Id = model.Id;
+			}
+			else
+			{
+				article.Id = model.Id = Guid.NewGuid();
+			}
+			article.CreatedAt = DateTime.Now;
+
+			// TODO: Map basic properties
+
+			throw new NotImplementedException();
+		}
+
 		/**
-		 * This function receives a list of "editor blocks" and converts them
+		 * This function receives a list of "block models" and converts them
 		 * into a list of database block entities (Block), which are the objects
-		 * your persistence layer stores. Every block model is scanned, converted
+		 * the persistence layer stores. Every block model is scanned, converted
 		 * to a database Block, and its fields are extracted and saved as BlockField
 		 * entries. If the block is a group container (a BlockGroup), the function
 		 * converts its child blocks recursively and links them to their parent.
@@ -57,6 +112,35 @@ namespace ThoughtHub.Services
 			}
 
 			return blocks;
+		}
+
+		public IList<BlockModel> TransformBlockEntitiesIntoModels(IEnumerable<Block> blocks)
+		{
+			var models = new List<BlockModel>();
+
+			foreach (var block in blocks)
+			{
+				var blockTypeDescriptor = _blocksRegistry.GetByTypeName(block.ClrType);
+
+				if (blockTypeDescriptor is not null)
+				{
+					var model = (BlockModel?)Activator.CreateInstance(blockTypeDescriptor.Type);
+
+					if (model is not null)
+					{
+						model.Id = block.Id;
+						model.Type = block.ClrType;
+
+						// TODO: Handle fields
+
+						// TODO: Handle parent
+
+						models.Add(model);
+					}
+				}
+			}
+
+			return models;
 		}
 	}
 }

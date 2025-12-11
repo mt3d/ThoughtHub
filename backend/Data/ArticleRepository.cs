@@ -20,6 +20,23 @@ namespace ThoughtHub.Data
 			_contentService = contentService;
 		}
 
+		public async Task<ArticleM?> GetById(Guid id)
+		{
+			var article = await _context.Articles
+				.AsNoTracking()
+				.Include(a => a.Blocks).ThenInclude(b => b.Block)
+				// TODO: Include tags
+				.OrderBy(a => a.CreatedAt)
+				.FirstOrDefaultAsync(a => a.Id == id);
+
+			if (article != null)
+			{
+				return _contentService.TransformArticleEntityIntoModel(article);
+			}
+
+			return null;
+		}
+
 		public Task SaveAsync(ArticleM model)
 		{
 			return SaveAsync(model, false);
