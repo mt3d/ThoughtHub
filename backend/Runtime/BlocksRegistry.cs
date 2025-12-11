@@ -65,5 +65,15 @@ namespace ThoughtHub.Runtime
 		{
 			return _blockDescriptors.SingleOrDefault(i => i.Type == type);
 		}
+
+		public BlockTypeDescriptor? GetByTypeName(string typeName)
+		{
+			if (typeName != null)
+			{
+				// TODO: Handle generic types.
+			}
+
+			return _blockDescriptors.SingleOrDefault(b => b.TypeName == typeName);
+		}
 	}
 }
