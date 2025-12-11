@@ -1,21 +1,47 @@
 ﻿using ThoughtHub.Api.Models.Content;
 using ThoughtHub.Api.Models.Editor;
 using ThoughtHub.Runtime;
+using ThoughtHub.Services;
 
 namespace ThoughtHub.EditorServices
 {
 	public class ContentTypeService
 	{
 		private readonly BlocksRegistry _registry;
+		private readonly IContentFactory _contentFactory;
 
-		public ContentTypeService(BlocksRegistry registry)
+		public ContentTypeService(BlocksRegistry registry, IContentFactory contentFactory)
 		{
 			_registry = registry;
+			_contentFactory = contentFactory;
 		}
 
-		public async Task<BlockModel> CreateBlockAsync(string type)
+		public async Task<BlockEditModel?> CreateBlockAsync(string type)
 		{
-			throw new NotImplementedException();
+			var blockTypeDescriptor = _registry.GetByTypeName(type);
+
+			if (blockTypeDescriptor != null)
+			{
+				var block = (BlockModel?)(await _contentFactory.CreateBlockAsync(type));
+
+				// TODO: Handle block groups in the future if necessary.
+
+				if (block is not null)
+				{
+					return new SingleBlockEditModel
+					{
+						Block = block,
+						Name = blockTypeDescriptor.Name,
+						// TODO: Return title
+						Icon = blockTypeDescriptor.Icon,
+						Component = blockTypeDescriptor.Component,
+					};
+				}
+
+				// TODO: Handle generic blocks in the future if necessary.
+			}
+
+			return null;
 		}
 
 		public BlockListModel GetArticleBlockTypes(string? parentType = null)

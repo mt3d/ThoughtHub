@@ -2,6 +2,8 @@
 {
 	public class BlockEditModel
 	{
+		// General contnet meta
+
 		// Unique client id
 		public string Uid { get; set; } = "uid-" + Math.Abs(Guid.NewGuid().GetHashCode()).ToString();
 
@@ -17,6 +19,8 @@
 
 		// Client component
 		public string Component { get; set; }
+
+		// Block meta
 
 		public bool IsCollapsed { get; set; }
 
