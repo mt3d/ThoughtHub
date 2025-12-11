@@ -7,6 +7,7 @@ using System.Text.Json;
 using ThoughtHub.Api.Models;
 using ThoughtHub.Api.Models.Content;
 using ThoughtHub.Api.Models.Editor;
+using ThoughtHub.UI.BlazorWasm.Components.Blocks;
 
 namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 {
@@ -31,6 +32,17 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 			return base.OnInitializedAsync();
 		}
 
+		private static readonly Dictionary<string, Type> BlockComponents = new()
+		{
+			["text-block"] = typeof(TextBlock)
+		};
+
+		private Type? GetComponentType(string name)
+		{
+			// TODO: Should we add a default block in case of errors?
+			return BlockComponents.TryGetValue(name, out var t) ? t : null;
+		}
+
 		private async Task OnBlockPicked((string type, int index) result)
 		{
 			await AddBlockAsync(result.type, result.index);
@@ -44,6 +56,7 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 
 				if (block != null)
 				{
+					Console.WriteLine(block.Block is ThoughtHub.Api.Models.Blocks.TextBlockModel); // False
 					ArticleModel.Blocks.Insert(position, block);
 				}
 			}

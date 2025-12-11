@@ -72,7 +72,7 @@ builder.Services.AddScoped<IContentFactory, ContentFactory>();
 // TODO: Find out if there's a better way.
 var blocksRegistry = new BlocksRegistry();
 blocksRegistry.Register<HtmlBlock>();
-blocksRegistry.Register<TextBlock>();
+blocksRegistry.Register<TextBlockModel>();
 blocksRegistry.Register<ImageBlock>();
 
 builder.Services.AddSingleton(blocksRegistry);

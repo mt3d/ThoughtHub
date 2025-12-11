@@ -28,7 +28,13 @@ namespace ThoughtHub.EditorServices
 
 				if (block is not null)
 				{
-					return new SingleBlockEditModel
+					/**
+					 * The runtime serializes the actual runtime type, not the declared return type.
+					 * So even though the method returns BlockEditModel, the object inside it is
+					 * actually a SingleBlockEditModel, and the JSON serializer will include all
+					 * public properties of that runtime type unless serialization settings suppress them.
+					 */
+					return new BlockEditModel
 					{
 						Block = block,
 						Name = blockTypeDescriptor.Name,

@@ -1,7 +1,13 @@
-﻿namespace ThoughtHub.Api.Models.Editor
+﻿using ThoughtHub.Api.Models.Content;
+
+namespace ThoughtHub.Api.Models.Editor
 {
 	public class BlockEditModel
 	{
+		public BlockModel Block { get; set; }
+
+		// The following properties are all BlockMeta.
+
 		// General contnet meta
 
 		// Unique client id

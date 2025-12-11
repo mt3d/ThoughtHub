@@ -54,10 +54,9 @@
     </div>
 </div>
 
-<div class="container-fluid d-flex flex-column editor-content align-content-center">
-
+<div class="editor-content">
     <!-- Title -->
-	<div class="card">
+	<div class="section">
 		<div class="card-body">
 			<div class="form-group title">
 				<dvi class="row">
@@ -82,7 +81,7 @@
 	</div>
 
     <!-- Blocks -->
-    <div class="card">
+    <div class="section">
         <div class="card-body">
             <div id="content-blocks" class="blocks">
 
@@ -96,51 +95,54 @@
                 {
                     var block = ArticleModel.Blocks[index];
 
-                    <div class="@GetBlockClasses(block)">
-@*                         <div :id="'tb-' + block.meta.uid" class="component-toolbar"></div>
+                    <div>
+                        <div class="@GetBlockClasses(block)">
+    @*                         <div :id="'tb-' + block.meta.uid" class="component-toolbar"></div>
 
-    *@                        <div class="block-header">
-                            <div class="title">
-                                    <i class="@block.Icon"></i>
-                                    @* TODO: Explain *@
-                                    <strong>@block.Name</strong> <span @key="index"> @if (block.IsCollapsed) { <text>- @block.Title</text> }</span>
+        *@                  <div class="block-header">
+                                <div class="title">
+                                        <i class="@block.Icon"></i>
+                                        @* TODO: Explain *@
+                                        <strong>@block.Name</strong> <span @key="index"> @if (block.IsCollapsed) { <text>- @block.Title</text> }</span>
+                                </div>
+
+                                <div class="actions">
+                                    @* Collapse the block Collapse(Block) *@
+                                    <span class="btn btn-sm">
+                                        @* TODO: Check if the block is collapsed*@
+                                        @if (true)
+                                        {
+                                            <i class="bi bi-chevron-up"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-chevron-down"></i>
+                                        }
+                                    </span>
+                                    <span class="btn btn-sm handle">
+                                            <i class="bi bi-three-dots-vertical"></i>
+                                    </span>
+
+                                    @* TODO: Call RemoveBlock(Block reference) *@
+                                    <button class="btn btn-sm danger block-remove" tabindex="-1">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+
                             </div>
 
-                            <div class="actions">
-                                @* Collapse the block Collapse(Block) *@
-                                <span class="btn btn-sm">
-                                    @* TODO: Check if the block is collapsed*@
-                                    @if (true)
-                                    {
-                                        <i class="bi bi-chevron-up"></i>
-                                    }
-                                    else
-                                    {
-                                        <i class="bi bi-chevron-down"></i>
-                                    }
-                                </span>
-                                <span class="btn btn-sm handle">
-                                        <i class="bi bi-three-dots-vertical"></i>
-                                </span>
-
-                                @* TODO: Call RemoveBlock(Block reference) *@
-                                <button class="btn btn-sm danger block-remove" tabindex="-1">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </div>
-
+                            @* Render the blocks *@
+                            <DynamicComponent
+                                Type="@GetComponentType(block.Component)"
+                                Parameters="@(new Dictionary<string, object> { ["Model"] = block.Block })" />
                         </div>
 
-                        @* Render the blocks *@
-
-                    </div>
-
-                    @* TODO: call BlockPicker.Open(), the callback is AddBlock, the index should be 0*@
-                    <a href="#" class="block-add">
-                        <hr>
-                        <i class="bi bi-plus-circle"></i>
-                    </a>
-@*                     </div> *@                
+                        @* TODO: call BlockPicker.Open(), the callback is AddBlock, the index should be 0*@
+                        <a href="#" class="block-add" @onclick:preventDefault @onclick="() => OpenBlockPicker(index)">
+                            <hr>
+                            <i class="bi bi-plus-circle"></i>
+                        </a>
+                    </div>               
                 }
 
                 @if (ArticleModel.Blocks.Count == 0)
@@ -153,63 +155,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    .card {
-        max-width: 740px;
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-
-    .block-add {
-        display: block;
-        position: relative;
-        height: 10px;
-        width: 150px;
-        padding: 1rem;
-        margin: .125rem auto;
-        transition: all ease-in-out .2s
-    }
-
-        .block-add hr {
-            margin: 0;
-            border-top-width: 2px;
-            border-color: transparent;
-            transition: border-color ease-in-out .2s
-        }
-
-        .block-add i {
-            background: #fff;
-            color: #e9ecef;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin-top: -18px;
-            margin-left: -18px;
-            font-size: 28px;
-            border: 4px solid #fff;
-            border-radius: 50%;
-            z-index: 1000;
-            transition: color ease-in-out .2s
-        }
-
-    a.block-add.active,
-    a.block-add:focus-within,
-    a.block-add:hover {
-        width: 100%;
-        max-width: 960px;
-        outline: 0
-    }
-
-        a.block-add.active hr,
-        a.block-add:focus-within hr,
-        a.block-add:hover hr {
-            border-color: #495057
-        }
-
-        a.block-add.active i,
-        a.block-add:focus-within i,
-        a.block-add:hover i {
-            color: #495057
-        }
-</style>

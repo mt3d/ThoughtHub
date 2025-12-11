@@ -1,0 +1,27 @@
+﻿@using ThoughtHub.Api.Models.Blocks
+
+<div class="block-body @(IsEmpty ? "empty" : "")">
+    <pre class="invisible" @onclick="FocusTextArea">
+        @(Model.Body)
+    </pre>
+
+    <textarea
+        @bind="Model.Body"
+        @bind:event="oninput"
+        @onblur="OnBlur"></textarea>
+</div>
+
+@code
+{
+    private bool IsEmpty => string.IsNullOrWhiteSpace("");
+
+    [Parameter]
+    public TextBlockModel Model { get; set; }
+
+    private async Task OnBlur(FocusEventArgs args)
+    {
+        
+    }
+
+    private void FocusTextArea() { }
+}
