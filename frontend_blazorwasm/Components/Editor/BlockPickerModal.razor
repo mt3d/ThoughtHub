@@ -1,6 +1,6 @@
 ﻿@using ThoughtHub.Api.Models.Editor
-<h3>BlockPickerModal</h3>
 
+<h3>Select Block</h3>
 <div class="p-3">
 	<input @bind="filter"
 		class="form-control"
@@ -11,7 +11,7 @@
 	{
 		<div class="blocktype-category mt-3">@category.Name</div>
 
-		<div class="bloctype-list">
+		<div class="blocktype-list">
 			@foreach (var item in FilterBlockTypes(category))
 			{
 				<div class="blocktype">
@@ -29,12 +29,8 @@
 	public IHttpClientFactory? ClientFactory { get; set; }
 	private HttpClient? httpClient;
 
-	protected override Task OnInitializedAsync()
-	{
-		httpClient = ClientFactory?.CreateClient("Auth");
-
-		return base.OnInitializedAsync();
-	}
+	[CascadingParameter]
+    public BlazoredModalInstance ModalInstance { get; set; } = default!;
 
 	[Parameter]
 	public EventCallback<(string type, int index)> OnSelected { get; set; }
@@ -48,6 +44,13 @@
 	private IEnumerable<BlockListModel.BlockListCategory> FilteredCategories => Categories.Where(c => FilterBlockTypes(c).Any());
 
 	private string filter = "";
+	
+	protected override Task OnInitializedAsync()
+	{
+		httpClient = ClientFactory?.CreateClient("Auth");
+
+		return base.OnInitializedAsync();
+	}
 
 	private IEnumerable<BlockListModel.BlockListItem> FilterBlockTypes(BlockListModel.BlockListCategory category)
 	{
@@ -80,5 +83,6 @@
 	private async Task Select(BlockListModel.BlockListItem item)
 	{
 		await OnSelected.InvokeAsync((item.Type, Index));
+		await ModalInstance.CloseAsync();
 	}
 }
