@@ -264,64 +264,64 @@ namespace ThoughtHub.Controllers
 			throw new NotImplementedException();
 		}
 
-		[HttpPost]
-		[Authorize]
-		public async Task<IActionResult> Create(ArticleCreateDto model)
-		{
-			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var authorProfile = await context.Profiles.FirstAsync(p => p.UserId == userId);
+		//[HttpPost]
+		//[Authorize]
+		//public async Task<IActionResult> Create(ArticleCreateDto model)
+		//{
+		//	var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+		//	var authorProfile = await context.Profiles.FirstAsync(p => p.UserId == userId);
 
-			var tags = new List<Tag>();
+		//	var tags = new List<Tag>();
 
-			List<string> tagNames = model.TagList;
-			List<string> normalizedNames = tagNames
-				.Select(t => t.Trim().ToLowerInvariant())
-				.Distinct()
-				.ToList();
+		//	List<string> tagNames = model.TagList;
+		//	List<string> normalizedNames = tagNames
+		//		.Select(t => t.Trim().ToLowerInvariant())
+		//		.Distinct()
+		//		.ToList();
 
-			// Naive implementation: loop over all tagNames. This is inefficient.
-			// Better: Single query for existing tags.
-			List<Tag> existingTags = await context.Tags
-				.Where(t => normalizedNames.Contains(t.Name.ToLower()))
-				.ToListAsync();
+		//	// Naive implementation: loop over all tagNames. This is inefficient.
+		//	// Better: Single query for existing tags.
+		//	List<Tag> existingTags = await context.Tags
+		//		.Where(t => normalizedNames.Contains(t.Name.ToLower()))
+		//		.ToListAsync();
 
-			List<Tag> newTags = normalizedNames
-				.Except(existingTags.Select(t => t.Name.ToLowerInvariant()))
-				.Select(name => new Tag { Name = name })
-				.ToList();
+		//	List<Tag> newTags = normalizedNames
+		//		.Except(existingTags.Select(t => t.Name.ToLowerInvariant()))
+		//		.Select(name => new Tag { Name = name })
+		//		.ToList();
 
-			if (newTags.Any())
-			{
-				// Batch insert missing tags (more efficient).
-				// TODO: might hit a race condition if two users try to add
-				// the same new tag at the same time
-				// Fix: Wrap in a try/catch for DbUpdateException on unique index
-				// violation, then reload the conflicting tag from DB.
-				await context.Tags.AddRangeAsync(newTags);
-				await context.SaveChangesAsync(); // Generate Ids
-			}
+		//	if (newTags.Any())
+		//	{
+		//		// Batch insert missing tags (more efficient).
+		//		// TODO: might hit a race condition if two users try to add
+		//		// the same new tag at the same time
+		//		// Fix: Wrap in a try/catch for DbUpdateException on unique index
+		//		// violation, then reload the conflicting tag from DB.
+		//		await context.Tags.AddRangeAsync(newTags);
+		//		await context.SaveChangesAsync(); // Generate Ids
+		//	}
 
-			List<Tag> allTags = existingTags.Concat(newTags).ToList();
+		//	List<Tag> allTags = existingTags.Concat(newTags).ToList();
 
-			Article article = new();
-			article.Tags = allTags;
+		//	Article article = new();
+		//	article.Tags = allTags;
 
-			throw new NotImplementedException();
-		}
+		//	throw new NotImplementedException();
+		//}
 
-		[HttpPut("{slug}")]
-		[Authorize]
-		public Task<IActionResult> Edit(string slug)
-		{
-			throw new NotImplementedException();
-		}
+		//[HttpPut("{slug}")]
+		//[Authorize]
+		//public Task<IActionResult> Edit(string slug)
+		//{
+		//	throw new NotImplementedException();
+		//}
 
-		[HttpDelete("{slug}")]
-		[Authorize]
-		public Task<IActionResult> Delete(string slug)
-		{
-			throw new NotImplementedException();
-		}
+		//[HttpDelete("{slug}")]
+		//[Authorize]
+		//public Task<IActionResult> Delete(string slug)
+		//{
+		//	throw new NotImplementedException();
+		//}
 
 		[Route("Save")]
 		[HttpPost]
