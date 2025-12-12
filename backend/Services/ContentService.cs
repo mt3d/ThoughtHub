@@ -3,7 +3,6 @@ using System.Reflection;
 using System.Text.Json;
 using ThoughtHub.Api.Core.Entities.Article;
 using ThoughtHub.Api.Models.Content;
-using ThoughtHub.Data;
 using ThoughtHub.Runtime;
 
 namespace ThoughtHub.Services
@@ -11,11 +10,17 @@ namespace ThoughtHub.Services
 	public class ContentService : IContentService
 	{
 		private readonly BlocksRegistry _blocksRegistry;
+		private readonly FieldsRegistry _fieldsRegistry;
 		private readonly IMapper _mapper;
 
-		public ContentService(BlocksRegistry blocksRegistry)
+		public ContentService(
+			BlocksRegistry blocksRegistry,
+			FieldsRegistry fieldsRegistry,
+			IMapper mapper)
 		{
 			_blocksRegistry = blocksRegistry;
+			_fieldsRegistry = fieldsRegistry;
+			_mapper = mapper;
 		}
 
 		public ArticleM TransformArticleEntityIntoModel(Article article)
@@ -131,7 +136,32 @@ namespace ThoughtHub.Services
 						model.Id = block.Id;
 						model.Type = block.ClrType;
 
-						// TODO: Handle fields
+						// For each property of the type IFieldModel in the BlockModel.
+						foreach (var prop in model.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase))
+						{
+							if (typeof(IFieldModel).IsAssignableFrom(prop.GetType()))
+							{
+								// Pair which one of the current block fields in the database is the value of this property.
+								var field = block.Fields.FirstOrDefault(f => f.FieldId == prop.Name);
+
+								if (field != null)
+								{ 
+									var fieldTypeDescriptor = _fieldsRegistry.GetByTypeName(field.ClrType);
+
+									if (fieldTypeDescriptor is not null)
+									{
+										var value = (IFieldModel?)JsonSerializer.Deserialize(field.SerializedValue, fieldTypeDescriptor.Type);
+
+										prop.SetValue(model, value);
+									}
+								}
+								else
+								{
+									// Empty TextField, ImageField, etc?
+									prop.SetValue(model, Activator.CreateInstance(prop.PropertyType));
+								}
+							}
+						}
 
 						// TODO: Handle parent
 
