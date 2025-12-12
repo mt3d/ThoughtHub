@@ -2,10 +2,7 @@
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
-using System.Reflection;
 using System.Text.Json;
-using ThoughtHub.Api.Models;
-using ThoughtHub.Api.Models.Content;
 using ThoughtHub.Api.Models.Editor;
 using ThoughtHub.UI.BlazorWasm.Components.EditorBlocks;
 
@@ -29,7 +26,11 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 
 			ArticleModel = new ArticleEditModel()
 			{
-
+				Slug = string.Empty,
+				Status = new StatusMessage { Body = string.Empty, Type = string.Empty },
+				OgTitle = string.Empty,
+				MetaTitle = string.Empty,
+				Published = string.Empty,
 			};
 
 			return base.OnInitializedAsync();
@@ -56,6 +57,10 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 			try
 			{
 				var block = await httpClient.GetFromJsonAsync<BlockEditModel>($"/content/block/{type}", options);
+				block.Title = string.Empty;
+				block.Description = string.Empty;
+				block.EditorWidth = string.Empty;
+				block.Placeholder = string.Empty;
 
 				if (block != null)
 				{
@@ -141,6 +146,33 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 			}
 
 			return classes;
+		}
+
+		private bool _saving = false;
+
+		// Publish
+		public async Task Save()
+		{
+			_saving = true;
+			await SaveInternal();
+		}
+
+		private async Task SaveInternal()
+		{
+			try
+			{
+				var result = await httpClient.PostAsJsonAsync<ArticleEditModel>($"/articles/save", ArticleModel, options);
+
+				// TODO: Handle the result.
+
+				_saving = false;
+
+			}
+			catch (Exception ex)
+			{
+				// TODO: Find a better way to report the error.
+				Console.WriteLine($"error: {ex.Message}");
+			}
 		}
 	}
 }
