@@ -56,8 +56,6 @@ namespace ThoughtHub.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ClrType = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsReusable = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -369,7 +367,7 @@ namespace ThoughtHub.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AuthorProfileId = table.Column<int>(type: "int", nullable: true),
                     FovoritesCount = table.Column<int>(type: "int", nullable: false),
-                    ArticleImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ArticleImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ClapsCount = table.Column<int>(type: "int", nullable: false),
                     CommentsCount = table.Column<int>(type: "int", nullable: false),
                     PublicationId = table.Column<int>(type: "int", nullable: true),
@@ -383,8 +381,7 @@ namespace ThoughtHub.Migrations
                         name: "FK_Articles_Images_ArticleImageId",
                         column: x => x.ArticleImageId,
                         principalTable: "Images",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Articles_Profiles_AuthorProfileId",
                         column: x => x.AuthorProfileId,

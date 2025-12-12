@@ -176,7 +176,7 @@ namespace ThoughtHub.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ArticleImageId")
+                    b.Property<Guid?>("ArticleImageId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("AuthorProfileId")
@@ -279,13 +279,6 @@ namespace ThoughtHub.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsReusable")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -841,9 +834,7 @@ namespace ThoughtHub.Migrations
                 {
                     b.HasOne("ThoughtHub.Data.Entities.Media.Image", "ArticleImage")
                         .WithMany()
-                        .HasForeignKey("ArticleImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ArticleImageId");
 
                     b.HasOne("ThoughtHub.Data.Entities.Profile", "AuthorProfile")
                         .WithMany("Articles")

@@ -28,9 +28,9 @@ namespace ThoughtHub.Api.Core.Entities.Article
 
 		public int FovoritesCount { get; set; } // Dynamically generated
 
-		public Image ArticleImage { get; set; }
+		public Image? ArticleImage { get; set; }
 
-		public Guid ArticleImageId { get; set; }
+		public Guid? ArticleImageId { get; set; }
 
 		public int ClapsCount { get; set; } // Dynamically generated
 

@@ -1,4 +1,5 @@
-﻿using ThoughtHub.Api.Models.Content;
+﻿using System.Reflection;
+using ThoughtHub.Api.Models.Content;
 using ThoughtHub.Runtime;
 
 namespace ThoughtHub.Services
@@ -28,7 +29,16 @@ namespace ThoughtHub.Services
 					{
 						block.Type = typeName;
 
-						// TODO: Create a loop that populates all field properties.
+						// Find each property of the block that is derived from IFieldModel
+						foreach (var prop in blockTypeDescriptor.Type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase))
+						{
+							if (typeof(IFieldModel).IsAssignableFrom(prop.PropertyType))
+							{
+								var field = Activator.CreateInstance(prop.PropertyType);
+
+								prop.SetValue(block, field);
+							}
+						}
 
 						return block;
 					}

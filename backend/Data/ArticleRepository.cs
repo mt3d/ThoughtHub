@@ -50,6 +50,8 @@ namespace ThoughtHub.Data
 
 			}
 
+			// Ensure the Slug exists.
+
 			if (string.IsNullOrEmpty(model.Slug))
 			{
 				model.Slug = Utils.GenerateSlug(model.Title, false);
@@ -96,7 +98,7 @@ namespace ThoughtHub.Data
 
 			// TODO: Set key for fields
 
-			// TODO: Transform blocks
+			// Transform blocks
 			var blockModels = model.BlockModels;
 
 			if (blockModels != null)

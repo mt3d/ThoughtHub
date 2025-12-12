@@ -2,11 +2,11 @@
 
 <div class="block-body @(IsEmpty ? "empty" : "")">
     <pre class="invisible" @onclick="FocusTextArea">
-        @(Model.Body)
+        @(Model.Body.Value)
     </pre>
 
     <textarea
-        @bind="Model.Body"
+        @bind="Model.Body.Value"
         @bind:event="oninput"
         @onblur="OnBlur"></textarea>
 </div>
