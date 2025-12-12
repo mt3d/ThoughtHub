@@ -12,6 +12,26 @@ namespace ThoughtHub.Services
 			_repo = repo;
 		}
 
+		public async Task<ArticleM?> GetByIdAsync(Guid id)
+		{
+			// TODO: Check the cache
+
+			var model = await _repo.GetById(id).ConfigureAwait(false);
+
+			if (model is not null)
+			{
+				// TODO: Format the perma link (based on the publication and the author)
+
+				// TODO: Init primary image and og image
+
+				// TODO: Cache the model
+
+				return model;
+			}
+
+			return null;
+		}
+
 		public Task SaveAsync(ArticleM model)
 		{
 			return SaveAsync(model, false);

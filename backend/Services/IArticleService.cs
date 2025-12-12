@@ -4,7 +4,7 @@ namespace ThoughtHub.Services
 {
 	public interface IArticleService
 	{
-		//Task<> GetByIdAsync(Guid id);
+		Task<ArticleM?> GetByIdAsync(Guid id);
 
 		public Task SaveAsync(ArticleM model);
 	}
