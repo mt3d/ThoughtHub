@@ -6,6 +6,6 @@ namespace ThoughtHub.Api.Models.Blocks
 	public class TextBlockModel : BlockModel
 	{
 		// TODO: A simple "string" field.
-		public string Body { get; set; }
+		public TextFieldModel Body { get; set; }
 	}
 }

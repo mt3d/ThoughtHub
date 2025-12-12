@@ -208,7 +208,6 @@ namespace ThoughtHub.Data
 				}
 			}
 			block.ClrType = blockToSave.ClrType;
-			block.Title = blockToSave.Title;
 			block.UpdatedAt = blockToSave.UpdatedAt;
 
 			UpdateFields(blockToSave, block, isDraft);

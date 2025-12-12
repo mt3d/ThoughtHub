@@ -77,6 +77,11 @@ blocksRegistry.Register<ImageBlock>();
 
 builder.Services.AddSingleton(blocksRegistry);
 
+var fieldsRegistry = new FieldsRegistry();
+fieldsRegistry.Register<TextFieldModel>();
+
+builder.Services.AddSingleton(fieldsRegistry);
+
 // TODO: Only if development.
 builder.Services.AddScoped<ImageCreator>();
 builder.Services.AddScoped<ProfileSeeder>();
