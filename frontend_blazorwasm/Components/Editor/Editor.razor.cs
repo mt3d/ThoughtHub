@@ -161,7 +161,7 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 		{
 			try
 			{
-				var response = await httpClient.PostAsJsonAsync<ArticleEditModel>($"/articles/save", ArticleModel, options);
+				var response = await httpClient.PostAsJsonAsync<ArticleEditModel>($"api/articles/save", ArticleModel, options);
 				response.EnsureSuccessStatusCode();
 
 				var result = await response.Content.ReadFromJsonAsync<ArticleEditModel>();

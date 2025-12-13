@@ -13,7 +13,7 @@ using ThoughtHub.Api.Models.Content;
 
 namespace ThoughtHub.Controllers
 {
-	[Route("[controller]")]
+	[Route("api/articles")]
 	[ApiController]
 	public class ArticlesController : ControllerBase
 	{
@@ -69,7 +69,7 @@ namespace ThoughtHub.Controllers
 		/// <param name="limit"></param>
 		/// <param name="offset"></param>
 		/// <returns></returns>
-		[HttpGet("/for-you")]
+		[HttpGet("for-you")]
 		[Authorize]
 		public async Task<IList<ArticleCardModel>> GetForYou([FromQuery] int? limit, [FromQuery] int? offset)
 		{
@@ -94,14 +94,14 @@ namespace ThoughtHub.Controllers
 		/// <param name="limit"></param>
 		/// <param name="offset"></param>
 		/// <returns></returns>
-		[HttpGet("/featured")]
+		[HttpGet("featured")]
 		[Authorize]
 		public async Task<IList<ArticleCardModel>> GetFeatured([FromQuery] int? limit, [FromQuery] int? offset)
 		{
 			throw new NotImplementedException();
 		}
 
-		[HttpGet("/@{author}/{slug}")]
+		[HttpGet("@{author}/{slug}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> GetIndependentArticle(string author, string slug)
@@ -147,7 +147,7 @@ namespace ThoughtHub.Controllers
 			return Ok(mapper.Map<ArticleModel>(article));
 		}
 
-		[HttpPost("/updateprogress")]
+		[HttpPost("updateprogress")]
 		[Authorize]
 		public async Task<IActionResult> UpdateReadingProgress(Guid articleId, double progress, int readSeconds)
 		{
@@ -176,7 +176,7 @@ namespace ThoughtHub.Controllers
 		}
 
 		[Authorize]
-		[HttpGet("/recently_read")]
+		[HttpGet("recently_read")]
 		public async Task<IActionResult> GetRecentlyRead(int limit = 5)
 		{
 			var profile = await GetCurrentUserProfileAsync();
@@ -193,7 +193,7 @@ namespace ThoughtHub.Controllers
 		}
 
 		[Authorize]
-		[HttpGet("/continue_reading")]
+		[HttpGet("continue_reading")]
 		public async Task<IActionResult> GetContinueReading(int limit = 5)
 		{
 			var profile = await GetCurrentUserProfileAsync();
@@ -209,7 +209,7 @@ namespace ThoughtHub.Controllers
 			return Ok(mapper.Map<List<ArticleCardModel>>(recentReads));
 		}
 
-		[HttpGet("/{publication}/{slug}")]
+		[HttpGet("{publication}/{slug}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> GetPublicationArticle(string publication, string slug)
@@ -243,7 +243,7 @@ namespace ThoughtHub.Controllers
 			throw new NotImplementedException();
 		}
 
-		[HttpGet("/tag/{topic}")]
+		[HttpGet("tag/{topic}")]
 		public async Task<IActionResult> GetArticlesByTopic(string topic)
 		{
 			throw new NotImplementedException();
@@ -257,7 +257,7 @@ namespace ThoughtHub.Controllers
 			return profile;
 		}
 
-		[Route("Save")]
+		[Route("save")]
 		[HttpPost]
 		[Authorize] // TODO: Check permissions for posting articles
 		public async Task<ArticleEditModel> Save(ArticleEditModel model)

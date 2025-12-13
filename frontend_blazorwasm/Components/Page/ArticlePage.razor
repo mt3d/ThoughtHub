@@ -127,11 +127,11 @@
 
         if (author is not null)
         {
-            Article = await httpClient.GetFromJsonAsync<ArticleModel>($"/@{author}/{slug}", options);
+            Article = await httpClient.GetFromJsonAsync<ArticleModel>($"api/articles/@{author}/{slug}", options);
         }
         else
         {
-            Article = await httpClient.GetFromJsonAsync<ArticleModel>($"/{publication}/{slug}", options);
+            Article = await httpClient.GetFromJsonAsync<ArticleModel>($"api/articles/{publication}/{slug}", options);
         }
     }
 }
