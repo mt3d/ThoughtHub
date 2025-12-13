@@ -13,14 +13,28 @@
 
 @code
 {
-    private bool IsEmpty => string.IsNullOrWhiteSpace("");
+    private bool IsEmpty => string.IsNullOrWhiteSpace(Model?.Body?.Value);
+
+    [Parameter]
+    public string Uid { get; set; }
 
     [Parameter]
     public TextBlockModel Model { get; set; }
 
+    [Parameter]
+    public EventCallback<(string Uid, string Title)> UpdateTitle { get;set; }
+
     private async Task OnBlur(FocusEventArgs args)
     {
-        
+        var raw = Model?.Body?.Value ?? string.Empty;
+        var title = raw;
+
+        if (title.Length > 40)
+        {
+            title = title.Substring(0, 40);
+        }
+
+        await UpdateTitle.InvokeAsync((Uid, title));
     }
 
     private void FocusTextArea() { }

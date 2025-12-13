@@ -133,7 +133,7 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 
 		private string GetBlockClasses(BlockEditModel block)
 		{
-			var classes = $"block + {block.Component}";
+			var classes = $"block {block.Component}";
 
 			if (block.IsCollapsed)
 			{
@@ -177,6 +177,18 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 				// TODO: Find a better way to report the error.
 				Console.WriteLine($"error: {ex.Message}");
 			}
+		}
+
+		private void OnUpdateBlockTitle((string uid, string title) args)
+		{
+			foreach (var block in ArticleModel.Blocks)
+			{
+				if (block.Uid == args.uid)
+				{
+					block.Title = args.title;
+					return;
+				}
+			}	
 		}
 	}
 }

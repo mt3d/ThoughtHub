@@ -134,7 +134,12 @@
                             @* Render the blocks *@
                             <DynamicComponent
                                 Type="@GetComponentType(block.Component)"
-                                Parameters="@(new Dictionary<string, object> { ["Model"] = block.Block })" />
+                                Parameters="@(new Dictionary<string, object>
+                                {
+                                    ["Uid"] = block.Uid,
+                                    ["Model"] = block.Block,
+                                    ["UpdateTitle"] = EventCallback.Factory.Create<(string, string)>(this, OnUpdateBlockTitle)
+                                })" />
                         </div>
 
                         @* TODO: call BlockPicker.Open(), the callback is AddBlock, the index should be 0*@
