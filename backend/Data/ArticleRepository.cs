@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using ThoughtHub.Api.Core.Entities.Article;
@@ -11,13 +12,16 @@ namespace ThoughtHub.Data
 	{
 		private readonly PlatformContext _context;
 		private readonly IContentService _contentService;
+		private readonly IMapper _mapper;
 
 		public ArticleRepository(
 			PlatformContext context,
-			IContentService contentService)
+			IContentService contentService,
+			IMapper mapper)
 		{
 			_context = context;
 			_contentService = contentService;
+			_mapper = mapper;
 		}
 
 		public async Task<ArticleM?> GetById(Guid id)
@@ -95,6 +99,7 @@ namespace ThoughtHub.Data
 			}
 
 			// TODO: Transform model to article
+			_mapper.Map<ArticleM, Article>(model, article);
 
 			// TODO: Set key for fields
 

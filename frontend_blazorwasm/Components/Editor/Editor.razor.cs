@@ -161,9 +161,13 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 		{
 			try
 			{
-				var result = await httpClient.PostAsJsonAsync<ArticleEditModel>($"/articles/save", ArticleModel, options);
+				var response = await httpClient.PostAsJsonAsync<ArticleEditModel>($"/articles/save", ArticleModel, options);
+				response.EnsureSuccessStatusCode();
 
-				// TODO: Handle the result.
+				var result = await response.Content.ReadFromJsonAsync<ArticleEditModel>();
+				ArticleModel.Id = result.Id;
+				ArticleModel.Slug = result.Slug;
+				// TODO: Update published.
 
 				_saving = false;
 

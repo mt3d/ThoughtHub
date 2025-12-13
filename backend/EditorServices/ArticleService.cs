@@ -1,21 +1,51 @@
 ﻿using ThoughtHub.Api.Models.Content;
 using ThoughtHub.Api.Models.Editor;
+using ThoughtHub.Runtime;
 using ThoughtHub.Services;
 
 namespace ThoughtHub.EditorServices
 {
 	public class ArticleService
 	{
-		public Services.IArticleService _service;
+		private readonly Services.IArticleService _service;
+		private readonly BlocksRegistry _blocksRegistry;
 
 		public ArticleService(Services.IArticleService service)
 		{
 			_service = service;
 		}
 
-		public async Task<ArticleEditModel> GetById(Guid id)
+		public async Task<ArticleEditModel?> GetById(Guid id, bool lookForDrafts = true)
 		{
-			throw new NotImplementedException();
+			// TODO: Look for both drafts and published depending on the optional parameter.
+			var article = await _service.GetByIdAsync(id);
+
+			if (article is not null)
+			{
+				var editModel = new ArticleEditModel()
+				{
+					Id = article.Id,
+					Title = article.Title,
+					Slug = article.Slug,
+				};
+
+				foreach (var blockModel in article.BlockModels)
+				{
+					var blockTypeDescriptor = _blocksRegistry.GetByTypeName(blockModel.Type);
+
+					editModel.Blocks.Add(new BlockEditModel
+					{
+						Block = blockModel,
+						Name = blockTypeDescriptor.Name,
+						Icon = blockTypeDescriptor.Icon,
+						Component = blockTypeDescriptor.Component
+					});
+				}
+
+				return editModel;
+			}
+
+			return null;
 		}
 
 		// create or update
