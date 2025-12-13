@@ -109,34 +109,6 @@ namespace ThoughtHub.Controllers
 			return Ok(mapper.Map<ArticleModel>(article));
 		}
 
-		[HttpPost("updateprogress")]
-		[Authorize]
-		public async Task<IActionResult> UpdateReadingProgress(Guid articleId, double progress, int readSeconds)
-		{
-			var profile = await GetCurrentUserProfileAsync();
-
-			var history = await context.ReadingHistories
-				.FirstOrDefaultAsync(r => r.ProfileId == profile.ProfileId && r.ArticleId == articleId);
-
-			if (history == null)
-			{
-				return NotFound();
-			}
-
-			history.Progress = Math.Max(history.Progress, progress);
-			history.Completed = history.Progress >= 95;
-
-			if (readSeconds > (history.TotalReadsSecond ?? 0)) // To avoid resets
-			{
-				history.TotalReadsSecond = readSeconds;
-			}
-
-			history.LastReadAt = DateTime.UtcNow;
-
-			await context.SaveChangesAsync();
-			return Ok();
-		}
-
 		[HttpGet("{publication}/{slug}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
