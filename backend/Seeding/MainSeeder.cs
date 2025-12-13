@@ -26,7 +26,7 @@
 			await _profileSeeder.SeedAsync(10);
 			await _tagSeeder.SeedAsync();
 			await _publicationSeeder.SeedAsync(20);
-			await _articleSeeder.SeedAsync(30);
+			await _articleSeeder.SeedAsync(articleCount);
 
 			Console.WriteLine("Seeding completed.");
 		}

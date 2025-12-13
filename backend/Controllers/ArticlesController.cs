@@ -78,9 +78,7 @@ namespace ThoughtHub.Controllers
 		[Authorize]
 		public async Task<IList<ArticleCardModel>> GetForYou([FromQuery] int? limit, [FromQuery] int? offset)
 		{
-			// TODO: Find a better way to access current user profile.
-			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var profile = await context.Profiles.FirstAsync(p => p.UserId == userId);
+			var profile = await GetCurrentUserProfileAsync();
 
 			var readArticleIds = await context.ReadingHistories
 				.Where(r => r.ProfileId == profile.ProfileId)
@@ -129,9 +127,7 @@ namespace ThoughtHub.Controllers
 				return NotFound();
 			}
 
-			// TODO: find a better way to get profile.
-			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var profile = await context.Profiles.FirstAsync(p => p.UserId == userId);
+			var profile = await GetCurrentUserProfileAsync();
 
 			var history = await context.ReadingHistories
 				.FirstOrDefaultAsync(r => r.ProfileId == profile.ProfileId && r.ArticleId == article.Id);
@@ -160,9 +156,7 @@ namespace ThoughtHub.Controllers
 		[Authorize]
 		public async Task<IActionResult> UpdateReadingProgress(Guid articleId, double progress, int readSeconds)
 		{
-			// TODO: Find a better way to access current user profile.
-			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var profile = await context.Profiles.FirstAsync(p => p.UserId == userId);
+			var profile = await GetCurrentUserProfileAsync();
 
 			var history = await context.ReadingHistories
 				.FirstOrDefaultAsync(r => r.ProfileId == profile.ProfileId && r.ArticleId == articleId);
@@ -190,9 +184,7 @@ namespace ThoughtHub.Controllers
 		[HttpGet("/recently_read")]
 		public async Task<IActionResult> GetRecentlyRead(int limit = 5)
 		{
-			// TODO: Find a better way.
-			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var profile = await context.Profiles.FirstAsync(p => p.UserId == userId);
+			var profile = await GetCurrentUserProfileAsync();
 
 			var recentReads = await context.ReadingHistories
 				.Include(r => r.Article)
@@ -209,9 +201,7 @@ namespace ThoughtHub.Controllers
 		[HttpGet("/continue_reading")]
 		public async Task<IActionResult> GetContinueReading(int limit = 5)
 		{
-			// TODO: Find a better way.
-			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var profile = await context.Profiles.FirstAsync(p => p.UserId == userId);
+			var profile = await GetCurrentUserProfileAsync();
 
 			var recentReads = await context.ReadingHistories
 				.Include(r => r.Article)
@@ -323,11 +313,21 @@ namespace ThoughtHub.Controllers
 		//	throw new NotImplementedException();
 		//}
 
+		private async Task<Data.Entities.Profile> GetCurrentUserProfileAsync()
+		{
+			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+			var profile = await context.Profiles.FirstAsync(p => p.UserId == userId);
+
+			return profile;
+		}
+
 		[Route("Save")]
 		[HttpPost]
 		[Authorize] // TODO: Check permissions for posting articles
 		public async Task<ArticleEditModel> Save(ArticleEditModel model)
 		{
+			model.AuthorProfileId = (await GetCurrentUserProfileAsync()).ProfileId;
+
 			if (string.IsNullOrEmpty(model.Published))
 			{
 				model.Published = DateTime.Now.ToString("yyyy-MM-dd HH:mm");

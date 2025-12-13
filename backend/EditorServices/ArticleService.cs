@@ -10,9 +10,12 @@ namespace ThoughtHub.EditorServices
 		private readonly Services.IArticleService _service;
 		private readonly BlocksRegistry _blocksRegistry;
 
-		public ArticleService(Services.IArticleService service)
+		public ArticleService(
+			Services.IArticleService service,
+			BlocksRegistry blocksRegistry)
 		{
 			_service = service;
+			_blocksRegistry = blocksRegistry;
 		}
 
 		public async Task<ArticleEditModel?> GetById(Guid id, bool lookForDrafts = true)
@@ -62,6 +65,7 @@ namespace ThoughtHub.EditorServices
 			{
 				article = new ArticleM();
 				article.Id = model.Id;
+				article.AuthorProfileId = model.AuthorProfileId;
 			}
 
 			article.Title = model.Title;

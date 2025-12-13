@@ -2,7 +2,7 @@
 
 namespace ThoughtHub.Api.Models.Editor
 {
-	public class ArticleEditModel : ContentEditModel
+	public class ArticleEditModel
 	{
 		public Guid Id { get; set; }
 
@@ -27,6 +27,8 @@ namespace ThoughtHub.Api.Models.Editor
 		// TODO: Add tags
 
 		public StatusMessage Status { get; set; }
+
+		public int AuthorProfileId { get; set; }
 	}
 
 	public class StatusMessage

@@ -145,7 +145,7 @@ if (app.Environment.IsDevelopment())
 			await context.Database.EnsureCreatedAsync();
 
 			MainSeeder seeder = scope.ServiceProvider.GetRequiredService<MainSeeder>();
-			await seeder.SeedAllAsync();
+			await seeder.SeedAllAsync(10);
 
 			//switch (seedtype.ToLower())
 			//{

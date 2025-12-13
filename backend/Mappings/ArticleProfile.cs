@@ -43,6 +43,9 @@ namespace ThoughtHub.Mappings
 				.ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.AuthorProfile))
 				.ForMember(dest => dest.Publication, opt => opt.MapFrom(src => src.Publication));
 
+			// Map Article model to Article entity
+			CreateMap<ArticleM, Article>();
+
 			CreateMap<Article, ArticleM>();
 
 			CreateMap<Article, ArticleCardModel>()

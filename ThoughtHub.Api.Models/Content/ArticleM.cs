@@ -11,6 +11,8 @@
 		public string Title { get; set; }
 
 		public IList<BlockModel> BlockModels { get; set; } = new List<BlockModel>();
+
+		public int AuthorProfileId { get; set; }
 	}
 
 	public class TagM
