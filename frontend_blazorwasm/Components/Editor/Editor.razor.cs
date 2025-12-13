@@ -188,7 +188,12 @@ namespace ThoughtHub.UI.BlazorWasm.Components.Editor
 					block.Title = args.title;
 					return;
 				}
-			}	
+			}
+		}
+
+		private void CollapseBlock(BlockEditModel block)
+		{
+			block.IsCollapsed = !block.IsCollapsed;
 		}
 	}
 }

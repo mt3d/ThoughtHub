@@ -2,57 +2,35 @@
 @using ThoughtHub.UI.BlazorWasm.Layout
 @layout EditorLayout
 
-<div class="editor-header">
-    <div class="header-wrapper">
-        <div class="header-content d-flex justify-content-around">
-            <div class="header-left d-flex">
-                <div class="website-title">
-                    <a href="/" data-log-event="home">
-                        <span>
-                            <svg width="120" height="26">
-                            </svg>
-                        </span>
-                        <span>Homepage</span>
-                    </a>
-                </div>
-                <div>
-                    <span>
-                        Draft in Muhammad Altahan
-                        <span>Saved</span>
-                    </span>
-                </div>
-            </div>
-            <div class="header-right d-flex">
-                <div class="publish-button">
-                    <button @onclick="Save">
-                        <span>Publish</span>
-                    </button>
-                </div>
-                <div>
-                    <button>
-                        <span>
-                            <svg width="25" height="25">
-                            </svg>
-                        </span>
-                    </button>
-                </div>
-                <div class="notifications-profile">
-                    <button title="Notifications" aria-label="Notifications">
-                        <span>
-                            <svg width="25" height="25">
-                            </svg>
-                        </span>
-                    </button>
-                    <button aria-haspopup="true">
-                        <div>
-                            <img src="" alt="">
-                        </div>
-                    </button>
-                </div>
-            </div>
+<header class="topbar">
+    <div class="topbar-inner">
+        <div class="topbar-left">
+            <a href="/" class="navbar-brand brand">
+                ThoughtHub
+            </a>
+            <span class="draft-status">Draft in </span>
+        </div>
+
+        <div class="topbar-right">
+            <button class="btn btn-primary btn-small" @onclick="Save">Publish</button>
+
+            <button class="btn btn-icon">
+                <i class="bi bi-three-dots"></i>
+            </button>
+
+            <button class="btn btn-icon" title="Notifications">
+                <i class="bi bi-bell"></i>
+            </button>
+
+            <button class="btn btn-avatar">
+                <img src=""
+                     alt="">
+            </button>
         </div>
     </div>
-</div>
+</header>
+
+<div class="topbar-spacer"></div>
 
 <div class="editor-content">
     <!-- Title -->
@@ -61,21 +39,9 @@
 			<div class="form-group title">
 				<dvi class="row">
 					<div class="col">
-						<input @bind="ArticleModel.Title" type="text" class="form-control form-control-lg" placeholder="Your article title" />
+						<input @bind="ArticleModel.Title" type="text" class="form-control form-control-lg" placeholder="Title" />
 					</div>
 				</dvi>
-                <div class="row mt-3">
-                    <div class="col-sm-6">
-                        <div class="form-group mb-0">
-                            <label style="display:none">Tags</label>
-                            @* TODO: Display selected tags*@
-                            <select id="selectedTags" class="form-control select2" multiple="multiple">
-                                @* TODO: Add a loop*@
-                                <option></option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
 			</div>
 		</div>
 	</div>
@@ -84,8 +50,6 @@
     <div class="section">
         <div class="card-body">
             <div id="content-blocks" class="blocks">
-
-                @* TODO: call BlockPicker.Open(), the callback is AddBlock, the index should be 0*@
                 <a href="#" class="block-add unsortable" @onclick:preventDefault @onclick="() => OpenBlockPicker(0)">
                     <hr>
                     <i class="bi bi-plus-circle"></i>
@@ -97,9 +61,7 @@
 
                     <div>
                         <div class="@GetBlockClasses(block)">
-    @*                         <div :id="'tb-' + block.meta.uid" class="component-toolbar"></div>
-
-        *@                  <div class="block-header">
+                            <div class="block-header">
                                 <div class="title">
                                         <i class="@block.Icon"></i>
                                         @* TODO: Explain *@
@@ -107,10 +69,8 @@
                                 </div>
 
                                 <div class="actions">
-                                    @* Collapse the block Collapse(Block) *@
-                                    <span class="btn btn-sm">
-                                        @* TODO: Check if the block is collapsed*@
-                                        @if (true)
+                                    <span class="btn btn-sm" @onclick="() => CollapseBlock(block)">
+                                        @if (!block.IsCollapsed)
                                         {
                                             <i class="bi bi-chevron-up"></i>
                                         }
@@ -123,8 +83,7 @@
                                             <i class="bi bi-three-dots-vertical"></i>
                                     </span>
 
-                                    @* TODO: Call RemoveBlock(Block reference) *@
-                                    <button class="btn btn-sm danger block-remove" tabindex="-1">
+                                    <button class="btn btn-sm danger block-remove" tabindex="-1" @onclick="() => RemoveBlock(block)">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </div>
