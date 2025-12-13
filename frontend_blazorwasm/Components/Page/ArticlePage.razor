@@ -1,6 +1,7 @@
 ﻿@page "/@{author}/{slug}"
 @page "/{publication}/{slug}"
 @using System.Text.Json
+@using ThoughtHub.Api.Models.Content
 @using ThoughtHub.UI.BlazorWasm.Layout
 @layout MainLayout
 
@@ -32,36 +33,34 @@
                     </div> *@
 
                     <!-- Title -->
-                    <h1 class="mb-2">@Article.Title</h1>
+                    <h1 class="">@Article.Title</h1>
 
                     <!-- Subtitle / Description -->
-                    <p class="text-secondary fs-5 mb-3">@Article.Description</p>
+                    <p class="text-secondary">@Article.Description</p>
 
                     <!-- Meta Info -->
-                    <div class="mb-4 text-muted">
+                    <div>
                         <span>@Article.UpdatedAt.ToString("MMM d")</span>
-                        <span class="ms-3"> @Article.ClapsCount Claps</span>
-                        <span class="ms-3"> @Article.CommentsCount Comments</span>
+@*                         <span class="ms-3"> @Article.ClapsCount Claps</span>
+                        <span class="ms-3"> @Article.CommentsCount Comments</span> *@
                     </div>
 
                     <!-- Article Image -->
-                    @if (!string.IsNullOrEmpty(Article.Image))
+@*                     @if (!string.IsNullOrEmpty(Article.Image))
                     {
                         <img src="@Article.Image" alt="@Article.Title" class="img-fluid mb-4" />
-                    }
+                    } *@
 
                     <!-- Article Body (if stored in HTML) -->
-                    <div class="article-body mb-5">
-                        @*         @Html.Raw(Wrapper.Article.BodyHtml) *@
-                        @Article.BodySource
+                    <div class="article-body">
                     </div>
 
                     <!-- Tags -->
                     <div class="mb-4">
                         @foreach (var tag in Article.Tags)
                         {
-                            <span class="badge bg-secondary me-1">#@tag.Name</span>
-                        }
+@*                             <span class="badge bg-secondary me-1">#@tag.Name</span>
+ *@                        }
                     </div>
 
             @*             <PublicationAuthorCard />

@@ -5,7 +5,7 @@ namespace ThoughtHub.Services
 {
 	public interface IContentService
 	{
-		ArticleM TransformArticleEntityIntoModel(Article article);
+		ArticleModel TransformArticleEntityIntoModel(Article article);
 
 		IList<Block> TransformBlocks(IList<BlockModel> models);
 

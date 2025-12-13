@@ -23,9 +23,9 @@ namespace ThoughtHub.Services
 			_mapper = mapper;
 		}
 
-		public ArticleM TransformArticleEntityIntoModel(Article article)
+		public ArticleModel TransformArticleEntityIntoModel(Article article)
 		{
-			var model = new ArticleM();
+			var model = new ArticleModel();
 
 			// TODO: Initialized model?
 
@@ -49,7 +49,7 @@ namespace ThoughtHub.Services
 			return model;
 		}
 
-		public Article Transform(ArticleM model)
+		public Article Transform(ArticleModel model)
 		{
 			var article = new Article();
 

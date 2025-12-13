@@ -34,7 +34,11 @@ namespace ThoughtHub.Mappings
 		{
 			CreateMap<Image, string>().ConvertUsing<ImageToUrlConverter>();
 
+			// Map Article model to Article entity
+			CreateMap<ArticleModel, Article>();
+
 			CreateMap<Article, ArticleModel>()
+				// TODO: Move to permalink.
 				.ForMember(dest => dest.Url, opt => opt.MapFrom(src =>
 					src.Publication == null
 						? $"@{src.AuthorProfile.User.UserName}/{src.Slug}"
@@ -42,11 +46,6 @@ namespace ThoughtHub.Mappings
 				)
 				.ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.AuthorProfile))
 				.ForMember(dest => dest.Publication, opt => opt.MapFrom(src => src.Publication));
-
-			// Map Article model to Article entity
-			CreateMap<ArticleM, Article>();
-
-			CreateMap<Article, ArticleM>();
 
 			CreateMap<Article, ArticleCardModel>()
 				.ForMember(dest => dest.Url, opt => opt.MapFrom(src =>

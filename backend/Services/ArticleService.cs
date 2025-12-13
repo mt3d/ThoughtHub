@@ -12,7 +12,7 @@ namespace ThoughtHub.Services
 			_repo = repo;
 		}
 
-		public async Task<ArticleM?> GetByIdAsync(Guid id)
+		public async Task<ArticleModel?> GetByIdAsync(Guid id)
 		{
 			// TODO: Check the cache
 
@@ -32,12 +32,12 @@ namespace ThoughtHub.Services
 			return null;
 		}
 
-		public Task SaveAsync(ArticleM model)
+		public Task SaveAsync(ArticleModel model)
 		{
 			return SaveAsync(model, false);
 		}
 
-		private async Task SaveAsync(ArticleM model, bool isDraft)
+		private async Task SaveAsync(ArticleModel model, bool isDraft)
 		{
 			if (model.Id == Guid.Empty)
 			{

@@ -63,7 +63,7 @@ namespace ThoughtHub.EditorServices
 
 			if (article is null)
 			{
-				article = new ArticleM();
+				article = new ArticleModel();
 				article.Id = model.Id;
 				article.AuthorProfileId = model.AuthorProfileId;
 			}

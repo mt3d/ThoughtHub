@@ -24,7 +24,7 @@ namespace ThoughtHub.Data
 			_mapper = mapper;
 		}
 
-		public async Task<ArticleM?> GetById(Guid id)
+		public async Task<ArticleModel?> GetById(Guid id)
 		{
 			var article = await _context.Articles
 				.AsNoTracking()
@@ -41,12 +41,12 @@ namespace ThoughtHub.Data
 			return null;
 		}
 
-		public Task SaveAsync(ArticleM model)
+		public Task SaveAsync(ArticleModel model)
 		{
 			return SaveAsync(model, false);
 		}
 
-		private async Task SaveAsync(ArticleM model, bool isDraft)
+		private async Task SaveAsync(ArticleModel model, bool isDraft)
 		{
 			// Handle tags
 			foreach (var tag in model.Tags)
@@ -99,7 +99,7 @@ namespace ThoughtHub.Data
 			}
 
 			// TODO: Transform model to article
-			_mapper.Map<ArticleM, Article>(model, article);
+			_mapper.Map<ArticleModel, Article>(model, article);
 
 			// TODO: Set key for fields
 
