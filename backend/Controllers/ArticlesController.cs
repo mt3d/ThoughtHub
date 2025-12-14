@@ -1,12 +1,8 @@
 ﻿using ThoughtHub.Data;
-using ThoughtHub.Data.Entities;
-using ThoughtHub.Api.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using ThoughtHub.Api.Models.Editor;
-using ThoughtHub.Api.Models.Content;
 using ThoughtHub.Services;
 
 namespace ThoughtHub.Controllers
@@ -15,23 +11,17 @@ namespace ThoughtHub.Controllers
 	[ApiController]
 	public class ArticlesController : ControllerBase
 	{
-		private PlatformContext context;
-		private IMapper mapper;
 		private readonly EditorServices.ArticleService _service;
 		private readonly ICurrentUserService _currentUserService;
 		private readonly IArticleService _articleService;
 		private readonly IReadingHistoryService _readingHistoryService;
 
 		public ArticlesController(
-			PlatformContext context,
-			IMapper mapper,
 			EditorServices.ArticleService service,
 			ICurrentUserService currentUserService,
 			IArticleService articleService,
 			IReadingHistoryService readingHistoryService)
 		{
-			this.context = context;
-			this.mapper = mapper;
 			_service = service;
 			_currentUserService = currentUserService;
 			_articleService = articleService;
