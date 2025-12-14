@@ -1,57 +1,78 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
 @using ThoughtHub.UI.BlazorWasm.Components.Modals
 
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-    <div class="container-fluid">
-        <AuthorizeView>
-	        <Authorized>
-                <div>
-                    <a class="navbar-brand fw-bold" href="/">ThoughtHub</a>
+<AuthorizeView>
+	<Authorized>
+@*                 <div>
+            <a class="navbar-brand fw-bold" href="/">ThoughtHub</a>
 
-                    <button type="button" class="btn btn-link shadow-none navigation-pane-toggler" @onclick="ToggleNavPane">
+            <button type="button" class="btn btn-link shadow-none navigation-pane-toggler" @onclick="ToggleNavPane">
+                <i class="bi bi-list"></i>
+            </button>
+        </div>
+
+        <div class="d-flex" id="navContent">
+            <form class="d-flex ms-auto me-3" role="search">
+                <input class="form-control form-control-sm" type="search" placeholder="Search" aria-label="Search">
+            </form>
+
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Write</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Notifications</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Account</a>
+                </li>
+            </ul>
+
+        </div> *@
+        <header class="header-container">
+            <div class="header-inner">
+                <div class="header-left">
+                    <button class="icon-button" aria-label="Open menu" @onclick="ToggleNavPane">
                         <i class="bi bi-list"></i>
                     </button>
+
+                    <a href="/" class="header-logo" aria-label="Homepage">
+                        <span>ThoughtHub</span>
+                    </a>
                 </div>
 
-                <div class="d-flex" id="navContent">
-                    <form class="d-flex ms-auto me-3" role="search">
-                        <input class="form-control form-control-sm" type="search" placeholder="Search" aria-label="Search">
-                    </form>
-
-                    <ul class="navbar-nav mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Write</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Notifications</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Account</a>
-                        </li>
-                    </ul>
-
+                <div class="header-search">
+                    <i class="bi bi-search search-icon"></i>
+                    <input type="text"
+                            placeholder="Search"
+                            aria-label="Search" />
                 </div>
-	        </Authorized>
-	        <NotAuthorized>
 
-                <!-- Sidebar toggle button -->
-@*                 <button class="btn btn-outline-secondary d-lg-none" type="button"
-                        data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"
-                        aria-controls="sidebarMenu" aria-label="Toggle sidebar">
-                    <i class="bi bi-list"></i>
-                </button> *@
+                <div class="header-actions">
+                    <a href="/new-story" class="action-button">
+                        <i class="bi bi-pencil-square"></i>
+                        <span>Write</span>
+                    </a>
 
-                <!-- Logo -->
+                    <a href="/notifications" class="icon-button" aria-label="Notifications">
+                        <i class="bi bi-bell"></i>
+                    </a>
+
+                    <button class="avatar-button" aria-label="User menu">
+                        <img src="https://miro.medium.com/v2/resize:fill:40:40/1*dmbNkD5D-u45r44go_cf0g.png"
+                                alt="User avatar" />
+                    </button>
+                </div>
+            </div>
+        </header>
+
+	</Authorized>
+	<NotAuthorized>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container-fluid">
                 <a class="navbar-brand ms-2" href="/">
                     <img src="/images/logo.svg" alt="ThoughtHub" height="30">
                 </a>
-
-@*                 <button class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navContent">
-                    <span class="navbar-toggler-icon"></span>
-                </button> *@
 
                 <div class="collapse navbar-collapse" id="navContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -78,10 +99,11 @@
                         </li>
                     </ul>
                 </div>
-	        </NotAuthorized>
-        </AuthorizeView>
-    </div>
-</nav>
+            </div>
+        </nav>
+	</NotAuthorized>
+</AuthorizeView>
+
 
 @code
 {
