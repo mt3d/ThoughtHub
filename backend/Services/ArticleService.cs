@@ -1,15 +1,56 @@
-﻿using ThoughtHub.Api.Models.Content;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using System;
+using ThoughtHub.Api.Models.Content;
 using ThoughtHub.Data;
+using ThoughtHub.Data.Entities.Publications;
 
 namespace ThoughtHub.Services
 {
 	public class ArticleService : IArticleService
 	{
 		private readonly IArticleRepository _repo;
+		private readonly PlatformContext _context;
+		private readonly IMapper _mapper;
 
-		public ArticleService(IArticleRepository repo)
+		public ArticleService(
+			IArticleRepository repo,
+			PlatformContext context,
+			IMapper mapper)
 		{
 			_repo = repo;
+			_context = context;
+			_mapper = mapper;
+		}
+
+		public async Task<ArticleModel> GetIndependentArticle(string userName, string articleSlug)
+		{
+			// TODO: Use the article repo.
+			var article = await _context.Articles.AsNoTracking()
+				.Include(a => a.Tags)
+				.Include(a => a.Publication)
+				.Include(a => a.AuthorProfile)
+				.ThenInclude(p => p.User)
+				.FirstOrDefaultAsync(x => x.AuthorProfile.User.UserName == userName && x.Slug == articleSlug);
+
+			// TODO: Transform the blocks.
+
+			return _mapper.Map<ArticleModel>(article);
+		}
+
+		public async Task<ArticleModel> GetPublicationArticle(string publicationName, string slug)
+		{
+			var article = await _context.Articles.AsNoTracking()
+				.Include(a => a.Publication)
+				.Include(a => a.Tags)
+				.Include(a => a.AuthorProfile)
+				.FirstOrDefaultAsync(a =>
+					a.Publication != null && a.Publication.Slug == publicationName
+					&& a.Slug == slug);
+
+			// TODO: Transform the blocks.
+
+			return _mapper.Map<ArticleModel>(article);
 		}
 
 		public async Task<ArticleModel?> GetByIdAsync(Guid id)

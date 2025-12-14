@@ -19,36 +19,31 @@ namespace ThoughtHub.Controllers
 		private IMapper mapper;
 		private readonly EditorServices.ArticleService _service;
 		private readonly ICurrentUserService _currentUserService;
+		private readonly IArticleService _articleService;
 
 		public ArticlesController(
 			PlatformContext context,
 			IMapper mapper,
 			EditorServices.ArticleService service,
-			ICurrentUserService currentUserService)
+			ICurrentUserService currentUserService,
+			IArticleService articleService)
 		{
 			this.context = context;
 			this.mapper = mapper;
 			_service = service;
 			_currentUserService = currentUserService;
+			_articleService = articleService;
 		}
 
-		[HttpGet("@{author}/{slug}")]
+		// TODO: No need for the endpoint to match
+		[HttpGet("@{username}/{slug}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<IActionResult> GetIndependentArticle(string author, string slug)
+		public async Task<IActionResult> GetIndependentArticle(string userName, string slug)
 		{
-			/**
-			 * FirstOrDefault() returns the first element or the default value (null for
-			 * reference types). Meanwhile, First() throws an exception if no element is found.
-			 */
-			var article = await context.Articles.AsNoTracking()
-				.Include(a => a.Tags)
-				.Include(a => a.Publication)
-				.Include(a => a.AuthorProfile)
-				.ThenInclude(p => p.User)
-				.FirstOrDefaultAsync(x => x.AuthorProfile.User.UserName == author && x.Slug == slug);
+			var article = await _articleService.GetIndependentArticle(userName, slug);
 
-			if (article == null)
+			if (article is null)
 			{
 				return NotFound();
 			}
@@ -58,7 +53,7 @@ namespace ThoughtHub.Controllers
 			var history = await context.ReadingHistories
 				.FirstOrDefaultAsync(r => r.ProfileId == profile.ProfileId && r.ArticleId == article.Id);
 
-			if (history == null)
+			if (history is null)
 			{
 				history = new ReadingHistory
 				{
@@ -75,7 +70,7 @@ namespace ThoughtHub.Controllers
 
 			await context.SaveChangesAsync();
 
-			return Ok(mapper.Map<ArticleModel>(article));
+			return Ok(article);
 		}
 
 		[HttpGet("{publication}/{slug}")]
@@ -83,19 +78,14 @@ namespace ThoughtHub.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> GetPublicationArticle(string publication, string slug)
 		{
-			var article = await context.Articles.AsNoTracking()
-				.Include(a => a.Publication)
-				.Include(a => a.Tags)
-				.FirstOrDefaultAsync(a =>
-					a.Publication != null && a.Publication.Slug == publication
-					&& a.Slug == slug);
+			var article = await _articleService.GetPublicationArticle(publication, slug);
 
-			if (article == null)
+			if (article is null)
 			{
 				return NotFound();
 			}
 
-			return Ok(mapper.Map<ArticleModel>(article));
+			return Ok(article);
 		}
 
 		/// <summary>
