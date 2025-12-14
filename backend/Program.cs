@@ -68,6 +68,8 @@ builder.Services.AddScoped<IArticleService, ThoughtHub.Services.ArticleService>(
 builder.Services.AddScoped<ThoughtHub.EditorServices.ArticleService>();
 builder.Services.AddScoped<ContentTypeService>();
 builder.Services.AddScoped<IContentFactory, ContentFactory>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 // TODO: Find out if there's a better way.
 var blocksRegistry = new BlocksRegistry();

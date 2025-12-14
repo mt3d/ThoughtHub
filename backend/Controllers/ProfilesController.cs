@@ -12,21 +12,23 @@ namespace ThoughtHub.Controllers
 	{
 		private readonly PlatformContext _context;
 		private readonly IMediaUploadService _mediaService;
+		private readonly ICurrentUserService _currentUserService;
 
 		public ProfilesController(
 			PlatformContext context,
-			IMediaUploadService mediaService)
+			IMediaUploadService mediaService,
+			ICurrentUserService currentUserService)
 		{
 			_context = context;
 			_mediaService = mediaService;
+			_currentUserService = currentUserService;
 		}
 
 		[HttpPost]
 		[Consumes("multipart/form-data")]
 		public async Task<IActionResult> SetProfileImage(IFormFile file)
 		{
-			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var profile = (await _context.Profiles.FirstAsync(p => p.UserId == userId));
+			var profile = await _currentUserService.GetProfileAsync();
 
 			var image = await _mediaService.SaveImageAsync(file);
 

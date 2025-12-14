@@ -4,31 +4,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using ThoughtHub.Data;
+using ThoughtHub.Services;
 
 namespace ThoughtHub.Controllers
 {
 	public class ArticleProgressController : Controller
 	{
 		private readonly PlatformContext _context;
+		private readonly ICurrentUserService _currentUserService;
 
-		private async Task<Data.Entities.Profile> GetCurrentUserProfileAsync()
-		{
-			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var profile = await _context.Profiles.FirstAsync(p => p.UserId == userId);
-
-			return profile;
-		}
-
-		public ArticleProgressController(PlatformContext context)
+		public ArticleProgressController(
+			PlatformContext context,
+			ICurrentUserService currentUserService)
 		{
 			_context = context;
+			_currentUserService = currentUserService;
 		}
 
 		[HttpPost("updateprogress")]
 		[Authorize]
 		public async Task<IActionResult> UpdateReadingProgress(Guid articleId, double progress, int readSeconds)
 		{
-			var profile = await GetCurrentUserProfileAsync();
+			var profile = await _currentUserService.GetProfileAsync();
 
 			var history = await _context.ReadingHistories
 				.FirstOrDefaultAsync(r => r.ProfileId == profile.ProfileId && r.ArticleId == articleId);
@@ -48,7 +45,7 @@ namespace ThoughtHub.Controllers
 
 			history.LastReadAt = DateTime.UtcNow;
 
-			await context.SaveChangesAsync();
+			await _context.SaveChangesAsync();
 			return Ok();
 		}
 

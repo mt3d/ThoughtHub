@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using ThoughtHub.Api.Models;
 using ThoughtHub.Data;
+using ThoughtHub.Services;
 
 namespace ThoughtHub.Controllers
 {
@@ -14,21 +15,16 @@ namespace ThoughtHub.Controllers
 	{
 		private readonly PlatformContext _context;
 		private readonly IMapper _mapper;
-
-		private async Task<Data.Entities.Profile> GetCurrentUserProfileAsync()
-		{
-			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var profile = await _context.Profiles.FirstAsync(p => p.UserId == userId);
-
-			return profile;
-		}
+		private readonly ICurrentUserService _currentUserService;
 
 		public RecommendationsController(
 			PlatformContext context,
-			IMapper mapper)
+			IMapper mapper,
+			ICurrentUserService currentUserService)
 		{
 			_context = context;
 			_mapper = mapper;
+			_currentUserService = currentUserService;
 		}
 
 		/// <summary>
@@ -41,7 +37,7 @@ namespace ThoughtHub.Controllers
 		[Authorize]
 		public async Task<IList<ArticleCardModel>> GetForYou([FromQuery] int? limit, [FromQuery] int? offset)
 		{
-			var profile = await GetCurrentUserProfileAsync();
+			var profile = await _currentUserService.GetProfileAsync();
 
 			var readArticleIds = await _context.ReadingHistories
 				.Where(r => r.ProfileId == profile.ProfileId)
@@ -73,7 +69,7 @@ namespace ThoughtHub.Controllers
 		[HttpGet("recently_read")]
 		public async Task<IActionResult> GetRecentlyRead(int limit = 5)
 		{
-			var profile = await GetCurrentUserProfileAsync();
+			var profile = await _currentUserService.GetProfileAsync();
 
 			var recentReads = await _context.ReadingHistories
 				.Include(r => r.Article)
@@ -90,7 +86,7 @@ namespace ThoughtHub.Controllers
 		[HttpGet("continue_reading")]
 		public async Task<IActionResult> GetContinueReading(int limit = 5)
 		{
-			var profile = await GetCurrentUserProfileAsync();
+			var profile = await _currentUserService.GetProfileAsync();
 
 			var recentReads = await _context.ReadingHistories
 				.Include(r => r.Article)
@@ -102,6 +98,5 @@ namespace ThoughtHub.Controllers
 
 			return Ok(_mapper.Map<List<ArticleCardModel>>(recentReads));
 		}
-
 	}
 }

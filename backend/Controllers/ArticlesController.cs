@@ -5,11 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using System.Security.Claims;
-using ThoughtHub.Api.Core.Entities.Article;
-using ThoughtHub.EditorServices;
 using ThoughtHub.Api.Models.Editor;
 using ThoughtHub.Api.Models.Content;
+using ThoughtHub.Services;
 
 namespace ThoughtHub.Controllers
 {
@@ -19,16 +17,19 @@ namespace ThoughtHub.Controllers
 	{
 		private PlatformContext context;
 		private IMapper mapper;
-		private readonly ArticleService _service;
+		private readonly EditorServices.ArticleService _service;
+		private readonly ICurrentUserService _currentUserService;
 
 		public ArticlesController(
 			PlatformContext context,
 			IMapper mapper,
-			ArticleService service)
+			EditorServices.ArticleService service,
+			ICurrentUserService currentUserService)
 		{
 			this.context = context;
 			this.mapper = mapper;
 			_service = service;
+			_currentUserService = currentUserService;
 		}
 
 		/// <summary>
@@ -84,7 +85,7 @@ namespace ThoughtHub.Controllers
 				return NotFound();
 			}
 
-			var profile = await GetCurrentUserProfileAsync();
+			var profile = await _currentUserService.GetProfileAsync();
 
 			var history = await context.ReadingHistories
 				.FirstOrDefaultAsync(r => r.ProfileId == profile.ProfileId && r.ArticleId == article.Id);
@@ -149,20 +150,12 @@ namespace ThoughtHub.Controllers
 			throw new NotImplementedException();
 		}
 
-		private async Task<Data.Entities.Profile> GetCurrentUserProfileAsync()
-		{
-			var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-			var profile = await context.Profiles.FirstAsync(p => p.UserId == userId);
-
-			return profile;
-		}
-
 		[Route("save")]
 		[HttpPost]
 		[Authorize] // TODO: Check permissions for posting articles
 		public async Task<ArticleEditModel> Save(ArticleEditModel model)
 		{
-			model.AuthorProfileId = (await GetCurrentUserProfileAsync()).ProfileId;
+			model.AuthorProfileId = (await _currentUserService.GetProfileAsync()).ProfileId;
 
 			if (string.IsNullOrEmpty(model.Published))
 			{
