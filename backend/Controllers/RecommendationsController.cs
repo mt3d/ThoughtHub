@@ -36,7 +36,7 @@ namespace ThoughtHub.Controllers
 		/// <returns></returns>
 		[HttpGet("for-you")]
 		[Authorize]
-		public async Task<IList<ArticleCardModel>> GetForYou([FromQuery] int? limit, [FromQuery] int? offset)
+		public async Task<IList<ArticleDigestModel>> GetForYou([FromQuery] int? limit, [FromQuery] int? offset)
 		{
 			var profile = await _currentUserService.GetProfileAsync();
 
@@ -61,7 +61,7 @@ namespace ThoughtHub.Controllers
 		/// <returns></returns>
 		[HttpGet("featured")]
 		[Authorize]
-		public async Task<IList<ArticleCardModel>> GetFeatured([FromQuery] int? limit, [FromQuery] int? offset)
+		public async Task<IList<ArticleDigestModel>> GetFeatured([FromQuery] int? limit, [FromQuery] int? offset)
 		{
 			throw new NotImplementedException();
 		}
@@ -80,7 +80,7 @@ namespace ThoughtHub.Controllers
 				.Take(limit)
 				.ToListAsync();
 
-			return Ok(_mapper.Map<List<ArticleCardModel>>(recentReads));
+			return Ok(_mapper.Map<List<ArticleDigestModel>>(recentReads));
 		}
 
 		[Authorize]
@@ -97,7 +97,7 @@ namespace ThoughtHub.Controllers
 				.Take(limit)
 				.ToListAsync();
 
-			return Ok(_mapper.Map<List<ArticleCardModel>>(recentReads));
+			return Ok(_mapper.Map<List<ArticleDigestModel>>(recentReads));
 		}
 
 		/// <summary>
@@ -105,7 +105,7 @@ namespace ThoughtHub.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet("recent_unpersonalized")]
-		public async Task<IList<ArticleCardModel>> GetRecentArticles(
+		public async Task<IList<ArticleDigestModel>> GetRecentArticles(
 			[FromQuery] int limit,
 			[FromQuery] int offset = 0) // TODO: Add filtering by tag and author
 		{
@@ -121,7 +121,7 @@ namespace ThoughtHub.Controllers
 				.Include(a => a.ArticleImage)
 				.ToListAsync();
 
-			List<ArticleCardModel> articleModels = _mapper.Map<List<ArticleCardModel>>(articles);
+			List<ArticleDigestModel> articleModels = _mapper.Map<List<ArticleDigestModel>>(articles);
 
 			// TODO: Handle tags
 			// TODO: Handle author

@@ -1,6 +1,6 @@
 ﻿namespace ThoughtHub.Api.Models
 {
-	public class ArticleCardModel
+	public class ArticleDigestModel
 	{
 		public Guid Id { get; set; }
 

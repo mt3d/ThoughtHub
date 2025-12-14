@@ -26,7 +26,7 @@ namespace ThoughtHub.Infrastructure
 				.ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.AuthorProfile))
 				.ForMember(dest => dest.Publication, opt => opt.MapFrom(src => src.Publication));
 
-			CreateMap<Article, ArticleCardModel>()
+			CreateMap<Article, ArticleDigestModel>()
 				.ForMember(dest => dest.Url, opt => opt.MapFrom(src =>
 					src.Publication == null
 						? $"@{src.AuthorProfile.User.UserName}/{src.Slug}"

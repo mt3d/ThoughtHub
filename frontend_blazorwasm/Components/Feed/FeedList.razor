@@ -19,7 +19,7 @@
 </HubTab>
 
 @code {
-    private List<ArticleCardModel> Articles = new();
+    private List<ArticleDigestModel> Articles = new();
 
     [Inject]
     public IHttpClientFactory ClientFactory { get; set; }
@@ -31,13 +31,13 @@
         httpClient = ClientFactory.CreateClient("Auth");
     }
 
-    async Task<IEnumerable<ArticleCardModel>?> GetItems(ItemsRequest request)
+    async Task<IEnumerable<ArticleDigestModel>?> GetItems(ItemsRequest request)
     {
         int pageSize = 5;
 
         JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
 
-        var fetchedArticles = await httpClient.GetFromJsonAsync<IList<ArticleCardModel>>($"api/recommend/recent_unpersonalized?limit={pageSize}&offset={request.StartIndex}", options);
+        var fetchedArticles = await httpClient.GetFromJsonAsync<IList<ArticleDigestModel>>($"api/recommend/recent_unpersonalized?limit={pageSize}&offset={request.StartIndex}", options);
 
         return fetchedArticles;
     }
