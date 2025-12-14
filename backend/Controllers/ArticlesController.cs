@@ -77,12 +77,6 @@ namespace ThoughtHub.Controllers
 			throw new NotImplementedException();
 		}
 
-		[HttpGet("tag/{topic}")]
-		public async Task<IActionResult> GetArticlesByTopic(string topic)
-		{
-			throw new NotImplementedException();
-		}
-
 		[Route("save")]
 		[HttpPost]
 		[Authorize] // TODO: Check permissions for posting articles

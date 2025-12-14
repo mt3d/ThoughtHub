@@ -6,7 +6,7 @@ using ThoughtHub.Data;
 
 namespace ThoughtHub.Controllers
 {
-	[Route("[controller]")]
+	[Route("api/tags")]
 	[ApiController]
 	public class TagsController : ControllerBase
 	{
@@ -28,6 +28,12 @@ namespace ThoughtHub.Controllers
 				.ToListAsync();
 
 			return Ok(mapper.Map<List<TagModel>>(tags));
+		}
+
+		[HttpGet("{topic-slug}/articles")]
+		public async Task<IActionResult> GetArticlesByTopic(string topic, [FromQuery] int limit, [FromQuery] int offset = 0)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
