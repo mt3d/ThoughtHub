@@ -20,19 +20,22 @@ namespace ThoughtHub.Controllers
 		private readonly EditorServices.ArticleService _service;
 		private readonly ICurrentUserService _currentUserService;
 		private readonly IArticleService _articleService;
+		private readonly IReadingHistoryService _readingHistoryService;
 
 		public ArticlesController(
 			PlatformContext context,
 			IMapper mapper,
 			EditorServices.ArticleService service,
 			ICurrentUserService currentUserService,
-			IArticleService articleService)
+			IArticleService articleService,
+			IReadingHistoryService readingHistoryService)
 		{
 			this.context = context;
 			this.mapper = mapper;
 			_service = service;
 			_currentUserService = currentUserService;
 			_articleService = articleService;
+			_readingHistoryService = readingHistoryService;
 		}
 
 		// TODO: No need for the endpoint to match
@@ -50,25 +53,7 @@ namespace ThoughtHub.Controllers
 
 			var profile = await _currentUserService.GetProfileAsync();
 
-			var history = await context.ReadingHistories
-				.FirstOrDefaultAsync(r => r.ProfileId == profile.ProfileId && r.ArticleId == article.Id);
-
-			if (history is null)
-			{
-				history = new ReadingHistory
-				{
-					ProfileId = profile.ProfileId,
-					ArticleId = article.Id,
-					FirstReadAt = DateTime.UtcNow,
-				};
-
-				context.ReadingHistories.Add(history);
-			}
-
-			history.ReadCount++;
-			history.LastReadAt = DateTime.UtcNow;
-
-			await context.SaveChangesAsync();
+			await _readingHistoryService.UpdateArticleHistory(article.Id, profile.ProfileId);
 
 			return Ok(article);
 		}

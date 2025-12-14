@@ -70,6 +70,7 @@ builder.Services.AddScoped<ContentTypeService>();
 builder.Services.AddScoped<IContentFactory, ContentFactory>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddScoped<IReadingHistoryService, ReadingHistoryService>();
 
 // TODO: Find out if there's a better way.
 var blocksRegistry = new BlocksRegistry();
