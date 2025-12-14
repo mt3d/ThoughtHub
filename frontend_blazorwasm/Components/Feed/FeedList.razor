@@ -37,7 +37,7 @@
 
         JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
 
-        var fetchedArticles = await httpClient.GetFromJsonAsync<IList<ArticleCardModel>>($"api/articles?limit={pageSize}&offset={request.StartIndex}", options);
+        var fetchedArticles = await httpClient.GetFromJsonAsync<IList<ArticleCardModel>>($"api/recommend/recent_unpersonalized?limit={pageSize}&offset={request.StartIndex}", options);
 
         return fetchedArticles;
     }

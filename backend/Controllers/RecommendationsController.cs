@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Security.Claims;
 using ThoughtHub.Api.Models;
 using ThoughtHub.Data;
@@ -97,6 +98,35 @@ namespace ThoughtHub.Controllers
 				.ToListAsync();
 
 			return Ok(_mapper.Map<List<ArticleCardModel>>(recentReads));
+		}
+
+		/// <summary>
+		/// Returns a slice of unpersonalized feed.
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet("recent_unpersonalized")]
+		public async Task<IList<ArticleCardModel>> GetRecentArticles(
+			[FromQuery] int limit,
+			[FromQuery] int offset = 0) // TODO: Add filtering by tag and author
+		{
+			var query = _context.Articles.AsNoTracking();
+
+			var articles = await query
+				.OrderByDescending(a => a.CreatedAt)
+				.Skip(offset)
+				.Take(limit)
+				.Include(a => a.Publication).ThenInclude(p => p.PublicationImage)
+				.Include(a => a.AuthorProfile).ThenInclude(p => p.User)
+				.Include(a => a.AuthorProfile).ThenInclude(p => p.ProfilePicture)
+				.Include(a => a.ArticleImage)
+				.ToListAsync();
+
+			List<ArticleCardModel> articleModels = _mapper.Map<List<ArticleCardModel>>(articles);
+
+			// TODO: Handle tags
+			// TODO: Handle author
+
+			return articleModels;
 		}
 	}
 }

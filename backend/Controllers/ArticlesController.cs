@@ -32,38 +32,6 @@ namespace ThoughtHub.Controllers
 			_currentUserService = currentUserService;
 		}
 
-		/// <summary>
-		/// Get a list of Articles
-		/// </summary>
-		/// <returns></returns>
-		[HttpGet]
-		public async Task<IList<ArticleCardModel>> Get(
-			[FromQuery] string? tag,
-			[FromQuery] string? author,
-			[FromQuery] int? limit,
-			[FromQuery] int? offset)
-		{
-			// TODO: Include ArticleFavorites, and Article Tags
-			var query = context.Articles.AsNoTracking();
-
-			var articles = await query
-				.OrderByDescending(a => a.CreatedAt)
-				.Skip(offset ?? 0)
-				.Take(limit ?? 10)
-				.Include(a => a.Publication).ThenInclude(p => p.PublicationImage)
-				.Include(a => a.AuthorProfile).ThenInclude(p => p.User)
-				.Include(a => a.AuthorProfile).ThenInclude(p => p.ProfilePicture)
-				.Include(a => a.ArticleImage)
-				.ToListAsync();
-
-			List<ArticleCardModel> articleModels = mapper.Map<List<ArticleCardModel>>(articles);
-
-			// TODO: Handle tags
-			// TODO: Handle author
-
-			return articleModels;
-		}
-
 		[HttpGet("@{author}/{slug}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
