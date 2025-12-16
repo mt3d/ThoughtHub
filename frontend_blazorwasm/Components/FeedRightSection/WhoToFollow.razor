@@ -1,0 +1,122 @@
+﻿<div class="fs ft fu y">
+	<div class="y">
+		<div class="y">
+
+			<div class="y">
+				<div class="gc y">
+					<h2 class="as gd ge an gf cn">Who to follow</h2>
+				</div>
+			</div>
+
+			<div class="y">
+				<div class="bb n y">
+					<div class="hx n o ee eg">
+
+						<div class="o">
+							<a tabindex="0" rel="noopener follow" href="" data-discover="true">
+								<div class="y br">
+									<img alt="Dilip Kumar" class="y df t dc dd dg" width="32" height="32" loading="lazy" src="https://miro.medium.com/v2/resize:fill:40:40/0*7x2QV_h5haHA8-Xc.jpg">
+									<div class="db t y dc dd bs ab bl kk"></div>
+								</div>
+							</a>
+
+							<div class="ao ej y">
+								<a class="bi aq bk ct bm at bn ae au av aw ax ay az ba" rel="noopener follow" href="" data-discover="true">
+									<h2 class="as hd ge an bw kl gw gx km gz kn hb gf cn">Dilip Kumar</h2>
+								</a>
+								<a class="bi aq bk ct bm at bn ae au av aw ax ay az ba" rel="noopener follow" href="" data-discover="true">
+									<div class="ko y kn">
+										<p class="as b ar an bw kl gw gx km gz hb ap">With 19+ years of experience as a software engineer. Enjoy teaching, writing, leading team etc. Last 4+ years, working at Google as a backend Software Engineer.</p>
+									</div>
+								</a>
+							</div>
+
+						</div>
+
+						<div class="ki kj">
+							<div class="bg">
+								<button style="border: 1px solid rgb(36, 36, 36);" class="oc od av o q p oe of og">
+									<span class="as b ck an cn n">
+										<span class="bg oh">Follow</span>
+									</span>
+								</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="bb n y">
+					<div class="hx n o ee eg">
+						<div class="o">
+							<a href="" rel="noopener follow">
+								<div class="br">
+									<img alt="Casual Snack Reviews" class="dg gt y dd dc" width="32" height="32" loading="lazy" src="https://miro.medium.com/v2/resize:fill:40:40/1*i_hHCeGyFZAdm8Q-mGavCg.png"><div class="gt y dc dd bs ab db kk">
+									</div>
+								</div>
+							</a>
+							<div class="ao ej y">
+								<a class="bi aq bk ct bm at bn ae au av aw ax ay az ba" href="" rel="noopener follow"><h2 class="as hd ge an bw kl gw gx km gz kn hb gf cn">Casual Snack Reviews</h2></a><div class="kp kq y"><p class="as b ar an cn">Publication</p></div><a class="bi aq bk ct bm at bn ae au av aw ax ay az ba" href="https://medium.com/casual-snack-reviews?source=home---who_to_follow------1-----------------------------------" rel="noopener follow"><div class="ko y kn"><p class="as b ar an bw kl gw gx km gz hb ap">A place for anyone to share their thoughts on snacking.</p></div></a>
+							</div>
+						</div>
+						<div class="ki kj">
+							<button style="border: 1px solid rgb(36, 36, 36);" class="oc od av o q p oe of og">
+								<span class="as b ck an cn n"><span class="bg oh">Follow</span></span>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="bb n y">
+					<div class="n o ee eg">
+						<div class="o">
+							<a tabindex="0" rel="noopener follow" href="" data-discover="true">
+								<div class="y br">
+									<img alt="Kris Gage" class="y df t dc dd dg" width="32" height="32" loading="lazy" src="https://miro.medium.com/v2/resize:fill:40:40/1*e7o4kbk8ofT6eKaLrO0jaw.png">
+									<div class="db t y dc dd bs ab bl kk">
+									</div>
+								</div>
+							</a>
+							<div class="ao ej y">
+								<a class="bi aq bk ct bm at bn ae au av aw ax ay az ba" rel="noopener follow" href="" data-discover="true">
+									<h2 class="as hd ge an bw kl gw gx km gz kn hb gf cn">Kris Gage</h2>
+								</a>
+								<a class="bi aq bk ct bm at bn ae au av aw ax ay az ba" rel="noopener follow" href="" data-discover="true">
+									<div class="ko y kn">
+										<p class="as b ar an bw kl gw gx km gz hb ap">www.krisgage.com</p>
+									</div>
+								</a>
+							</div>
+						</div>
+						<div class="ki kj">
+							<div class="bg">
+								<button style="border: 1px solid rgb(36, 36, 36);" class="oc od av o q p oe of og"><span class="as b ck an cn n"><span class="bg oh">Follow</span></span></button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="hm y">
+			<p class="as b ck an ap">
+				<a class="bi aq bk ct bm at bn ae au av aw ax ay gm" rel="noopener follow" href="/me/following/suggestions" data-discover="true">See more suggestions</a>
+			</p>
+		</div>
+
+	</div>
+</div>
+
+@code {
+	[Inject]
+	public IHttpClientFactory ClientFactory { get; set; }
+	private HttpClient httpClient;
+
+	IEnumerable<AuthorModel> Suggestions { get; set; } = new List<AuthorModel>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		// httpClient = ClientFactory.CreateClient("Auth");
+		// Suggestions = await httpClient.GetFromJsonAsync<List<TagModel>>("api/recommend/topics?count=7") ?? new List<TagModel>();
+	}
+}

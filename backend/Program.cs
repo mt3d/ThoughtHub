@@ -7,6 +7,7 @@ using ThoughtHub.Data;
 using ThoughtHub.Data.Identity;
 using ThoughtHub.EditorServices;
 using ThoughtHub.Infrastructure;
+using ThoughtHub.Recommendation;
 using ThoughtHub.Runtime;
 using ThoughtHub.Seeding;
 using ThoughtHub.Services;
@@ -71,6 +72,7 @@ builder.Services.AddScoped<IContentFactory, ContentFactory>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IReadingHistoryService, ReadingHistoryService>();
+builder.Services.AddScoped<IRecommendationService, RecommendationService>();
 
 // TODO: Find out if there's a better way.
 var blocksRegistry = new BlocksRegistry();

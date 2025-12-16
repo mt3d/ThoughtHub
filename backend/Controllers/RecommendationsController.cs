@@ -6,6 +6,7 @@ using System;
 using System.Security.Claims;
 using ThoughtHub.Api.Models;
 using ThoughtHub.Data;
+using ThoughtHub.Recommendation;
 using ThoughtHub.Services;
 
 namespace ThoughtHub.Controllers
@@ -17,15 +18,18 @@ namespace ThoughtHub.Controllers
 		private readonly PlatformContext _context;
 		private readonly IMapper _mapper;
 		private readonly ICurrentUserService _currentUserService;
+		private readonly IRecommendationService _recommendationService;
 
 		public RecommendationsController(
 			PlatformContext context,
 			IMapper mapper,
-			ICurrentUserService currentUserService)
+			ICurrentUserService currentUserService,
+			IRecommendationService recommendationService)
 		{
 			_context = context;
 			_mapper = mapper;
 			_currentUserService = currentUserService;
+			_recommendationService = recommendationService;
 		}
 
 		/// <summary>
@@ -127,6 +131,15 @@ namespace ThoughtHub.Controllers
 			// TODO: Handle author
 
 			return articleModels;
+		}
+
+		[HttpGet("topics")]
+		public async Task<IActionResult> GetTopics([FromQuery] int count = 3)
+		{
+			var profile = await _currentUserService.GetProfileAsync();
+			var result = await _recommendationService.SuggestTopics(profile.ProfileId, count);
+
+			return Ok(result);
 		}
 	}
 }

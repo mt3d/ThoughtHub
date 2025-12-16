@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using ThoughtHub.Api.Models;
 using ThoughtHub.Controllers;
 using ThoughtHub.Data;
 using ThoughtHub.Data.Entities;
@@ -11,13 +13,17 @@ namespace ThoughtHub.Recommendation
 		public int Weight { get; set; }
 	}
 
-	public class RecommendationService
+	public class RecommendationService : IRecommendationService
 	{
 		private readonly PlatformContext _context;
+		private readonly IMapper _mapper;
 
-		public RecommendationService(PlatformContext context)
+		public RecommendationService(
+			PlatformContext context,
+			IMapper mapper)
 		{
 			_context = context;
+			_mapper = mapper;
 		}
 
 		public async Task<IList<InterestProfile>> GenerateInterestProfile(int profileId)
@@ -45,5 +51,11 @@ namespace ThoughtHub.Recommendation
 			return profileTagWeights;
 		}
 
+		public async Task<IEnumerable<TagModel>> SuggestTopics(int profileId, int count = 3)
+		{
+			var topics = await _context.Tags.ToListAsync();
+
+			return _mapper.Map<IEnumerable<Tag>, IEnumerable<TagModel>>(topics.Take(count));
+		}
 	}
 }

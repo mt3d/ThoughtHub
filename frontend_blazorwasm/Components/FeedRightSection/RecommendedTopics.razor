@@ -1,0 +1,41 @@
+﻿<div class="fs ft fu y">
+	<div class="y">
+
+		<div class="gc y">
+			<h2 class="as gd ge an gf cn">Recommended topics</h2>
+		</div>
+
+		<div class="o ee gg">
+
+			@foreach (var topic in Topics)
+			{
+				<div class="gi o">
+					<a class="ej bl ae av" rel="noopener follow" href="/tag/@topic.Slug" data-discover="true">
+						<div class="jo br dg gh kf kg kh as b ck an cn by">@topic.Name</div>
+					</a>
+				</div>
+			}
+		</div>
+
+		<div class="gl y">
+			<p class="as b ck an ap">
+				<a class="bi aq bk ct bm at bn ae au av aw ax ay gm" rel="noopener follow" href="/explore-topics" data-discover="true">See more topics</a>
+			</p>
+		</div>
+
+	</div>
+</div>
+
+@code {
+	[Inject]
+	public IHttpClientFactory ClientFactory { get; set; }
+	private HttpClient httpClient;
+
+	IEnumerable<TagModel> Topics { get; set; } = new List<TagModel>();
+
+	protected override async Task OnInitializedAsync()
+	{
+		httpClient = ClientFactory.CreateClient("Auth");
+		Topics = await httpClient.GetFromJsonAsync<List<TagModel>>("api/recommend/topics?count=7") ?? new List<TagModel>();
+	}
+}
