@@ -6,11 +6,9 @@
             <FeedList />
         </div>
 
-    <div id="@SidebarId" style="display: block;">
-        <div id="@InnerId" style="display: flex; flex-direction: column;">
+        <HubStickyBar>
             <RightFeedSection />
-        </div>
-    </div>
+        </HubStickyBar>
 </div>
 
 <style>
@@ -18,34 +16,5 @@
         display: flex;
         gap: 40px;
         align-items: flex-start; /* Ensures sidebar doesn't stretch */
-/*         position: relative;
- */    }
+    }
 </style>
-
-@code {
-    private string SidebarId = "medium-sidebar";
-    private string InnerId = "medium-sidebar-inner";
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (!firstRender) return;
-
-        await JS.InvokeVoidAsync(
-            "mediumSidebar.init",
-            SidebarId,
-            InnerId,
-            new
-            {
-                fullNavbarHeight = 57,   // match your layout
-                upsellHeight = 0,        // Medium uses this
-                baseTopOffset = 0,       // Medium constant (o.oe)
-                minHeight = (string?)null
-            }
-        );
-    }
-
-    public async ValueTask DisposeAsync()
-    {
-        await JS.InvokeVoidAsync("mediumSidebar.dispose");
-    }
-}

@@ -1,4 +1,4 @@
-﻿window.mediumSidebar = (function () {
+﻿window.stickySidebar = (function () {
 
     // Internal state (equivalent to useRef)
     let lastScrollY = 0;
@@ -20,10 +20,10 @@
 
         const viewportHeight = window.innerHeight;
 
-        // Same as Medium: overflow = sidebar height - viewport
+        // If sidebar fits inside viewport, do nothing.
+        // We do NOT use sticky bottom unless the sidebar is taller than the screen.
+        // This prevents jitter, pointless state transitions, and broken layouts on small sidebars.
         const overflow = sidebar.offsetHeight - viewportHeight;
-
-        // Ignore short sidebars
         if (overflow <= 20) return;
 
         if (scrollingDown) {
@@ -41,6 +41,8 @@
             ) {
                 state = "stickyToBottom";
                 sidebar.style.position = "sticky";
+
+                // pushes the element up so its bottom aligns with viewport bottom
                 sidebar.style.top = (-overflow) + "px";
             }
 
@@ -52,7 +54,12 @@
 
                 // IMPORTANT:
                 // margin-top is computed ONCE and then frozen
+                // margin-top is set so it does not jump.
+                // The initial margin-top exists to prevent a visual jump when the
+                // sidebar stops being sticky and re - enters normal document flow.
                 sidebar.style.marginTop = "0px";
+
+                // lastScrollY - sidebar.offsetTop: How far the page has scrolled past the sidebar’s original position.
                 sidebar.style.marginTop =
                     Math.max(
                         lastScrollY - sidebar.offsetTop,
@@ -85,10 +92,10 @@
                 sidebar.style.marginTop = "0px";
                 sidebar.style.marginTop =
                     lastScrollY -
-                    overflow -
-                    sidebar.offsetTop -
+                    overflow - // How much taller the sidebar is than the viewport
+                    sidebar.offsetTop - // Sidebar’s natural top position in the document
                     baseTopOffset -
-                    upsellHeight + "px";
+                    upsellHeight + "px"; // Extra dynamic header space Medium adds
             }
         }
     }

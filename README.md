@@ -23,16 +23,11 @@
     * `wwwroot/appsettings.json` file in the `ThoughtHub.Ui.BlazorWasm` app.
 
 4. Run the `ThoughtHub.Api` and `ThoughtHub.Ui.BlazorWasm` apps.
+    - Optionally,
 
 5. Navigate to the `ThoughtHub.Ui.BlazorWasm` app at the `BlazorWasmFrontendUrl`.
 
-6. Register a new user or use one of the preregistered test users (all test users share the same password `12345678ABab$`).
-    * `jwilkins@example.com`
-	* `sarahd@example.com`
-	* `mkhan@example.com`
-	* `lchen@example.com`
-	* `mrivera@example.com`
-	* `sofiam@example.com`
+6. Register a new user or use one of the preregistered test users if the seed option was used.
 
 
 ## Roadmap
@@ -42,12 +37,12 @@ Medium.com is a huge website, and trying to fully recreate it would takes hundre
 
 ### Text Editor
 - A full text editor with structured blocks
-	- Parahtaphs
+	- Paragraphs
 	- Headings
 	- Images
-	- embeds
-	- quotes
-	- code blocks
+	- Embeds
+	- Quotes
+	- Code blocks
 - Deterministic serialization into HTML or Markdown
 - Preservation of formatting consistency across browsers and devices
 
@@ -56,7 +51,6 @@ Medium.com is a huge website, and trying to fully recreate it would takes hundre
 	- writes draft deltas at controlled intervals
 	- merges competing changes
 	- guards against race conditions when users edit the same draft on multiple devices
-
 
 ### Recommendation Engine
 - A recommendation engine that computes related articles using multiple signals:
