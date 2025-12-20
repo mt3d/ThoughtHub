@@ -1,23 +1,51 @@
 ﻿@using ThoughtHub.UI.BlazorWasm.Components.FeedRightSection
+@inject IJSRuntime JS
 
-<div class="container mt-3">
-    <div class="row">
-        <div class="col-lg-8 col-md-7">
+<div class="feed-container mt-3">
+        <div class="article-list">
             <FeedList />
         </div>
 
-        <div class="col-lg-4 col-md-5">
-            <div class="sticky-right-section">
-                <RightFeedSection />
-            </div>
+    <div id="@SidebarId" style="display: block;">
+        <div id="@InnerId" style="display: flex; flex-direction: column;">
+            <RightFeedSection />
         </div>
     </div>
 </div>
 
 <style>
-    .sticky-right-section {
-        position: sticky;
-        top: 60px;
-        align-self: flex-start
-    }
+    .feed-container {
+        display: flex;
+        gap: 40px;
+        align-items: flex-start; /* Ensures sidebar doesn't stretch */
+/*         position: relative;
+ */    }
 </style>
+
+@code {
+    private string SidebarId = "medium-sidebar";
+    private string InnerId = "medium-sidebar-inner";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        await JS.InvokeVoidAsync(
+            "mediumSidebar.init",
+            SidebarId,
+            InnerId,
+            new
+            {
+                fullNavbarHeight = 57,   // match your layout
+                upsellHeight = 0,        // Medium uses this
+                baseTopOffset = 0,       // Medium constant (o.oe)
+                minHeight = (string?)null
+            }
+        );
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await JS.InvokeVoidAsync("mediumSidebar.dispose");
+    }
+}
