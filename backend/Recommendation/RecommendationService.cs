@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using ThoughtHub.Api.Models;
+using ThoughtHub.Api.Models.RecommendedPublishers;
 using ThoughtHub.Controllers;
 using ThoughtHub.Data;
 using ThoughtHub.Data.Entities;
+using ThoughtHub.Data.Entities.Publications;
 
 namespace ThoughtHub.Recommendation
 {
@@ -56,6 +59,25 @@ namespace ThoughtHub.Recommendation
 			var topics = await _context.Tags.ToListAsync();
 
 			return _mapper.Map<IEnumerable<Tag>, IEnumerable<TagModel>>(topics.Take(count));
+		}
+
+		public async Task<RecommendedPublisherConnectionModel> GetRecommendedPublishersAsync(int count, string? after, ClaimsPrincipal user)
+		{
+			throw new NotImplementedException();
+		}
+
+		public async Task<IEnumerable<UserPublisherModel>> SuggestProfiles(int profileId, int count = 3)
+		{
+			var profiles = await _context.Profiles.Take(count).ToListAsync();
+
+			return _mapper.Map<IEnumerable<Data.Entities.Profile>, IEnumerable<UserPublisherModel>>(profiles);
+		}
+
+		public async Task<IEnumerable<PublicationPublisherModel>> SuggestPublications(int profileId, int count = 3)
+		{
+			var publications = await _context.Publications.Take(count).ToListAsync();
+
+			return _mapper.Map<IEnumerable<Publication>, IEnumerable<PublicationPublisherModel>>(publications);
 		}
 	}
 }

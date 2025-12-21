@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Security.Claims;
 using ThoughtHub.Api.Models;
+using ThoughtHub.Api.Models.RecommendedPublishers;
 using ThoughtHub.Data;
 using ThoughtHub.Recommendation;
 using ThoughtHub.Services;
@@ -138,6 +139,16 @@ namespace ThoughtHub.Controllers
 		{
 			var profile = await _currentUserService.GetProfileAsync();
 			var result = await _recommendationService.SuggestTopics(profile.ProfileId, count);
+
+			return Ok(result);
+		}
+
+		[HttpGet("who-to-follow")]
+		public async Task<ActionResult<RecommendedPublisherConnectionModel>> GetWhoToFollow(
+			[FromQuery] int count = 3,
+			[FromQuery] string? after = null)
+		{
+			var result = await _recommendationService.GetRecommendedPublishersAsync(count, after, User);
 
 			return Ok(result);
 		}
