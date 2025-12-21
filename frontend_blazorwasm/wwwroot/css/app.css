@@ -148,3 +148,16 @@ code {
     width: 600px;
     max-width: 600px;
 }
+
+/* Feed page */
+.feed-container {
+    display: flex;
+    gap: 40px;
+    justify-content: space-evenly;
+    align-items: flex-start; /* Ensures sidebar doesn't stretch */
+}
+
+.feed-list {
+    max-width: 680px;
+    margin: 0px 24px;
+}

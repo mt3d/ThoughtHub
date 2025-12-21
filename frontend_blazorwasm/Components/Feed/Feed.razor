@@ -1,8 +1,8 @@
 ﻿@using ThoughtHub.UI.BlazorWasm.Components.FeedRightSection
 @inject IJSRuntime JS
 
-<div class="feed-container mt-3">
-        <div class="article-list">
+<div class="feed-container">
+        <div class="feed-list">
             <FeedList />
         </div>
 
@@ -10,11 +10,3 @@
             <RightFeedSection />
         </HubStickyBar>
 </div>
-
-<style>
-    .feed-container {
-        display: flex;
-        gap: 40px;
-        align-items: flex-start; /* Ensures sidebar doesn't stretch */
-    }
-</style>
