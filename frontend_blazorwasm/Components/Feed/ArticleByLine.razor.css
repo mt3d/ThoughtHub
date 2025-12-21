@@ -1,0 +1,125 @@
+﻿
+.article-byline {
+    display: flex;
+}
+
+.article-byline-content {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.byline-avatar-overlay {
+    display: block;
+    position: absolute;
+    top: 0px;
+    width: 20px;
+    height: 20px;
+    -webkit-line-clamp: 2;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px inset;
+}
+
+    .byline-avatar-overlay:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+.byline-avatar-image {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: rgb(242, 242, 242);
+    -webkit-line-clamp: 2;
+}
+
+.byline-author-avatar-image {
+    display: block;
+    box-sizing: border-box;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: rgb(242, 242, 242);
+}
+
+.byline-avatar-wrapper {
+    display: block;
+    margin-right: 8px;
+}
+
+.byline-label-wrapper {
+    display: block;
+    border-radius: 2px;
+    padding-right: 4px;
+}
+
+.byline-meta-text {
+    font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    color: rgb(107, 107, 107);
+}
+
+.byline-link {
+    display: flex;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+    color: inherit;
+    fill: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    border: inherit;
+}
+
+    .byline-link:hover {
+        text-decoration: underline;
+    }
+
+.byline-name-text {
+    font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    color: rgb(36, 36, 36);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -moz-box-orient: vertical;
+    word-break: break-all;
+    max-height: none;
+}
+
+.byline-block-display {
+    display: block;
+}
+
+.byline-padding-around {
+    padding: 0px 4px;
+}
+
+.byline-no-outline {
+    outline: none;
+}
+
+.byline-position-relative {
+    position: relative;
+}
+
+.byline-avatar-ring {
+    display: block;
+    position: absolute;
+    top: 0px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: medium;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px inset;
+}
+
+    .byline-avatar-ring:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+    }

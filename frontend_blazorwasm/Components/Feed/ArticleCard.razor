@@ -1,41 +1,386 @@
-﻿<article class="card border-0 shadow-sm mb-4 article-card">
-    <div class="card-body">
+﻿@using ThoughtHub.UI.BlazorWasm.Components.Icons
+<div class="inherited-context">
+	<div class="ob n y">
+		<article class="" data-testid="post-preview">
+			<div class="hf y">
+				<div class="n bb">
+					<div class="y">
+						<div class="n y">
+							<div style="position: relative; display: flex;" role="link" data-href="@Article.Url" tabindex="0">
+								<div class="n kx ky kz la">
 
-            @if (Article.Publication != null)
-            {
-                <ArticleCardAuthor DisplayPublication
-                                   PublicationName="@Article.Publication.Name"
-                                   PublicationUrl="@Article.Publication.Url"
-                                   PublicationImageUrl="@Article.Publication.PublicationImageUrl"
-                                   AuthorName="@Article.Author.FullName"
-                                   AuthorUrl="@Article.Author.Url"
-                                   />
-            }
-            else
-            {
-                <ArticleCardAuthor AuthorName="@Article.Author.FullName"
-                                   AuthorUrl="@Article.Author.Url"
-                                   AuthorImageUrl="@Article.Author.ProfilePic"
-                                   />
-            }
+									@if (Article.Publication != null)
+									{
+										<div class="o">
+											<div class="lb lc ld le lf o p">
+												<div class="ej y">
+													<div>
+														<div class="y" aria-describedby="85" aria-labelledby="85" role="tooltip">
+															<div tabindex="-1" class="bh">
+																<a href="@Article.Publication.Url" rel="noopener follow">
+																	<div class="br">
+																		<img alt="Write A Catalyst" class="dg kn y el ek" width="20" height="20" loading="lazy" src="@Article.Publication.PublicationImageUrl">
+																		<div class="kn y ek el bs ab db de"></div>
+																	</div>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+												
+												<div class="kq y by">
+													<p class="as b ar an ap">In</p>
+												</div>
+												
+												<div class="y">
+													<div>
+														<div class="y" aria-describedby="86" aria-labelledby="86" role="tooltip">
+															<div tabindex="-1" class="bh">
+																<a class="bi aq bk ct bm at bn ae au av aw ax ay gm o p" href="@Article.Publication.Url" rel="noopener follow">
+																	<p class="as b ar an bw gt gu gv gw gx gy gz cn">@Article.Publication.Name</p>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+												
+												<div class="ke y">
+													<p class="as b ar an ap">by</p>
+												</div>
+												
+												<div>
+													<div class="y" aria-describedby="87" aria-labelledby="87" role="tooltip">
+														<div tabindex="-1" class="bh">
+															<a class="bi aq bk ct bm at bn ae au av aw ax ay gm o p" rel="noopener follow" href="@Article.Author.Url" data-discover="true">
+																<p class="as b ar an bw gt gu gv gw gx gy gz cn">@Article.Author.FullName</p>
+															</a>
+														</div>
+													</div>
+												</div></div>
+										</div>
+									}
+									else
+									{
+										<div class="o">
+											<div class="lb lc ld le lf o p">
+												<div class="ej y">
+													<div class="y">
+														<div>
+															<div class="y" aria-describedby="74" aria-labelledby="74" role="tooltip">
+																<div tabindex="-1" class="bh">
+																	<a tabindex="-1" rel="noopener follow" href="" data-discover="true">
+																		<div class="y br">
+																			<img alt="@Article.Author.FullName" class="y df t ek el dg" width="20" height="20" loading="lazy" src="@Article.Author.ProfilePic">
+																			<div class="db t y ek el bs ab bl de"></div>
+																		</div>
+																	</a>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div>
+													<div class="y" aria-describedby="75" aria-labelledby="75" role="tooltip">
+														<div tabindex="-1" class="bh">
+															<a class="bi aq bk ct bm at bn ae au av aw ax ay gm o p" rel="noopener follow" href="@Article.Author.Url" data-discover="true">
+																<p class="as b ar an bw gt gu gv gw gx gy gz cn">@Article.Author.FullName</p>
+															</a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									}
 
-        <!-- Title + Description -->
-        <a class="text-decoration-none text-dark d-flex" href="@Article.Url">
-            <div class="flex-grow-1">
-                <h5 class="fw-bold mb-1">@Article.Title</h5>
-                <p class="text-muted mb-2">@Article.Description</p>
-                <div class="d-flex align-items-center small text-muted">
-                    <span>@Article.UpdatedAt.ToString("MMM d, yyyy")</span>
-                    <span class="ms-3"><i class="bi bi-hand-thumbs-up"></i> @Article.ClapsCount</span>
-                    <span class="ms-3"><i class="bi bi-chat"></i> @Article.CommentsCount</span>
-                </div>
-            </div>
-            <img src="@Article.Image" alt="@Article.Title" class="ms-3 rounded" width="120" height="80">
-        </a>
-    </div>
-</article>
+									@* Standard card + bottom bar *@
+									<div class="o">
+
+										<div class="y dj ko">
+
+											<div class="lg lh li lj lk ll lm ln lo lp">
+												<a class="bi aq bk ct bm at bn ae au av aw ax ay az ba" rel="noopener follow" href="@Article.Url" data-discover="true">
+													<h2 class="as hd lq lr ls lt lu lv lw lx ly lz ma mb mc md me mf mg mh mi mj mk ml mm mn mo bw gu gv gx gz cn">@Article.Title</h2>
+													<div class="mp">
+														<h3 class="as b ge an bw km gu gv kn gx gz ap">@Article.Description</h3>
+													</div>
+												</a>
+											</div>
+
+											<div class="i l">
+												<div class="mq mr ms mt mu mv mw mx my mz y">
+													<span class="as b ar an ap">
+														<div class="na o eg bf">
+
+															@* Left section *@
+															<div class="o p he">
+
+																@* Member-only icon *@
+																<div class="hf o">
+																	<button class="y bl av ae" aria-label="Member-only story">
+																		<div class="">
+																			<div>
+																				<div class="bg" aria-describedby="76" aria-labelledby="76" role="tooltip">
+																					<div tabindex="-1" class="bh">
+
+																						<MemberOnlyIcon />
+
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</button>
+																</div>
+
+																@* Date *@
+																<span>@Article.UpdatedAt.ToString("MMM d, yyyy")</span>
+
+																@* Claps and comments *@
+																<div class="">
+																	<div class="br nb eq o p">
+
+																		<div class="bs il nc o p he">
+																			<div class="if eq gk y dg"></div>
+																		</div>
+
+																		<a class="bs kw nc o p he" tabindex="-1" rel="noopener follow" href="@Article.Url" data-discover="true">
+
+																			@* Claps *@
+																			<div>
+																				<div class="o" aria-describedby="198" aria-labelledby="198" role="tooltip">
+																					<div tabindex="-1" class="bh">
+																						<div class="o p nd">
+
+																							<ClapIcon />
+
+																							<span>@Article.ClapsCount</span>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+
+																			@* Comments *@
+																			<div>
+																				<div class="o" aria-describedby="77" aria-labelledby="77" role="tooltip">
+																					<div tabindex="-1" class="bh">
+																						<div class="o p nd">
+
+																							<CommentIcon />
+
+																							<span>@Article.CommentsCount</span>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+
+																		</a>
+																	</div>
+																</div>
+															</div>
+
+															@* Right section *@
+															<div class="o p ne nf">
+																@* Show less like this button *@
+																<div>
+																	<div class="bg" aria-describedby="78" aria-labelledby="78" role="tooltip">
+																		<div tabindex="-1" class="bh">
+																			<button class="bi aq bk ct bm at bn ni au av aw ax ay az ba" aria-label="Show less like this">
+
+																				<LessIcon />
+
+																			</button>
+																		</div>
+																	</div>
+																</div>
+
+																@* Add to reading list button *@
+																<div class="i l">
+																	<div>
+																		<div class="bg" aria-describedby="79" aria-labelledby="79" role="tooltip">
+																			<div tabindex="-1" class="bh">
+																				<div class="bg">
+																					<button aria-controls="addToCatalogBookmarkButton" aria-expanded="false" aria-label="Add to list bookmark button" class="bi bj bk ct bm at bn ni au av aw bo nj nk io">
+
+																						<AddToListIcon />
+
+																					</button>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+																@* More Options button *@
+																<div class="nl y">
+																	<div class="bg">
+																		<div class="bg">
+																			<div>
+																				<div class="bg" aria-describedby="200" aria-labelledby="200" role="tooltip">
+																					<div tabindex="-1" class="bh">
+
+																						<button aria-label="More options" class="bi bj bk ct bm at bn ni au av aw bo bp bq nm nn">
+
+																							<OptionsIcon />
+
+																						</button>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+															</div>
+
+														</div>
+													</span>
+												</div>
+											</div>
+										</div>
+
+										<div class="no np nq nr ns y">
+											<div aria-label="@Article.Title">
+
+												@* Small article image *@
+												<div class="k j e">
+													<img alt="@Article.Title" class="nt kq" width="80" height="53" loading="lazy" src="@Article.Image">
+												</div>
+
+												@* Big article image *@
+												<div class="i l">
+													<img alt="@Article.Title" class="nt kq" width="160" height="107" loading="lazy" src="@Article.Image">
+												</div>
+
+											</div>
+										</div>
+
+									</div>
+
+									@* Small bar *@
+									<div class="nu k j e">
+										<span class="as b ar an ap">
+											<div class="na o eg bf">
+
+												@* Left section *@
+												<div class="o p he">
+
+													<div class="hf o">
+														<button class="y bl av ae" aria-label="Member-only story">
+															<div class="">
+																<div>
+																	<div class="bg" aria-describedby="81" aria-labelledby="81" role="tooltip">
+																		<div tabindex="-1" class="bh">
+
+																			<MemberOnlyIcon />
+
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</button>
+													</div>
+
+													<span>@Article.UpdatedAt.ToString("MMM d, yyyy")</span>
+
+													<div class="i l k j e">
+														<div class="br nb eq o p">
+															<div class="bs il nc o p he">
+																<div class="if eq gk y dg"></div>
+															</div>
+
+															<a class="bs kw nc o p he" tabindex="-1" rel="noopener follow" href="@Article.Url" data-discover="true">
+																<div>
+																	<div class="o" aria-describedby="201" aria-labelledby="201" role="tooltip">
+																		<div tabindex="-1" class="bh">
+																			<div class="o p nd">
+
+																				<ClapIcon />
+
+																				<span>@Article.ClapsCount</span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+																<div>
+																	<div class="o" aria-describedby="82" aria-labelledby="82" role="tooltip">
+																		<div tabindex="-1" class="bh">
+																			<div class="o p nd">
+
+																				<CommentIcon />
+
+																				<span>@Article.CommentsCount</span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</a>
+														</div>
+													</div>
+												</div>
+
+												@* Right section *@
+												<div class="o p ne nf">
+													<div>
+														<div class="bg" aria-describedby="83" aria-labelledby="83" role="tooltip">
+															<div tabindex="-1" class="bh">
+																<button class="bi aq bk ct bm at bn ni au av aw ax ay az ba" aria-label="Show less like this">
+
+																	<LessIcon />
+
+																</button>
+															</div>
+														</div>
+													</div><div class="i l k j e">
+														<div>
+															<div class="bg" aria-describedby="84" aria-labelledby="84" role="tooltip">
+																<div tabindex="-1" class="bh">
+																	<div class="bg">
+																		<button aria-controls="addToCatalogBookmarkButton" aria-expanded="false" aria-label="Add to list bookmark button" class="bi bj bk ct bm at bn ni au av aw bo nj nk io">
+
+																			<AddToListIcon />
+
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="nl y">
+														<div class="bg">
+															<div class="bg">
+																<div>
+																	<div class="bg" aria-describedby="203" aria-labelledby="203" role="tooltip">
+																		<div tabindex="-1" class="bh">
+																			<button aria-label="More options" class="bi bj bk ct bm at bn ni au av aw bo bp bq nm nn">
+
+																				<OptionsIcon />
+
+																			</button>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</div>
+										</span>
+									</div>
+
+								</div>
+							</div>
+							<div class="nv n af nw nx ny nz oa"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+	</div>
+</div>
 
 @code {
-    [Parameter]
-    public ArticleDigestModel Article { get; set; }
+	[Parameter]
+	public ArticleDigestModel Article { get; set; }
 }
