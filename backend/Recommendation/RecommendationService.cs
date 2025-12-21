@@ -61,9 +61,48 @@ namespace ThoughtHub.Recommendation
 			return _mapper.Map<IEnumerable<Tag>, IEnumerable<TagModel>>(topics.Take(count));
 		}
 
-		public async Task<RecommendedPublisherConnectionModel> GetRecommendedPublishersAsync(int count, string? after, ClaimsPrincipal user)
+		// TODO: A naive implementation until a recommendation engine is in place.
+		public async Task<RecommendedPublisherConnectionModel> GetRecommendedPublishersAsync(
+			int count, string? afterCursor, ClaimsPrincipal user)
 		{
-			throw new NotImplementedException();
+			var orderedPublishers = await LoadOrderedPublishersAsync();
+
+			var startIndex = 0;
+
+			if (!string.IsNullOrEmpty(afterCursor))
+			{
+				var payload = CursorCodec.Decode(afterCursor);
+
+				startIndex = orderedPublishers.FindIndex(p => p.Id == payload?.EntityId) + 1;
+
+				if (startIndex <= 0)
+				{
+					startIndex = orderedPublishers.Count;
+				}
+			}
+
+			var slice = orderedPublishers.Skip(startIndex).Take(count).ToList();
+
+			var edges = slice.Select(p => new RecommendedPublisherEdgeModel
+			{
+				Node = p,
+				Cursor = CursorCodec.Encode(new CursorPayload
+				{
+					EntityId = p.Id
+				})
+			}).ToList();
+
+			var endCursor = edges.LastOrDefault()?.Cursor;
+
+			return new RecommendedPublisherConnectionModel
+			{
+				Edges = edges,
+				PageInfo = new PageInfoModel
+				{
+					HasNextPage = startIndex + slice.Count < orderedPublishers.Count,
+					EndCursor = endCursor
+				}
+			};
 		}
 
 		public async Task<IEnumerable<UserPublisherModel>> SuggestProfiles(int profileId, int count = 3)
@@ -78,6 +117,31 @@ namespace ThoughtHub.Recommendation
 			var publications = await _context.Publications.Take(count).ToListAsync();
 
 			return _mapper.Map<IEnumerable<Publication>, IEnumerable<PublicationPublisherModel>>(publications);
+		}
+
+		private async Task<List<FollowablePublisherModel>> LoadOrderedPublishersAsync()
+		{
+			var users = await _context.Profiles
+				.Include(p => p.User)
+				.Include(p => p.ProfilePicture)
+				.OrderByDescending(p => p.ProfileId)
+				.Select(p => _mapper.Map<UserPublisherModel>(p))
+				.ToListAsync();
+
+			var userModels = _mapper.Map<List<UserPublisherModel>>(users);
+
+			var publications = await _context.Publications
+				.Include(p => p.PublicationImage)
+				.OrderByDescending(p => p.CreatedAt)
+				.ToListAsync();
+
+			var publicationModels = _mapper.Map<List<PublicationPublisherModel>>(publications);
+
+			return userModels
+				.Cast<FollowablePublisherModel>()
+				.Concat(publicationModels)
+				.OrderBy(p => p.Id) // temporary deterministic merge
+				.ToList();
 		}
 	}
 }

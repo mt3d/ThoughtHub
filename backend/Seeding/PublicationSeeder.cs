@@ -34,7 +34,8 @@ namespace ThoughtHub.Seeding
 					Slug = slug,
 					OwnerId = faker.PickRandom(profiles).ProfileId,
 					CreatedAt = faker.Date.Past(),
-					PublicationImageId = await _imageCreator.CreatePublicationImageAsync($"{slug}_publication_image.png")
+					PublicationImageId = await _imageCreator.CreatePublicationImageAsync($"{slug}_publication_image.png"),
+					Description = faker.Lorem.Sentences(3)
 					// TODO: Add random members, followers, description, tagline, and update time
 				});
 			}

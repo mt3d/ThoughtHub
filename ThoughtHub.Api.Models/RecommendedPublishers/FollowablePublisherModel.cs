@@ -7,6 +7,6 @@ namespace ThoughtHub.Api.Models.RecommendedPublishers
 	[JsonDerivedType(typeof(PublicationPublisherModel), "publication")]
 	public class FollowablePublisherModel
 	{
-		public int Id { get; init; }
+		public string Id { get; init; }
 	}
 }
