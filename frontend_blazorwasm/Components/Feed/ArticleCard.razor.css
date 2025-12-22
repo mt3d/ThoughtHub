@@ -720,3 +720,55 @@ svg._s1._s1 {
         display: none;
     }
 }
+
+.article-card-content {
+    position: relative;
+}
+
+.article-card-link {
+    display: flex;
+    flex-direction: column;
+    position: static;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+    fill: inherit;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    border: inherit;
+}
+
+.article-card-title {
+    font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0px;
+    color: rgb(36, 36, 36);
+    max-height: 96px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -moz-box-orient: vertical;
+    word-break: break-word;
+}
+
+.article-card-description-wrapper {
+    padding-top: 8px;
+}
+
+.article-card-description {
+    font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: rgb(107, 107, 107);
+    max-height: 40px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -moz-box-orient: vertical;
+}
