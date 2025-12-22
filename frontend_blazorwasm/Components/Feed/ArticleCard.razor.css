@@ -702,8 +702,21 @@ svg._s1._s1 {
     .k {
         display: none;
     }
+}
 
+@media(max-width: 975px)
+{
     .j {
+        display: none;
+    }
+}
+
+.article-meta-compact {
+    padding-top: 12px;
+}
+
+@media(min-width: 730px) {
+    .article-meta-compact {
         display: none;
     }
 }

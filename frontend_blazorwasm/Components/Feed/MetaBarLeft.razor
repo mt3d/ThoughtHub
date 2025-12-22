@@ -1,0 +1,71 @@
+@using ThoughtHub.UI.BlazorWasm.Components.Icons
+
+@* Left section *@
+<div class="o p he">
+
+    @* Member-only icon *@
+    <div class="hf o">
+        <button class="y bl av ae" aria-label="Member-only story">
+            <div class="">
+                <div>
+                    <div class="bg" aria-describedby="76" aria-labelledby="76" role="tooltip">
+                        <div tabindex="-1" class="bh">
+
+                            <MemberOnlyIcon />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </button>
+    </div>
+
+    @* Date *@
+    <span>@Article.UpdatedAt.ToString("MMM d, yyyy")</span>
+
+    @* Claps and comments *@
+    <div class="">
+        <div class="br nb eq o p">
+
+            <div class="bs il nc o p he">
+                <div class="if eq gk y dg"></div>
+            </div>
+
+            <a class="bs kw nc o p he" tabindex="-1" rel="noopener follow" href="@Article.Url" data-discover="true">
+                @* Claps *@
+                <div>
+                    <div class="o" aria-describedby="198" aria-labelledby="198" role="tooltip">
+                        <div tabindex="-1" class="bh">
+                            <div class="o p nd">
+
+                                <ClapIcon />
+
+                                <span>@Article.ClapsCount</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* Comments *@
+                <div>
+                    <div class="o" aria-describedby="77" aria-labelledby="77" role="tooltip">
+                        <div tabindex="-1" class="bh">
+                            <div class="o p nd">
+
+                                <CommentIcon />
+
+                                <span>@Article.CommentsCount</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </a>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public ArticleDigestModel Article { get; set; }
+}

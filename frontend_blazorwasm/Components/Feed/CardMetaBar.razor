@@ -1,0 +1,82 @@
+@using ThoughtHub.Api.Models.Content
+@using ThoughtHub.UI.BlazorWasm.Components.Icons
+
+<style>
+.article-meta-text {
+    font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 20px;
+    color: rgb(107, 107, 107);
+}
+
+.article-meta-row {
+    display: flex;
+    justify-content: space-between;
+    height: 48px;
+    flex: 1 0 auto;
+}
+
+</style>
+
+<span class="article-meta-text">
+    <div class="article-meta-row">
+
+        <MetaBarLeft Article="Article"/>
+
+        @* Right section *@
+        <div class="o p ne nf">
+            <div>
+                <div class="bg" aria-describedby="83" aria-labelledby="83" role="tooltip">
+                    <div tabindex="-1" class="bh">
+                        <button class="bi aq bk ct bm at bn ni au av aw ax ay az ba" aria-label="Show less like this">
+
+                            <LessIcon />
+
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="i l k j e">
+                <div>
+                    <div class="bg" aria-describedby="84" aria-labelledby="84" role="tooltip">
+                        <div tabindex="-1" class="bh">
+                            <div class="bg">
+                                <button aria-controls="addToCatalogBookmarkButton" aria-expanded="false" aria-label="Add to list bookmark button" class="bi bj bk ct bm at bn ni au av aw bo nj nk io">
+
+                                    <AddToListIcon />
+
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nl y">
+                <div class="bg">
+                    <div class="bg">
+                        <div>
+                            <div class="bg" aria-describedby="203" aria-labelledby="203" role="tooltip">
+                                <div tabindex="-1" class="bh">
+                                    <button aria-label="More options" class="bi bj bk ct bm at bn ni au av aw bo bp bq nm nn">
+
+                                        <OptionsIcon />
+
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</span>
+
+@code {
+    [Parameter]
+    public ArticleDigestModel Article { get; set; }
+}

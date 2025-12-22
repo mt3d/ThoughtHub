@@ -5,13 +5,16 @@
      aria-hidden="@(!HasAriaLabel)"
      aria-label="@AriaLabel"
      role="img"
-     class="icon"
+     class="@Class"
      fill="none"
      style="@Style">
     @ChildContent
 </svg>
 
 @code {
+    [Parameter]
+    public string Class { get; set; } = string.Empty;
+
     [Parameter]
     public int Size { get; set; } = 16;
 

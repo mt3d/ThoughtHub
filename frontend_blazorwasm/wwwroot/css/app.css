@@ -161,3 +161,11 @@ code {
     max-width: 680px;
     margin: 0px 24px;
 }
+
+.grey-stroke path {
+    stroke: rgb(107, 107, 107);
+}
+
+.black-stroke-hover:hover path {
+    stroke: rgb(0, 0, 0);
+}
