@@ -1,12 +1,25 @@
 ﻿@using ThoughtHub.UI.BlazorWasm.Components.FeedRightSection
+@using ThoughtHub.UI.BlazorWasm.Infrastructure
 @inject IJSRuntime JS
+@inject ViewportService ViewportService
 
 <div class="feed-container">
         <div class="feed-list">
             <FeedList />
         </div>
 
-        <HubStickyBar>
-            <RightFeedSection />
-        </HubStickyBar>
+        @if (ViewportService.Width > 900)
+        {
+            <HubStickyBar>
+                <RightFeedSection />
+            </HubStickyBar>
+        }
 </div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await ViewportService.InitializeAsync();
+        ViewportService.Changed += StateHasChanged;
+    }
+}

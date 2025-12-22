@@ -19,6 +19,8 @@ builder.Services.AddScoped(sp => (IAccountManagement)sp.GetRequiredService<Authe
 // TODO:EXPLAIN
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
+builder.Services.AddScoped<ViewportService>();
+
 builder.Services.AddHttpClient(
 	"Auth",
 	opt => opt.BaseAddress = new Uri(builder.Configuration["ApplicationUrls:BackendUrl"] ?? "http://localhost:5120")
