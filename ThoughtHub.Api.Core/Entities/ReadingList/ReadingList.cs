@@ -22,6 +22,16 @@ namespace ThoughtHub.Api.Core.Entities.ReadingList
 
 		public List<ReadingListArticle> _items = [];
 
+		public ReadingList(Guid ownerId, string name, string slug)
+		{
+			Id = Guid.NewGuid();
+			OwnerId = ownerId;
+			Name = name;
+			Slug = slug;
+			Visibility = ReadingListVisibility.Private;
+			CreatedAt = DateTime.UtcNow;
+		}
+
 		public static void OnModelCreating(ModelBuilder builder)
 		{
 			builder.Entity<ReadingList>(builder =>
