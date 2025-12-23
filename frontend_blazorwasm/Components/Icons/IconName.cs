@@ -1,0 +1,17 @@
+﻿namespace ThoughtHub.UI.BlazorWasm.Components.Icons
+{
+	public enum IconName
+	{
+		AddToList = 0,
+
+		Clap = 1,
+
+		Comment = 2,
+
+		MemberOnly = 3,
+
+		MoreOptions = 4,
+
+		ShowLess = 5
+	}
+}

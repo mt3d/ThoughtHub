@@ -1,4 +1,4 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg"
+﻿@* <svg xmlns="http://www.w3.org/2000/svg"
      width="@Size"
      height="@Size"
      viewBox="@ViewBox"
@@ -7,31 +7,35 @@
      role="img"
      class="@Class"
      fill="none"
-     style="@Style">
+     style="@Style"
+     @attributes="AdditionalAttributes">
     @ChildContent
 </svg>
 
 @code {
     [Parameter]
-    public string Class { get; set; } = string.Empty;
-
-    [Parameter]
-    public int Size { get; set; } = 16;
-
-    [Parameter]
-    public string ViewBox { get; set; } = "0 0 16 16";
-
-    [Parameter]
-    public string? AriaLabel { get; set; }
-
-    [Parameter]
     public RenderFragment ChildContent { get; set; } = default!;
 
-    [Parameter]
-    public string Fill { get; set; } = string.Empty;
+    // [Parameter]
+    // public string Class { get; set; } = string.Empty;
 
-    [Parameter]
-    public string Style { get; set; } = string.Empty;
+    // [Parameter]
+    // public int Size { get; set; } = 16;
 
-    private bool HasAriaLabel => !string.IsNullOrWhiteSpace(AriaLabel);
-}
+    // [Parameter]
+    // public string ViewBox { get; set; } = "0 0 16 16";
+
+    // [Parameter]
+    // public string? AriaLabel { get; set; }
+
+    // [Parameter]
+    // public string Fill { get; set; } = string.Empty;
+
+    // [Parameter]
+    // public string Style { get; set; } = string.Empty;
+
+    // private bool HasAriaLabel => !string.IsNullOrWhiteSpace(AriaLabel);
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, object>? AdditionalAttributes { get; set; }
+} *@
