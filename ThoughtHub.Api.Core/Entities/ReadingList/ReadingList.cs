@@ -22,7 +22,7 @@ namespace ThoughtHub.Api.Core.Entities.ReadingList
 
 		public List<ReadingListArticle> _items = [];
 
-		internal static void OnModelCreating(ModelBuilder builder)
+		public static void OnModelCreating(ModelBuilder builder)
 		{
 			builder.Entity<ReadingList>(builder =>
 			{

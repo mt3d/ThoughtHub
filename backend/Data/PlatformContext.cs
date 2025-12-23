@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ThoughtHub.Api.Core.Entities.Article;
+using ThoughtHub.Api.Core.Entities.ReadingList;
 using ThoughtHub.Data.Entities;
 using ThoughtHub.Data.Entities.Media;
 using ThoughtHub.Data.Entities.Publications;
@@ -33,6 +34,9 @@ namespace ThoughtHub.Data
 		public DbSet<Image> Images => Set<Image>();
 		public DbSet<ImageVersion> ImageVersions => Set<ImageVersion>();
 		public DbSet<ImageFolder> ImageFolders => Set<ImageFolder>();
+
+		public DbSet<ReadingList> ReadingLists => Set<ReadingList>();
+		public DbSet<ReadingListArticle> ReadingListArticles => Set<ReadingListArticle>();
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
@@ -142,6 +146,9 @@ namespace ThoughtHub.Data
 				.WithMany(f => f.Images)
 				.HasForeignKey(i => i.ImageFolderId)
 				.OnDelete(DeleteBehavior.NoAction);
+
+			ReadingList.OnModelCreating(builder);
+			ReadingListArticle.OnModelCreating(builder);
 		}
 
 		// TODO: Handle transaction

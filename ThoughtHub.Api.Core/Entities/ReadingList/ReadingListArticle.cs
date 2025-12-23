@@ -1,4 +1,6 @@
-﻿namespace ThoughtHub.Api.Core.Entities.ReadingList
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace ThoughtHub.Api.Core.Entities.ReadingList
 {
 	public sealed class ReadingListArticle
 	{
@@ -16,6 +18,17 @@
 			ReadingListId = readingListId;
 			ArticleId = articleId;
 			CreatedAt = DateTime.UtcNow;
+		}
+
+		public static void OnModelCreating(ModelBuilder builder)
+		{
+			builder.Entity<ReadingListArticle>(builder =>
+			{
+				builder.HasKey(x => x.Id);
+
+				builder.HasIndex(x => new { x.ReadingListId, x.ArticleId })
+					.IsUnique();
+			});
 		}
 	}
 }
