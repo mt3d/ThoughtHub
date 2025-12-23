@@ -32,6 +32,22 @@ namespace ThoughtHub.Services
 			return list;
 		}
 
+		public async Task<ReadingList?> GetBySlugAsync(
+			Guid ownerId,
+			string slug,
+			Guid? viewerId,
+			CancellationToken ct)
+		{
+			var query = _context.ReadingLists.Where(l => l.OwnerId == ownerId && l.Slug == slug);
+
+			if (viewerId != ownerId)
+			{
+				query = query.Where(l => l.Visibility == ReadingListVisibility.Public);
+			}
+
+			return await query.FirstOrDefaultAsync(ct);
+		}
+
 		/// <summary>
 		/// Find the smallest suffix that produces a slug not yet used by the same owner.
 		/// </summary>
