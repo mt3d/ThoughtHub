@@ -13,7 +13,7 @@ namespace ThoughtHub.Services
 			_context = context;
 		}
 
-		public async Task<ReadingList> CreateAsync(
+		public async Task<ReadingList> CreateCustomAsync(
 			Guid ownerId,
 			string name,
 			string? description,
@@ -23,8 +23,8 @@ namespace ThoughtHub.Services
 			var baseSlug = Utils.GenerateSlug(name);
 			var slug = await EnsureUniqueSlugAsync(ownerId, baseSlug, ct);
 
-			var list = new ReadingList(ownerId, name, slug);
-			list.Description = description;
+			var list = ReadingList.CreateCustom(ownerId, name, slug);
+			list.UpdateMetadata(name, description);
 
 			_context.ReadingLists.Add(list);
 			await _context.SaveChangesAsync(ct);
