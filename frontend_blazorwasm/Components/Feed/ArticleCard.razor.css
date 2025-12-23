@@ -682,35 +682,6 @@ svg._s1._s1 {
     max-height: none;
 }
 
-@media(max-width: 730px)
-{
-    .l {
-        display: none;
-    }
-
-    .i {
-        display: none;
-    }
-}
-
-@media(min-width: 730px)
-{
-    .e {
-        display: none;
-    }
-
-    .k {
-        display: none;
-    }
-}
-
-@media(max-width: 975px)
-{
-    .j {
-        display: none;
-    }
-}
-
 .article-meta-compact {
     padding-top: 12px;
 }
