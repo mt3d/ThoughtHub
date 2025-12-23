@@ -1,4 +1,6 @@
-﻿namespace ThoughtHub.Data.Entities.Media
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace ThoughtHub.Data.Entities.Media
 {
 	/// <summary>
 	/// Represents a logical piece of content: “this is the cover image of article X”
@@ -39,5 +41,14 @@
 		public ImageFolder? Folder { get; set; }
 
 		public IList<ImageVersion> Versions { get; set; } = new List<ImageVersion>();
+
+		public static void OnModelCreating(ModelBuilder builder)
+		{
+			builder.Entity<Image>()
+				.HasOne(i => i.Folder)
+				.WithMany(f => f.Images)
+				.HasForeignKey(i => i.ImageFolderId)
+				.OnDelete(DeleteBehavior.NoAction);
+		}
 	}
 }

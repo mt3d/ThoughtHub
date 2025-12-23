@@ -1,4 +1,5 @@
-﻿using ThoughtHub.Api.Core.Entities.Article;
+﻿using Microsoft.EntityFrameworkCore;
+using ThoughtHub.Api.Core.Entities.Article;
 using ThoughtHub.Data.Entities.Media;
 
 namespace ThoughtHub.Data.Entities.Publications
@@ -88,5 +89,24 @@ namespace ThoughtHub.Data.Entities.Publications
 
 		// TODO: Add social media Urls
 		// pulbic List<SocialMediaLink> SocialLinks = new();
+
+		public static void OnModelCreating(ModelBuilder builder)
+		{
+			builder.Entity<Publication>(builder =>
+			{
+				builder.HasMany(p => p.Articles)
+				.WithOne(a => a.Publication)
+				.HasForeignKey(a => a.PublicationId)
+				.OnDelete(DeleteBehavior.Cascade);
+
+			builder.HasIndex(p => p.Slug)
+				.IsUnique();
+
+			builder.HasOne(p => p.Owner)
+				.WithMany()
+				.HasForeignKey(p => p.OwnerId)
+				.OnDelete(DeleteBehavior.Restrict);
+			});
+		}
 	}
 }

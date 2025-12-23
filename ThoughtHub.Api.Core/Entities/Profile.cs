@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using ThoughtHub.Data.Entities.Publications;
 using ThoughtHub.Data.Entities.Media;
 using ThoughtHub.Api.Core.Entities.Article;
+using Microsoft.EntityFrameworkCore;
 
 namespace ThoughtHub.Data.Entities
 {
@@ -49,5 +50,19 @@ namespace ThoughtHub.Data.Entities
 		/// Provides access to the joint table of the following relationship.
 		/// </summary>
 		public ICollection<PublicationFollower> PublicationFollowers { get; set; } = new List<PublicationFollower>();
+
+		public static void OnModelCreating(ModelBuilder builder)
+		{
+			builder.Entity<Profile>(builder => {
+
+				builder.HasMany(p => p.FollowedPublications)
+				.WithMany(p => p.Followers)
+				.UsingEntity<PublicationFollower>();
+
+				builder.HasMany(p => p.MemberPublications)
+					.WithMany(p => p.Members)
+					.UsingEntity<PublicationMember>();
+			});
+		}
 	}
 }

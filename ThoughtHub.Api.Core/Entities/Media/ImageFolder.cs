@@ -1,4 +1,6 @@
-﻿namespace ThoughtHub.Data.Entities.Media
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace ThoughtHub.Data.Entities.Media
 {
 	public class ImageFolder
 	{
@@ -60,5 +62,14 @@
 		public DateTime CreatedAt { get; set; }
 
 		public IList<Image> Images { get; set; } = new List<Image>();
+
+        public static void OnModelCreating(ModelBuilder builder)
+        {
+			builder.Entity<ImageFolder>()
+	            .HasOne(f => f.Parent)
+	            .WithMany() // Each folder can be a parent of many folders.
+	            .HasForeignKey(f => f.ParentFolderId)
+	            .OnDelete(DeleteBehavior.NoAction);
+		}
 	}
 }
