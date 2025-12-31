@@ -22,7 +22,7 @@
 
 		public DateTime UpdatedAt { get; set; }
 
-		public int AuthorProfileId { get; set; }
+		public Guid AuthorProfileId { get; set; }
 
 		// TODO: Rename to ProfileModel and AutherProfile
 		public AuthorModel Author { get; set; } = new();

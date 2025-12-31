@@ -4,10 +4,10 @@ namespace ThoughtHub.Data.Entities
 {
 	public class FollowMapping
 	{
-		public int FollowerId { get; init; }
+		public Guid FollowerId { get; init; }
 		public Profile? Follower { get; init; }
 
-		public int FolloweeId { get; init; }
+		public Guid FolloweeId { get; init; }
 		public Profile? Followee { get; init; }
 
 		public static void OnModelCreating(ModelBuilder builder)

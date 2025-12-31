@@ -1,7 +1,7 @@
 ﻿namespace ThoughtHub.Events
 {
 	public sealed record UserRegisteredEvent(
-		Guid ProfileId,
+		string UserId,
 		string Email,
 		DateTime RegisteredAtUtc);
 }

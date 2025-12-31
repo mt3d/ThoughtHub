@@ -2,6 +2,6 @@
 {
 	public interface IReadingHistoryService
 	{
-		Task UpdateArticleHistory(Guid articleId, int profileId);
+		Task UpdateArticleHistory(Guid articleId, Guid profileId);
 	}
 }

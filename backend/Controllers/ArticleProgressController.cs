@@ -28,7 +28,7 @@ namespace ThoughtHub.Controllers
 			var profile = await _currentUserService.GetProfileAsync();
 
 			var history = await _context.ReadingHistories
-				.FirstOrDefaultAsync(r => r.ProfileId == profile.ProfileId && r.ArticleId == articleId);
+				.FirstOrDefaultAsync(r => r.ProfileId == profile.Id && r.ArticleId == articleId);
 
 			if (history == null)
 			{

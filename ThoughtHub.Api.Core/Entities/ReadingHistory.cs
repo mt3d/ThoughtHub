@@ -7,7 +7,7 @@ namespace ThoughtHub.Data.Entities
 	{
 		public int ReadingHistoryId { get; set; }
 
-		public int ProfileId { get; set; }
+		public Guid ProfileId { get; set; }
 
 		public Profile Profile { get; set; }
 

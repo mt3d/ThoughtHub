@@ -13,7 +13,7 @@ namespace ThoughtHub.Services
 			_context = context;
 		}
 
-		public async Task UpdateArticleHistory(Guid articleId, int profileId)
+		public async Task UpdateArticleHistory(Guid articleId, Guid profileId)
 		{
 			var history = await _context.ReadingHistories
 				.FirstOrDefaultAsync(r => r.ProfileId == profileId && r.ArticleId == articleId);

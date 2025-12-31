@@ -18,14 +18,12 @@ namespace ThoughtHub.Data.Entities
 		/// <summary>
 		/// The parent comment.
 		/// </summary>
-		[JsonIgnore]
 		public Comment? ParentComment { get; set; }
 
 		/// <summary>
 		/// The id of the comment's author.
 		/// </summary>
-		[JsonIgnore]
-		public int AuthorId { get; set; }
+		public Guid AuthorId { get; set; }
 
 		/// <summary>
 		/// The comment's author.
@@ -56,13 +54,11 @@ namespace ThoughtHub.Data.Entities
 		/// The ID of the parent article, stored for efficient filtering.
 		/// No need to include any information about the article when returning comments.
 		/// </summary>
-		[JsonIgnore]
 		public Guid ArticleId { get; set; }
 
 		/// <summary>
 		/// The parent article.
 		/// </summary>
-		[JsonIgnore]
 		public Article? Article { get; set; }
 
 		/// <summary>
@@ -84,13 +80,11 @@ namespace ThoughtHub.Data.Entities
 		/// Mark the comment as deleted. Delted comments are hidden but preserved
 		/// for moderation purposes.
 		/// </summary>
-		[JsonIgnore]
 		public bool IsDeleted { get; set; }
 
 		/// <summary>
 		/// Mark the comment as pinned. Authors/Publications can pin comments.
 		/// </summary>
-		[JsonIgnore]
 		public bool IsPinned { get; set; }
 	}
 }

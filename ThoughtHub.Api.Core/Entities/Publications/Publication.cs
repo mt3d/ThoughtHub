@@ -46,7 +46,7 @@ namespace ThoughtHub.Data.Entities.Publications
 		/// <summary>
 		/// Gets or sets the ID of the publication's owner.
 		/// </summary>
-		public int OwnerId { get; set; }
+		public Guid OwnerId { get; set; }
 
 		/// <summary>
 		/// Gets or sets the owner of the publication.

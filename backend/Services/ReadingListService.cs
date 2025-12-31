@@ -4,7 +4,7 @@ using ThoughtHub.Data;
 
 namespace ThoughtHub.Services
 {
-	public class ReadingListService
+	public class ReadingListService : IReadingListService
 	{
 		private readonly PlatformContext _context;
 

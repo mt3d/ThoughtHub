@@ -43,7 +43,7 @@ namespace ThoughtHub.Controllers
 
 			var profile = await _currentUserService.GetProfileAsync();
 
-			await _readingHistoryService.UpdateArticleHistory(article.Id, profile.ProfileId);
+			await _readingHistoryService.UpdateArticleHistory(article.Id, profile.Id);
 
 			return Ok(article);
 		}
@@ -82,7 +82,7 @@ namespace ThoughtHub.Controllers
 		[Authorize] // TODO: Check permissions for posting articles
 		public async Task<ArticleEditModel> Save(ArticleEditModel model)
 		{
-			model.AuthorProfileId = (await _currentUserService.GetProfileAsync()).ProfileId;
+			model.AuthorProfileId = (await _currentUserService.GetProfileAsync()).Id;
 
 			if (string.IsNullOrEmpty(model.Published))
 			{

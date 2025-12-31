@@ -9,7 +9,7 @@ namespace ThoughtHub.Data.Entities
 {
 	public class Profile
 	{
-		public int ProfileId { get; set; }
+		public Guid Id { get; set; }
 
 		/// <summary>
 		/// Identity User Id's are strings.
@@ -50,6 +50,10 @@ namespace ThoughtHub.Data.Entities
 		/// Provides access to the joint table of the following relationship.
 		/// </summary>
 		public ICollection<PublicationFollower> PublicationFollowers { get; set; } = new List<PublicationFollower>();
+
+		public DateTime CreatedAtUtc { get; set; }
+
+		public DateTime UpdatedAtUtc { get; set; }
 
 		public static void OnModelCreating(ModelBuilder builder)
 		{

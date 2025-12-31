@@ -1,9 +1,10 @@
-﻿using ThoughtHub.Data.Identity;
-using Microsoft.AspNetCore.Authentication.BearerToken;
+﻿using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using ThoughtHub.Data.Identity;
 
 namespace ThoughtHub.Infrastructure
 {
@@ -19,7 +20,7 @@ namespace ThoughtHub.Infrastructure
 		/// </summary>
 		/// <param name="routes"></param>
 		/// <returns></returns>
-		public static IEndpointRouteBuilder MapEmailLoginEndpoint(this IEndpointRouteBuilder routes)
+		public static IEndpointRouteBuilder MapModifiedIdentityEndpoints(this IEndpointRouteBuilder routes)
 		{
 			routes.MapPost("/login", async Task<Results<Ok<AccessTokenResponse>, EmptyHttpResult, ProblemHttpResult>>
 			([FromBody] LoginRequest login,

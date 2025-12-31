@@ -46,7 +46,7 @@ namespace ThoughtHub.Controllers
 			var profile = await _currentUserService.GetProfileAsync();
 
 			var readArticleIds = await _context.ReadingHistories
-				.Where(r => r.ProfileId == profile.ProfileId)
+				.Where(r => r.ProfileId == profile.Id)
 				.Select(a => a.ArticleId)
 				.ToListAsync();
 
@@ -80,7 +80,7 @@ namespace ThoughtHub.Controllers
 			var recentReads = await _context.ReadingHistories
 				.Include(r => r.Article)
 				.ThenInclude(a => a.AuthorProfile)
-				.Where(r => r.ProfileId == profile.ProfileId)
+				.Where(r => r.ProfileId == profile.Id)
 				.OrderByDescending(r => r.LastReadAt)
 				.Take(limit)
 				.ToListAsync();
@@ -97,7 +97,7 @@ namespace ThoughtHub.Controllers
 			var recentReads = await _context.ReadingHistories
 				.Include(r => r.Article)
 				.ThenInclude(a => a.AuthorProfile)
-				.Where(r => r.ProfileId == profile.ProfileId && r.Progress <= 95)
+				.Where(r => r.ProfileId == profile.Id && r.Progress <= 95)
 				.OrderByDescending(r => r.LastReadAt)
 				.Take(limit)
 				.ToListAsync();
@@ -138,7 +138,7 @@ namespace ThoughtHub.Controllers
 		public async Task<IActionResult> GetTopics([FromQuery] int count = 3)
 		{
 			var profile = await _currentUserService.GetProfileAsync();
-			var result = await _recommendationService.SuggestTopics(profile.ProfileId, count);
+			var result = await _recommendationService.SuggestTopics(profile.Id, count);
 
 			return Ok(result);
 		}

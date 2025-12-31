@@ -28,7 +28,7 @@ namespace ThoughtHub.Api.Models.Editor
 
 		public StatusMessage Status { get; set; }
 
-		public int AuthorProfileId { get; set; }
+		public Guid AuthorProfileId { get; set; }
 	}
 
 	public class StatusMessage

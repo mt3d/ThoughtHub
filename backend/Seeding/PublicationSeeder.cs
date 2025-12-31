@@ -32,7 +32,7 @@ namespace ThoughtHub.Seeding
 				{
 					Name = name,
 					Slug = slug,
-					OwnerId = faker.PickRandom(profiles).ProfileId,
+					OwnerId = faker.PickRandom(profiles).Id,
 					CreatedAt = faker.Date.Past(),
 					PublicationImageId = await _imageCreator.CreatePublicationImageAsync($"{slug}_publication_image.png"),
 					Description = faker.Lorem.Sentences(3)

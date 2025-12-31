@@ -53,7 +53,7 @@ namespace ThoughtHub.Infrastructure
 				.ForMember(dest => dest.PublicationImageUrl, opt => opt.MapFrom(src => src.PublicationImage));
 
 			CreateMap<Data.Entities.Profile, UserPublisherModel>()
-				.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ProfileId.ToString()))
+				.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()))
 				.ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FullName))
 				.ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.UserName))
 				.ForMember(dest => dest.ProfilePictureUrl, opt => opt.MapFrom(src => src.ProfilePicture));

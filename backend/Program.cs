@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ThoughtHub.Api.LocalStorage.Extensions;
 using ThoughtHub.Api.Models.Blocks;
 using ThoughtHub.Data;
+using ThoughtHub.Data.Entities;
 using ThoughtHub.Data.Identity;
 using ThoughtHub.EditorServices;
 using ThoughtHub.Events;
@@ -73,8 +74,10 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IReadingHistoryService, ReadingHistoryService>();
 builder.Services.AddScoped<IRecommendationService, RecommendationService>();
+builder.Services.AddScoped<IReadingListService, ReadingListService>();
 builder.Services.AddScoped<IEventPublisher, InProcessEventPublisher>();
-builder.Services.AddScoped<IEventHandler<UserRegisteredEvent>, DefaultReadingListOnRegistrationHandler>();
+builder.Services.AddScoped<IEventHandler<UserRegisteredEvent>, ProfileCreationOnRegistration>();
+builder.Services.AddScoped<IEventHandler<ProfileCreatedEvent>, DefaultReadingListOnProfileCreationHandler>();
 
 // TODO: Find out if there's a better way.
 var blocksRegistry = new BlocksRegistry();
@@ -111,7 +114,7 @@ app.UseRouting(); // Necessary
 
 // TODO:EXPLAIN
 app.MapIdentityApi<User>();
-app.MapEmailLoginEndpoint();
+app.MapModifiedIdentityEndpoints();
 
 // TODO:EXPLAIN
 app.UseCors("wasm");

@@ -8,7 +8,7 @@
 
 		public Publication Publication { get; set; }
 
-		public int ProfileId { get; set; }
+		public Guid ProfileId { get; set; }
 
 		public Profile Member { get; set; }
 

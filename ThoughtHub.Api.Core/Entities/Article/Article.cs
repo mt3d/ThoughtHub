@@ -20,7 +20,7 @@ namespace ThoughtHub.Api.Core.Entities.Article
 
 		public IList<ArticleBlock> Blocks { get; set; } = new List<ArticleBlock>();
 
-		public int? AuthorProfileId { get; set; }
+		public Guid? AuthorProfileId { get; set; }
 
 		public Profile? AuthorProfile { get; set; }
 

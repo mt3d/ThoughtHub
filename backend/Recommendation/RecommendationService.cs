@@ -29,7 +29,7 @@ namespace ThoughtHub.Recommendation
 			_mapper = mapper;
 		}
 
-		public async Task<IList<InterestProfile>> GenerateInterestProfile(int profileId)
+		public async Task<IList<InterestProfile>> GenerateInterestProfile(Guid profileId)
 		{
 			var profileTagWeights = await _context.ReadingHistories
 				.Where(r => r.ProfileId == profileId && r.Progress >= 50)
@@ -54,7 +54,7 @@ namespace ThoughtHub.Recommendation
 			return profileTagWeights;
 		}
 
-		public async Task<IEnumerable<TagModel>> SuggestTopics(int profileId, int count = 3)
+		public async Task<IEnumerable<TagModel>> SuggestTopics(Guid profileId, int count = 3)
 		{
 			var topics = await _context.Tags.ToListAsync();
 
@@ -105,14 +105,14 @@ namespace ThoughtHub.Recommendation
 			};
 		}
 
-		public async Task<IEnumerable<UserPublisherModel>> SuggestProfiles(int profileId, int count = 3)
+		public async Task<IEnumerable<UserPublisherModel>> SuggestProfiles(Guid profileId, int count = 3)
 		{
 			var profiles = await _context.Profiles.Take(count).ToListAsync();
 
 			return _mapper.Map<IEnumerable<Data.Entities.Profile>, IEnumerable<UserPublisherModel>>(profiles);
 		}
 
-		public async Task<IEnumerable<PublicationPublisherModel>> SuggestPublications(int profileId, int count = 3)
+		public async Task<IEnumerable<PublicationPublisherModel>> SuggestPublications(Guid profileId, int count = 3)
 		{
 			var publications = await _context.Publications.Take(count).ToListAsync();
 
@@ -124,7 +124,7 @@ namespace ThoughtHub.Recommendation
 			var users = await _context.Profiles
 				.Include(p => p.User)
 				.Include(p => p.ProfilePicture)
-				.OrderByDescending(p => p.ProfileId)
+				.OrderByDescending(p => p.Id)
 				.Select(p => _mapper.Map<UserPublisherModel>(p))
 				.ToListAsync();
 
