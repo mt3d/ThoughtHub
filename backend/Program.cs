@@ -117,17 +117,6 @@ app.UseCors("wasm");
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapPost("/logout", async (SignInManager<User> signInManager, [FromBody] object empty) =>
-{
-	if (empty is not null)
-	{
-		await signInManager.SignOutAsync();
-
-		return Results.Ok();
-	}
-	return Results.Unauthorized();
-}).RequireAuthorization();
-
 app.MapControllers();
 
 if (app.Environment.IsDevelopment())
