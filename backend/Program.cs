@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ThoughtHub.Api.LocalStorage.Extensions;
 using ThoughtHub.Api.Models.Blocks;
 using ThoughtHub.Data;
 using ThoughtHub.Data.Identity;
 using ThoughtHub.EditorServices;
+using ThoughtHub.Events;
 using ThoughtHub.Infrastructure;
 using ThoughtHub.Recommendation;
 using ThoughtHub.Runtime;
@@ -73,6 +73,8 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IReadingHistoryService, ReadingHistoryService>();
 builder.Services.AddScoped<IRecommendationService, RecommendationService>();
+builder.Services.AddScoped<IEventPublisher, InProcessEventPublisher>();
+builder.Services.AddScoped<IEventHandler<UserRegisteredEvent>, DefaultReadingListOnRegistrationHandler>();
 
 // TODO: Find out if there's a better way.
 var blocksRegistry = new BlocksRegistry();

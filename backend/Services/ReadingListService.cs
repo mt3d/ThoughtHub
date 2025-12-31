@@ -94,5 +94,35 @@ namespace ThoughtHub.Services
 
 			return $"{baseSlug}-{maxSuffix}";
 		}
+
+		public async Task EnsureDefaultReadingListAsync(Guid profileId)
+		{
+			// It's a good idea to wrap it in a transaction with retry logic in case
+			// of race conditions (e.g., two parallel registrations for the same email,
+			// or the list already exists).
+			int retryCount = 0;
+
+			while (retryCount < 3)
+			{
+				try
+				{
+					if (await _context.ReadingLists.AnyAsync(l => l.OwnerId == profileId && l.Type == ReadingListType.System))
+					{
+						return;
+					}
+
+					var list = ReadingList.CreateDefault(profileId);
+
+					_context.ReadingLists.Add(list);
+					await _context.SaveChangesAsync();
+					return;
+				}
+				catch (DbUpdateException)
+				{
+					retryCount++;
+					await Task.Delay(50);
+				}
+			}
+		}
 	}
 }

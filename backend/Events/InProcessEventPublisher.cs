@@ -1,5 +1,8 @@
 ﻿namespace ThoughtHub.Events
 {
+	/**
+	 * Reslove all handlers from DI and invoke them.
+	 */
 	public class InProcessEventPublisher : IEventPublisher
 	{
 		private readonly IServiceProvider _serviceProvider;

@@ -52,8 +52,19 @@
                     } *@
 
                     <!-- Article Body (if stored in HTML) -->
-                    <div class="article-body">
+                    <main>
+                        <div class="article-body">
+                            @foreach (var block in Article.BlockModels)
+                        {
+                            <div class="block">
+                                <div class="container">
+
+                                </div>
+                            </div>
+                        }
                     </div>
+                    </main>
+
 
                     <!-- Tags -->
                     <div class="mb-4">
