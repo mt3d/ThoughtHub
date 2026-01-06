@@ -17,5 +17,7 @@ namespace ThoughtHub.Services
 			CancellationToken ct);
 
 		Task EnsureDefaultReadingListAsync(Guid profileId);
+
+		Task AddArticleToReadingList(Guid profileId, Guid articleId);
 	}
 }

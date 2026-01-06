@@ -13,6 +13,28 @@ namespace ThoughtHub.Services
 			_context = context;
 		}
 
+		public async Task AddArticleToReadingList(Guid profileId, Guid articleId)
+		{
+
+		}
+
+		// TODO: Implement.
+		public async Task<bool> AddArticleToList(Guid profileId, string listSlug, Guid articleId)
+		{
+			var list = await _context.ReadingLists
+				.Include(l => l.Items)
+				.FirstOrDefaultAsync(l => l.Slug == listSlug);
+
+			if (list is null)
+			{
+				return false;
+			}
+
+			//if (list.Items.FirstOrDefault(a => a.ArticleId == articleId))
+
+			return true;
+		}
+
 		public async Task<ReadingList> CreateCustomAsync(
 			Guid ownerId,
 			string name,

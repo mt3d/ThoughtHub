@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System;
 using ThoughtHub.Api.Models.Content;
 using ThoughtHub.Data;
-using ThoughtHub.Data.Entities.Publications;
 
 namespace ThoughtHub.Services
 {
