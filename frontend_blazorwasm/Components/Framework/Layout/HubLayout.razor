@@ -1,0 +1,39 @@
+﻿@namespace ThoughtHub.UI.BlazorWasm.Components.Framework
+@inherits HubComponentBase
+
+@*
+	TODO: Add ref to root element
+	Add Id
+
+*@
+<div class="@ClassBuilder.Value"
+	style="@StyleBuilder.Value">
+	@if (Header is not null)
+	{
+		<header class="hub-layout-header @Classes?.Header">
+			@Header
+		</header>
+	}
+
+	<main class="hub-layout-main @Classes?.Main">
+		@if (NavigationPane is not null && RemoveNavigationPane is false)
+		{
+			<div class="hub-layout-navigationpane @Classes?.NavigationPane">
+				@NavigationPane
+			</div>
+		}
+
+		<div class="hub-layout-main-content @Classes?.MainContent">
+			@Main
+		</div>
+	</main>
+
+	@if (Footer is not null)
+	{
+		<footer class="hub-layout-footer @Classes?.Footer">
+			@Footer
+		</footer>
+	}
+</div>
+
+@* TODO: If the header or footer are sticky, add custom classes to indicate this *@

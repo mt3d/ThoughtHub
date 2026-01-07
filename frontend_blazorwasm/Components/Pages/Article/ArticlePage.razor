@@ -1,0 +1,148 @@
+﻿@page "/@{author}/{slug}"
+@page "/{publication}/{slug}"
+@using System.Text.Json
+@using ThoughtHub.Api.Models.Content
+@using ThoughtHub.UI.BlazorWasm.Components.Layout
+@layout MainLayout
+
+<div style="display: flex; justify-content: center;">
+    <div style="max-width: 680px; margin: 0px 24px;" class="container mt-3">
+        @if (_isLoading)
+        {
+            <ArticleSkeleton />
+        }
+        else if (_notFound)
+        {
+            <ArticleNotFound />
+        }
+        else
+        {
+            @if (Article is not null)
+            {
+                    <!-- Publication & Author -->
+            @*              <div class="d-flex align-items-center mb-3">
+                        @if (!string.IsNullOrEmpty(Article.Publication.Name))
+                        {
+                            <a href="@Article.Publication.Url" class="d-flex align-items-center me-3 text-decoration-none">
+                                <img src="" class="rounded-circle me-2" width="24" height="24" />
+                                <span class="fw-bold">Article.Publication.Name</span>
+                            </a>
+                        }
+                        <span class="text-muted me-1">by</span>
+                        <a href="/@Article.Author.Url" class="fw-bold text-decoration-none">@Article.Author.FullName</a>
+                    </div> *@
+
+                    <!-- Title -->
+                    <h1 class="">@Article.Title</h1>
+
+                    <!-- Subtitle / Description -->
+                    <p class="text-secondary">@Article.Description</p>
+
+                    <!-- Meta Info -->
+                    <div>
+                        <span>@Article.UpdatedAt.ToString("MMM d")</span>
+@*                         <span class="ms-3"> @Article.ClapsCount Claps</span>
+                        <span class="ms-3"> @Article.CommentsCount Comments</span> *@
+                    </div>
+
+                    <!-- Article Image -->
+@*                     @if (!string.IsNullOrEmpty(Article.Image))
+                    {
+                        <img src="@Article.Image" alt="@Article.Title" class="img-fluid mb-4" />
+                    } *@
+
+                    <!-- Article Body (if stored in HTML) -->
+                    <main>
+                        <div class="article-body">
+                            @foreach (var block in Article.BlockModels)
+                        {
+                            <div class="block">
+                                <div class="container">
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    </main>
+
+
+                    <!-- Tags -->
+                    <div class="mb-4">
+                        @foreach (var tag in Article.Tags)
+                        {
+@*                             <span class="badge bg-secondary me-1">#@tag.Name</span>
+ *@                        }
+                    </div>
+
+            @*             <PublicationAuthorCard />
+                        <CommentSection />
+            *@        
+            }
+        }
+    </div>
+</div>
+
+@code
+{
+    [Parameter]
+    public string? author { get; set; }
+
+    [Parameter]
+    public string? publication { get; set; }
+
+    [Parameter]
+    public string? slug { get; set; } = string.Empty;
+
+    [Inject]
+    public IHttpClientFactory ClientFactory { get; set; }
+
+    private HttpClient httpClient;
+
+    public ArticleModel? Article { get; set; }
+
+    private bool _isLoading = true;
+    private bool _notFound = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        httpClient = ClientFactory.CreateClient("Auth");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (author is null && publication is null)
+        {
+            return;
+        }
+
+        try
+        {
+            await LoadArticleAsync(author, publication, slug);
+
+            if (Article is null)
+            {
+                _notFound = true;
+            }
+        }
+        catch
+        {
+            _notFound = true;
+        }
+
+        _isLoading = false;
+    }
+
+    public async Task LoadArticleAsync(string? author, string? publication, string slug)
+    {
+        JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
+
+        if (author is not null)
+        {
+            Article = await httpClient.GetFromJsonAsync<ArticleModel>($"api/articles/@{author}/{slug}", options);
+        }
+        else
+        {
+            Article = await httpClient.GetFromJsonAsync<ArticleModel>($"api/articles/{publication}/{slug}", options);
+        }
+    }
+}

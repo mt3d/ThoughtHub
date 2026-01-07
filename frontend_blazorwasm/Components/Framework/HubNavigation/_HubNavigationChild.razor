@@ -1,0 +1,59 @@
+﻿@typeparam TItem
+@namespace ThoughtHub.UI.BlazorWasm.Components.Framework
+
+<li role="listitem">
+	
+	@{
+		var url = ParentNav.GetUrl(Item);
+		var text = ParentNav.GetText(Item);
+		var isSeparator = ParentNav.GetIsSeparator(Item);
+		var renderlink = url is not null;
+		var href = url; // Disable href if the element is selected
+		var iconName = ParentNav.GetIconName(Item);
+	}
+
+	@if (ParentNav.RenderType is HubNavigationRenderType.Grouped && Parent is null)
+	{
+	}
+	else
+	{
+		@if (isSeparator)
+		{
+			<div class="hub-navigation-separator" />
+		}
+		else
+		{
+			// @* TODO: Use templates for added flexibility *@
+
+			// TODO: The padding value depends on many factors including the depth and the icon.
+			var padding = ParentNav.IndentValue;
+
+			// The container displays the chevron, the icon, the text, and the description
+			// inside either a link or a button.
+			<_HubNavigationItemContainer
+				Href="@href"
+				RenderLink="renderlink"
+				Class=@($"hub-navigation-item-container")
+				Style="@($"padding-inline-start:{padding}px")">
+				<div class="hub-navigation-main-content">
+					@* TODO: Render the chevron *@
+
+					@* Render the content of the item *@
+					<div class="hub-navigation-item">
+						@* Render the icon *@
+						@if (iconName is not null)
+						{
+							<i style="" class="bi bi-@iconName" />
+						}
+
+						@* Render the text *@
+						<span style="" class="hub-navigation-item-text">@text</span>
+					</div>
+				</div>
+
+				@* TODO: Display the description if available *@
+
+			</_HubNavigationItemContainer>
+		}
+	}
+</li>

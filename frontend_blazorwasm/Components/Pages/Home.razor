@@ -1,0 +1,12 @@
+﻿@page "/"
+@using Microsoft.AspNetCore.Components.Authorization
+@using ThoughtHub.UI.BlazorWasm.Components.Pages.Feed
+
+<AuthorizeView>
+    <Authorized>
+        <Feed />
+    </Authorized>
+    <NotAuthorized>
+        <Welcome />
+    </NotAuthorized>
+</AuthorizeView>

@@ -1,0 +1,138 @@
+﻿@using ThoughtHub.UI.BlazorWasm.Components.Framework
+
+<span class="as b ar an ap">
+	<div class="na o eg bf">
+
+		@* Left section *@
+		<div class="o p he">
+
+			@* Member-only icon *@
+			<div class="hf o">
+				<button class="y bl av ae" aria-label="Member-only story">
+					<div class="">
+						<div>
+							<div class="bg" aria-describedby="76" aria-labelledby="76" role="tooltip">
+								<div tabindex="-1" class="bh">
+									<HubIcon Name="IconName.MemberOnly" Fill="#FFC017" ViewBox="0 0 64 64" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</button>
+			</div>
+
+			@* Date *@
+			<span>@Article.UpdatedAt.ToString("MMM d, yyyy")</span>
+
+			@* Claps and comments *@
+			<div class="">
+				<div class="br nb eq o p">
+
+					<div class="bs il nc o p he">
+						<div class="if eq gk y dg"></div>
+					</div>
+
+					<a class="bs kw nc o p he" tabindex="-1" rel="noopener follow" href="@Article.Url" data-discover="true">
+
+						@* Claps *@
+						<div>
+							<div class="o" aria-describedby="198" aria-labelledby="198" role="tooltip">
+								<div tabindex="-1" class="bh">
+									<div class="o p nd">
+										<HubIcon Name="IconName.Clap" Fill="#6B6B6B" />
+										<span>@Article.ClapsCount</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						@* Comments *@
+						<div>
+							<div class="o" aria-describedby="77" aria-labelledby="77" role="tooltip">
+								<div tabindex="-1" class="bh">
+									<div class="o p nd">
+										<HubIcon Name="IconName.Comment" AriaLabel="Comments" Fill="#6B6B6B" />
+										<span>@Article.CommentsCount</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</a>
+				</div>
+			</div>
+		</div>
+
+		@* Right section *@
+		<div class="o p ne nf">
+			@* Show less like this button *@
+			<div>
+				<div class="bg" aria-describedby="78" aria-labelledby="78" role="tooltip">
+					<div tabindex="-1" class="bh">
+						<button class="bi aq bk ct bm at bn ni au av aw ax ay az ba" aria-label="Show less like this">
+							<HubIcon Name="IconName.ShowLess" Width="24" Height="24" Fill="none" ViewBox="0 0 24 24" AriaLabel="ShowLess" Style="" Class="grey-stroke black-stroke-hover" />
+						</button>
+					</div>
+				</div>
+			</div>
+
+			@* Add to reading list button *@
+			<div class="i l">
+				<div>
+					<div class="bg" aria-describedby="79" aria-labelledby="79" role="tooltip">
+						<div tabindex="-1" class="bh">
+							<div class="bg">
+								<button aria-controls="addToCatalogBookmarkButton" aria-expanded="false" aria-label="Add to list bookmark button" class="bi bj bk ct bm at bn ni au av aw bo nj nk io">
+
+									<HubIcon Name="IconName.AddToList" Width="24" Height="24" ViewBox="0 0 24 24" AriaLabel="AddToList" Style="fill: rgb(36, 36, 36);" />
+
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="i l k j e">
+				<div>
+					<div class="bg" aria-describedby="84" aria-labelledby="84" role="tooltip">
+						<div tabindex="-1" class="bh">
+							<div class="bg">
+								<button aria-controls="addToCatalogBookmarkButton" aria-expanded="false" aria-label="Add to list bookmark button" class="bi bj bk ct bm at bn ni au av aw bo nj nk io">
+
+									<HubIcon Name="IconName.AddToList" Width="24" Height="24" ViewBox="0 0 24 24" AriaLabel="AddToList" Style="fill: rgb(36, 36, 36);" />
+
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			@* More Options button *@
+			<div class="nl y">
+				<div class="bg">
+					<div class="bg">
+						<div>
+							<div class="bg" aria-describedby="200" aria-labelledby="200" role="tooltip">
+								<div tabindex="-1" class="bh">
+
+									<button aria-label="More options" class="bi bj bk ct bm at bn ni au av aw bo bp bq nm nn">
+										<HubIcon Name="IconName.MoreOptions" Height="24" Width="24" Fill="none" ViewBox="0 0 24 24" AriaLabel="MoreOptions" />
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</span>
+
+@code {
+	[Parameter]
+	public ArticleDigestModel Article { get; set; }
+}

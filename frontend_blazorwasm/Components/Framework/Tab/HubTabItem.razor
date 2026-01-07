@@ -1,0 +1,22 @@
+﻿@inherits HubComponentBase
+@namespace ThoughtHub.UI.BlazorWasm.Components.Framework
+
+<div class="@ClassBuilder.Value" aria-current="false">
+	<a class="hub-tab-link" href="#" role="tab">
+		@if (Header is not null)
+		{
+			@Header
+		}
+		else if (HeaderText is not null)
+		{
+			<button
+				class="hub-tab-button"
+				type="button"
+				role="tab"
+				@onclick="HandleOnClick"
+			>
+				@HeaderText
+			</button>
+		}
+	</a>
+</div>

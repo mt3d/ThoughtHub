@@ -1,0 +1,11 @@
+﻿@inherits HubComponentBase
+@typeparam TItem
+@namespace ThoughtHub.UI.BlazorWasm.Components.Framework
+
+<div class="@ClassBuilder.Value"
+     style="border: 1px solid var(--hub-color-border-secondary); @StyleBuilder.Value">
+
+    <div class="hub-navigation-pane-content">
+        <HubNavigation Items="Items" />
+    </div>
+</div>

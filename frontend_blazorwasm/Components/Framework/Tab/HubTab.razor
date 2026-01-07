@@ -1,0 +1,42 @@
+﻿@inherits HubComponentBase
+@namespace ThoughtHub.UI.BlazorWasm.Components.Framework
+
+<div style="@StyleBuilder.Value" class="@ClassBuilder.Value">
+
+	<CascadingValue Value="this" IsFixed="true">
+		<div style="@Styles?.Header" class="hub-tab-header-content @Classes?.Header">
+			@ChildContent
+		</div>
+	</CascadingValue>
+
+	@* Should all tabs be rendered and then hidden with css? *@
+	@if (RenderAll)
+	{
+		
+	}
+	else
+	{
+		<div role="tabpanel"
+			 style=""
+			 class="hub-tab-content"
+		>
+			@* HubTabItem could have supports custom Headers. If these custom headers are used
+				the content of the tabs will be specified using the body section.
+				<HubTabItem>
+					<Header>
+						...
+					</Header>
+					<Body>
+						...
+					</Body>
+				</HubTabItem>
+
+				However, if custom headers are not used, then the child content will be rendered.
+				<HubTabItem>
+					...
+				</HubTabItem>
+			*@
+			 @(_selectedItem?.Body ?? _selectedItem?.ChildContent)
+		 </div>
+	}
+</div>

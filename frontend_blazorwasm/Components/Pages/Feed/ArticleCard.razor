@@ -1,0 +1,74 @@
+﻿<div class="inherited-context">
+	<div class="ob n y">
+		<article class="" data-testid="post-preview">
+			<div class="hf y">
+				<div class="n bb">
+					<div class="y">
+						<div class="n y">
+							<div style="position: relative; display: flex;" role="link" data-href="@Article.Url" tabindex="0">
+								<div class="n kx ky kz la">
+
+									<ArticleByLine Publication="Article.Publication" Author="Article.Author" />
+
+									@* Standard card + bottom bar *@
+									<div class="o">
+
+										<div class="y dj ko">
+
+											<div class="article-card-content">
+												<a class="article-card-link" rel="noopener follow" href="@Article.Url" data-discover="true">
+													<h2 class="article-card-title">@Article.Title</h2>
+
+													<div class="article-card-description-wrapper">
+														<h3 class="article-card-description">@Article.Description</h3>
+													</div>
+												</a>
+											</div>
+
+											<div class="i l">
+												<div class="mq mr ms mt mu mv mw mx my mz y">
+													<MetaBar Article="Article" />
+												</div>
+											</div>
+
+										</div>
+
+                                        @* Article image *@
+										<div class="no np nq nr ns y">
+											<div aria-label="@Article.Title">
+
+												@* Small article image *@
+												<div class="k j e">
+													<img alt="@Article.Title" class="nt kq" width="80" height="53" loading="lazy" src="@Article.Image">
+												</div>
+
+												@* Big article image *@
+												<div class="i l">
+													<img alt="@Article.Title" class="nt kq" width="160" height="107" loading="lazy" src="@Article.Image">
+												</div>
+
+											</div>
+										</div>
+
+									</div>
+
+
+									<div class="mk k j e">
+                                        <MetaBar Article="Article" />
+                                    </div>
+
+								</div>
+							</div>
+							<div class="nv n af nw nx ny nz oa"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public ArticleDigestModel Article { get; set; }
+}

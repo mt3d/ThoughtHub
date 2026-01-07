@@ -1,0 +1,16 @@
+﻿@inherits HubComponentBase
+@typeparam TItem
+@namespace ThoughtHub.UI.BlazorWasm.Components.Framework
+
+<nav style="@StyleBuilder.Value"
+     class="@ClassBuilder.Value">
+
+     <ul role="list">
+        <CascadingValue Value="this" IsFixed="true">
+            @foreach (var (item, idx) in _items.Select((item, idx) => (item, idx)))
+            {
+                <_HubNavigationChild Item="item" />
+            }
+        </CascadingValue>
+     </ul>
+</nav>

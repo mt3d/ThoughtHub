@@ -7,9 +7,11 @@ using Blazored.Modal;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
+// TODO: Explain.
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
+// TODO: Redesign authentication.
 builder.Services.AddTransient<CookieHandler>();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddScoped<AuthenticationStateProvider, CookieAuthenticationStateProvider>();
@@ -19,8 +21,10 @@ builder.Services.AddScoped(sp => (IAccountManagement)sp.GetRequiredService<Authe
 // TODO:EXPLAIN
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
+// TODO: Explain.
 builder.Services.AddScoped<ViewportService>();
 
+// TODO: Replace.
 builder.Services.AddHttpClient(
 	"Auth",
 	opt => opt.BaseAddress = new Uri(builder.Configuration["ApplicationUrls:BackendUrl"] ?? "http://localhost:5120")
