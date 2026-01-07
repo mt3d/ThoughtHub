@@ -27,6 +27,7 @@
     <ProjectReference Include="..\ThoughtHub.Api.Core\ThoughtHub.Api.Core.csproj" />
     <ProjectReference Include="..\ThoughtHub.Api.LocalStorage\ThoughtHub.Api.LocalStorage.csproj" />
     <ProjectReference Include="..\ThoughtHub.Api.Models\ThoughtHub.Api.Models.csproj" />
+    <ProjectReference Include="..\ThoughtHub.ServiceDefaults\ThoughtHub.ServiceDefaults.csproj" />
   </ItemGroup>
 
   <ItemGroup>

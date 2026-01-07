@@ -15,6 +15,8 @@ using ThoughtHub.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
+
 // TODO: Configure connection string and database provider
 builder.Services.AddDbContext<PlatformContext>(options =>
 {
@@ -108,6 +110,8 @@ builder.Services.AddScoped<MainSeeder>();
 builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 app.UseStaticFiles();
 app.UseRouting(); // Necessary

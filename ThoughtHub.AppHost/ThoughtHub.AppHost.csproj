@@ -1,0 +1,16 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.1.0">
+
+  <ItemGroup>
+    <ProjectReference Include="..\backend\ThoughtHub.Api.csproj" />
+    <ProjectReference Include="..\frontend_blazorwasm\ThoughtHub.UI.BlazorWasm.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>5483db60-44df-49a4-8e4d-85e4188215dc</UserSecretsId>
+  </PropertyGroup>
+
+</Project>
