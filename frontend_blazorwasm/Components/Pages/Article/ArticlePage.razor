@@ -1,7 +1,9 @@
 ﻿@page "/@{author}/{slug}"
 @page "/{publication}/{slug}"
 @using System.Text.Json
+@using ThoughtHub.Api.Models.Blocks
 @using ThoughtHub.Api.Models.Content
+@using ThoughtHub.UI.BlazorWasm.Components.Blocks
 @using ThoughtHub.UI.BlazorWasm.Components.Framework
 @using ThoughtHub.UI.BlazorWasm.Components.Layout
 @using ThoughtHub.UI.BlazorWasm.Services
@@ -93,7 +95,11 @@
                     <section class="post-body">
                         @foreach (var block in Article.BlockModels)
                         {
-                            
+                            <div class="block">
+                                <div class="container">
+                                    <DynamicComponent Type="@GetBlockComponentType(block)" Parameters="@(new Dictionary<string, object>{{"Block", block}})"/>
+                                </div>
+                            </div>
                         }
                     </section>
 
@@ -129,7 +135,14 @@
 
         try
         {
-            await LoadArticleAsync(author, publication, slug);
+            if (author is not null)
+            {
+                Article = await ArticleService.GetIndependentArticleAsync(author, slug);
+            }
+            else
+            {
+                Article = await ArticleService.GetPublicationArticleAsync(author, slug);
+            }
 
             if (Article is null)
             {
@@ -144,17 +157,13 @@
         _isLoading = false;
     }
 
-    public async Task LoadArticleAsync(string? author, string? publication, string slug)
+    private static readonly Dictionary<Type, Type> BlockMap = new()
     {
-        JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
+        { typeof(TextBlockModel), typeof(TextBlock) }
+    };
 
-        if (author is not null)
-        {
-            Article = await ArticleService.GetIndependentArticleAsync(author, slug);
-        }
-        else
-        {
-            Article = await ArticleService.GetPublicationArticleAsync(author, slug);
-        }
+    private Type GetBlockComponentType(BlockModel block)
+    {
+        return BlockMap.TryGetValue(block.GetType(), out var type) ? type : typeof(UnknownBlockType);
     }
 }
