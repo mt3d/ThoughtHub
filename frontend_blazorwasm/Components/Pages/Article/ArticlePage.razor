@@ -2,9 +2,13 @@
 @page "/{publication}/{slug}"
 @using System.Text.Json
 @using ThoughtHub.Api.Models.Content
+@using ThoughtHub.UI.BlazorWasm.Components.Framework
 @using ThoughtHub.UI.BlazorWasm.Components.Layout
+@using ThoughtHub.UI.BlazorWasm.Services
 @layout MainLayout
+@inject IArticleService ArticleService
 
+@* TODO: Remove these styles *@
 <div style="display: flex; justify-content: center;">
     <div style="max-width: 680px; margin: 0px 24px;" class="container mt-3">
         @if (_isLoading)
@@ -19,64 +23,82 @@
         {
             @if (Article is not null)
             {
-                    <!-- Publication & Author -->
-            @*              <div class="d-flex align-items-center mb-3">
-                        @if (!string.IsNullOrEmpty(Article.Publication.Name))
-                        {
-                            <a href="@Article.Publication.Url" class="d-flex align-items-center me-3 text-decoration-none">
-                                <img src="" class="rounded-circle me-2" width="24" height="24" />
-                                <span class="fw-bold">Article.Publication.Name</span>
-                            </a>
-                        }
-                        <span class="text-muted me-1">by</span>
-                        <a href="/@Article.Author.Url" class="fw-bold text-decoration-none">@Article.Author.FullName</a>
-                    </div> *@
+                <article class="post">
 
-                    <!-- Title -->
-                    <h1 class="">@Article.Title</h1>
+                    <header class="post-header">
 
-                    <!-- Subtitle / Description -->
-                    <p class="text-secondary">@Article.Description</p>
+                        <h1 class="post-title">
+                            @Article.Title
+                        </h1>
 
-                    <!-- Meta Info -->
-                    <div>
-                        <span>@Article.UpdatedAt.ToString("MMM d")</span>
-@*                         <span class="ms-3"> @Article.ClapsCount Claps</span>
-                        <span class="ms-3"> @Article.CommentsCount Comments</span> *@
-                    </div>
+                        <div class="post-byline">
 
-                    <!-- Article Image -->
-@*                     @if (!string.IsNullOrEmpty(Article.Image))
-                    {
-                        <img src="@Article.Image" alt="@Article.Title" class="img-fluid mb-4" />
-                    } *@
+                            <div class="post-author">
+                                <a class="post-author__avatar-link" href="#">
+                                    <img class="post-author__avatar"
+                                         src="@Article.Author.ProfilePic"
+                                         alt="@Article.Author.FullName" />
+                                </a>
 
-                    <!-- Article Body (if stored in HTML) -->
-                    <main>
-                        <div class="article-body">
-                            @foreach (var block in Article.BlockModels)
-                        {
-                            <div class="block">
-                                <div class="container">
-
+                                <div class="post-author__meta">
+                                    <a class="post-author__name" href="#">
+                                        @Article.Author.FullName
+                                    </a>
                                 </div>
+
+                                <button class="post-author__follow">
+                                    Follow
+                                </button>
                             </div>
-                        }
-                    </div>
-                    </main>
 
+                            <div class="post-meta">
+                                <span class="post-meta__read-time">6 min read</span>
+                                <span class="post-meta__separator">·</span>
+                                <span class="post-meta__date">@Article.UpdatedAt.ToShortDateString()</span>
+                            </div>
 
-                    <!-- Tags -->
-                    <div class="mb-4">
-                        @foreach (var tag in Article.Tags)
+                        </div>
+
+                        <div class="post-actions">
+
+                            <button class="post-action post-action--clap">
+                                <HubIcon Name="IconName.Clap" /> <span class="post-action__count">251</span>
+                            </button>
+
+                            <button class="post-action post-action--responses">
+                                <HubIcon Name="IconName.Comment" /> <span class="post-action__count">4</span>
+                            </button>
+
+                            <button class="post-action post-action--bookmark">
+                                <HubIcon Name="IconName.AddToList" />
+                            </button>
+
+                            @* TODO: Add custom icon *@
+                            <button class="post-action post-action--listen">
+                                ▶ Listen
+                            </button>
+
+                            <button class="post-action post-action--share">
+                                Share
+                            </button>
+
+                            <button class="post-action post-action--more">
+                                More
+                            </button>
+
+                        </div>
+
+                    </header>
+
+                    <section class="post-body">
+                        @foreach (var block in Article.BlockModels)
                         {
-@*                             <span class="badge bg-secondary me-1">#@tag.Name</span>
- *@                        }
-                    </div>
+                            
+                        }
+                    </section>
 
-            @*             <PublicationAuthorCard />
-                        <CommentSection />
-            *@        
+                </article>
+
             }
         }
     </div>
@@ -93,20 +115,10 @@
     [Parameter]
     public string? slug { get; set; } = string.Empty;
 
-    [Inject]
-    public IHttpClientFactory ClientFactory { get; set; }
-
-    private HttpClient httpClient;
-
     public ArticleModel? Article { get; set; }
 
     private bool _isLoading = true;
     private bool _notFound = false;
-
-    protected override async Task OnInitializedAsync()
-    {
-        httpClient = ClientFactory.CreateClient("Auth");
-    }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -138,11 +150,11 @@
 
         if (author is not null)
         {
-            Article = await httpClient.GetFromJsonAsync<ArticleModel>($"api/articles/@{author}/{slug}", options);
+            Article = await ArticleService.GetIndependentArticleAsync(author, slug);
         }
         else
         {
-            Article = await httpClient.GetFromJsonAsync<ArticleModel>($"api/articles/{publication}/{slug}", options);
+            Article = await ArticleService.GetPublicationArticleAsync(author, slug);
         }
     }
 }
