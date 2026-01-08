@@ -3,7 +3,7 @@ using ThoughtHub.UI.BlazorWasm.Infrastructure;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Blazored.Modal;
+using ThoughtHub.UI.BlazorWasm.Extensions;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -19,17 +19,11 @@ builder.Services.AddScoped(sp => (IAccountManagement)sp.GetRequiredService<Authe
 
 // set base address for default host
 // TODO:EXPLAIN
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+//builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 // TODO: Explain.
 builder.Services.AddScoped<ViewportService>();
 
-// TODO: Replace.
-builder.Services.AddHttpClient(
-	"Auth",
-	opt => opt.BaseAddress = new Uri(builder.Configuration["ApplicationUrls:BackendUrl"] ?? "http://localhost:5120")
-	).AddHttpMessageHandler<CookieHandler>();
-
-builder.Services.AddBlazoredModal();
+builder.AddCustomApplicationServices();
 
 await builder.Build().RunAsync();

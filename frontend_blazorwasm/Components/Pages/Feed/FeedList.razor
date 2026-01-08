@@ -1,6 +1,8 @@
 ﻿@using System.Text.Json
 @using ThoughtHub.UI.BlazorWasm.Infrastructure
 @using ThoughtHub.UI.BlazorWasm.Components.Framework
+@using ThoughtHub.UI.BlazorWasm.Services
+@inject IArticleService articleService
 
 <HubTab Styles="@(new HubTabClassesStyles { Header = "position: sticky; top: 57px; background: #fff; z-index: 500; padding-top: 16px;" })">
     <HubTabItem HeaderText="For you">
@@ -21,23 +23,10 @@
 @code {
     private List<ArticleDigestModel> Articles = new();
 
-    [Inject]
-    public IHttpClientFactory ClientFactory { get; set; }
-    private HttpClient httpClient;
+    public int PageSize { get; set; } = 5;
 
-    protected override async Task OnInitializedAsync()
+    private async Task<IEnumerable<ArticleDigestModel>?> GetItems(ItemsRequest request)
     {
-        httpClient = ClientFactory.CreateClient("Auth");
-    }
-
-    async Task<IEnumerable<ArticleDigestModel>?> GetItems(ItemsRequest request)
-    {
-        int pageSize = 5;
-
-        JsonSerializerOptions options = new() { PropertyNameCaseInsensitive = true };
-
-        var fetchedArticles = await httpClient.GetFromJsonAsync<IList<ArticleDigestModel>>($"api/recommend/recent_unpersonalized?limit={pageSize}&offset={request.StartIndex}", options);
-
-        return fetchedArticles;
+        return await articleService.GetFeedArticlesAsync(request.StartIndex, PageSize);
     }
 }
