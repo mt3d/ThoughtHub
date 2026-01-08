@@ -1,4 +1,6 @@
 ﻿@using ThoughtHub.Api.Models.RecommendedPublishers
+@using ThoughtHub.UI.BlazorWasm.Services
+@inject IArticleService articleService
 
 <div class="who-to-follow">
     <header class="who-to-follow__header">
@@ -78,22 +80,10 @@
 
 
 @code {
-	[Inject]
-	public IHttpClientFactory ClientFactory { get; set; }
-	private HttpClient httpClient;
+    private RecommendedPublisherConnectionModel? _connection = null;
 
-	private RecommendedPublisherConnectionModel? _connection = null;
-
-	protected override async Task OnInitializedAsync()
-	{
-		try
-		{
-			httpClient = ClientFactory.CreateClient("Auth");
-			_connection = await httpClient.GetFromJsonAsync<RecommendedPublisherConnectionModel>("api/recommend/who-to-follow?count=3");
-		}
-		catch
-		{
-			
-		}
-	}
+    protected override async Task OnInitializedAsync()
+    {
+        _connection = await articleService.GetWhoToFollowConnectionAsync();
+    }
 }

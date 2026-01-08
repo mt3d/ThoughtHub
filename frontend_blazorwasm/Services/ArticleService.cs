@@ -1,6 +1,7 @@
 ﻿using System.Net.Http.Json;
 using System.Text.Json;
 using ThoughtHub.Api.Models;
+using ThoughtHub.Api.Models.RecommendedPublishers;
 
 namespace ThoughtHub.UI.BlazorWasm.Services
 {
@@ -18,10 +19,13 @@ namespace ThoughtHub.UI.BlazorWasm.Services
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex.Message);
-
 				return new List<ArticleDigestModel>();
 			}
+		}
+
+		public async Task<RecommendedPublisherConnectionModel> GetWhoToFollowConnectionAsync()
+		{
+			return await httpClient.GetFromJsonAsync<RecommendedPublisherConnectionModel>("api/recommend/who-to-follow?count=3");
 		}
 	}
 }
