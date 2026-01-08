@@ -1,111 +1,81 @@
 ﻿@using ThoughtHub.Api.Models.RecommendedPublishers
 
+<div class="who-to-follow">
+    <header class="who-to-follow__header">
+        <h2 class="who-to-follow__title">Who to follow</h2>
+    </header>
 
-<div class="fs ft fu y">
-	<div class="y">
-		<div class="y">
+    @if (_connection is not null)
+    {
+        <ul class="who-to-follow__list">
+            @foreach (var edge in _connection.Edges)
+            {
+                switch (edge.Node)
+                {
+                    case UserPublisherModel user:
+                        <li class="who-to-follow__item">
+                            <div class="who-to-follow__content">
+                                <a class="who-to-follow__avatar-link" href="#">
+                                    <img class="who-to-follow__avatar"
+                                         src="@user.ProfilePictureUrl"
+                                         alt="@user.Name" />
+                                </a>
 
-			<div class="y">
-				<div class="gc y">
-					<h2 class="as gd ge an gf cn">Who to follow</h2>
-				</div>
-			</div>
+                                <div class="who-to-follow__meta">
+                                    <a class="who-to-follow__name" href="#">
+                                        @user.Name
+                                    </a>
+                                    <p class="who-to-follow__description">
+                                        @user.Bio
+                                    </p>
+                                </div>
+                            </div>
 
-		@if (_connection is null)
-		{
-			@* TODO: Dsiplay skeleton *@
-		}
-		else
-		{
-			<div class="y">
-				@foreach (var edge in _connection.Edges)
-				{
-					switch (edge.Node)
-					{
-						case UserPublisherModel user:
-							<div class="bb n y">
-								<div class="hx n o ee eg">
+                            <button class="who-to-follow__action">
+                                Follow
+                            </button>
+                        </li>
+                        break;
 
-									<div class="o">
-										<a tabindex="0" rel="noopener follow" href="" data-discover="true">
-											<div class="y br">
-												<img alt="@user.Name" class="y df t dc dd dg" width="32" height="32" loading="lazy" src="@user.ProfilePictureUrl">
-												<div class="db t y dc dd bs ab bl kk"></div>
-											</div>
-										</a>
+                    case PublicationPublisherModel publication:
+                        <li class="who-to-follow__item">
+                            <div class="who-to-follow__content">
+                                <a class="who-to-follow__avatar-link" href="#">
+                                    <img class="who-to-follow__avatar"
+                                         src="@publication.PublicationImageUrl"
+                                         alt="@publication.Name" />
+                                </a>
 
-										<div class="ao ej y">
-											<a class="bi aq bk ct bm at bn ae au av aw ax ay az ba" rel="noopener follow" href="#" data-discover="true">
-												<h2 class="as hd ge an bw kl gw gx km gz kn hb gf cn">@user.Name</h2>
-											</a>
-											<a class="bi aq bk ct bm at bn ae au av aw ax ay az ba" rel="noopener follow" href="#" data-discover="true">
-												<div class="ko y kn">
-													<p class="as b ar an bw kl gw gx km gz hb ap">@user.Bio</p>
-												</div>
-											</a>
-										</div>
+                                <div class="who-to-follow__meta">
+                                    <a class="who-to-follow__name" href="#">
+                                        @publication.Name
+                                    </a>
+                                    <p class="who-to-follow__type">
+                                        Publication
+                                    </p>
+                                    <p class="who-to-follow__description">
+                                        @publication.Description
+                                    </p>
+                                </div>
+                            </div>
 
-									</div>
+                            <button class="who-to-follow__action">
+                                Follow
+                            </button>
+                        </li>
+                        break;
+                }
+            }
+        </ul>
+    }
 
-									<div class="ki kj">
-										<div class="bg">
-											<button style="border: 1px solid rgb(36, 36, 36);" class="oc od av o q p oe of og">
-												<span class="as b ck an cn n">
-													<span class="bg oh">Follow</span>
-												</span>
-											</button>
-										</div>
-									</div>
-
-								</div>
-							</div>
-							break;
-						case PublicationPublisherModel publication:
-							<div class="bb n y">
-								<div class="hx n o ee eg">
-									<div class="o">
-										<a href="" rel="noopener follow">
-											<div class="br">
-												<img alt="@publication.Name" class="dg gt y dd dc" width="32" height="32" loading="lazy" src="@publication.PublicationImageUrl"><div class="gt y dc dd bs ab db kk">
-												</div>
-											</div>
-										</a>
-										<div class="ao ej y">
-											<a class="bi aq bk ct bm at bn ae au av aw ax ay az ba" href="" rel="noopener follow">
-												<h2 class="as hd ge an bw kl gw gx km gz kn hb gf cn">@publication.Name</h2>
-												</a>
-											<div class="kp kq y">
-												<p class="as b ar an cn">Publication</p>
-											</div>
-											<a class="bi aq bk ct bm at bn ae au av aw ax ay az ba" href="#" rel="noopener follow">
-												<div class="ko y kn">
-													<p class="as b ar an bw kl gw gx km gz hb ap">@publication.Description</p>
-												</div>
-											</a>
-										</div>
-									</div>
-									<div class="ki kj">
-										<button style="border: 1px solid rgb(36, 36, 36);" class="oc od av o q p oe of og">
-											<span class="as b ck an cn n"><span class="bg oh">Follow</span></span>
-										</button>
-									</div>
-								</div>
-							</div>
-							break;
-					}
-				}
-			</div>
-		}
-	</div>
-
-		<div class="hm y">
-			<p class="as b ck an ap">
-				<a class="bi aq bk ct bm at bn ae au av aw ax ay gm" rel="noopener follow" href="#" data-discover="true">See more suggestions</a>
-			</p>
-		</div>
-
-	</div>
+    <footer class="who-to-follow__footer">
+        <a class="who-to-follow__more" href="#">
+            See more suggestions
+        </a>
+    </footer>
 </div>
+
 
 @code {
 	[Inject]
