@@ -48,8 +48,7 @@ namespace ThoughtHub.Seeding
 					Slug = slug,
 					AuthorProfileId = author.Id,
 					// TODO: Handle tags.
-					// TODO: Handle images.
-					// ArticleImageId = await _imageCreator.CreateArticleImageAsync($"{title}_article_image.png", title)
+					ArticleImageId = await _imageCreator.CreateArticleImageAsync($"{title}_article_image.png", title)
 				};
 
 				var blocksCount = faker.PickRandom(Enumerable.Range(5, 15));

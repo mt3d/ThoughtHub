@@ -26,7 +26,6 @@
 
 		public Guid AuthorProfileId { get; set; }
 
-		// TODO: Rename to ProfileModel and AutherProfile
 		public AuthorModel? AuthorProfile { get; set; }
 
 
@@ -34,6 +33,7 @@
 
 		public PublicationModel? Publication { get; set; }
 
+		public Guid ArticleImageId { get; set; }
 
 		// TODO: Add image.
 		// TODO: Add comments.
