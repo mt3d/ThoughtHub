@@ -20,7 +20,7 @@ namespace ThoughtHub.Api.Core.Entities.Article
 
 		public IList<ArticleBlock> Blocks { get; set; } = new List<ArticleBlock>();
 
-		public Guid? AuthorProfileId { get; set; }
+		public Guid AuthorProfileId { get; set; }
 
 		public Profile? AuthorProfile { get; set; }
 
@@ -38,7 +38,6 @@ namespace ThoughtHub.Api.Core.Entities.Article
 
 		public int? PublicationId { get; set; }
 
-		[JsonIgnore]
 		public Publication? Publication { get; set; }
 
 		public DateTime CreatedAt { get; set; }

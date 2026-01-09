@@ -1,7 +1,11 @@
 ﻿using Bogus;
 using Microsoft.EntityFrameworkCore;
 using ThoughtHub.Api.Core.Entities.Article;
+using ThoughtHub.Api.Models;
+using ThoughtHub.Api.Models.Blocks;
+using ThoughtHub.Api.Models.Content;
 using ThoughtHub.Data;
+using ThoughtHub.Services;
 
 namespace ThoughtHub.Seeding
 {
@@ -9,16 +13,21 @@ namespace ThoughtHub.Seeding
 	{
 		private readonly PlatformContext _context;
 		private readonly ImageCreator _imageCreator;
+		private readonly IArticleService _articleService;
 
-		public ArticleSeeder(PlatformContext context, ImageCreator imageCreator)
+		public ArticleSeeder(
+			PlatformContext context,
+			ImageCreator imageCreator,
+			IArticleService articleService)
 		{
 			_context = context;
 			_imageCreator = imageCreator;
+			_articleService = articleService;
 		}
 
 		public async Task SeedAsync(int count)
 		{
-			var articles = new List<Article>();
+			//var articles = new List<Article>();
 			var profiles = await _context.Profiles.ToListAsync();
 			var tags = await _context.Tags.ToListAsync();
 			var publications = await _context.Publications.ToListAsync();
@@ -32,15 +41,25 @@ namespace ThoughtHub.Seeding
 				var slug = SeedingUtilities.Slugify(title);
 				var author = faker.PickRandom(profiles);
 
-				var article = new Article
+				var article = new ArticleModel
 				{
 					Title = title,
 					Description = subtitle,
 					Slug = slug,
-					AuthorProfile = author,
-					Tags = faker.PickRandom(tags, faker.Random.Int(2, 5)).ToList(),
-					ArticleImageId = await _imageCreator.CreateArticleImageAsync($"{title}_article_image.png", title)
+					AuthorProfileId = author.Id,
+					// TODO: Handle tags.
+					// TODO: Handle images.
+					// ArticleImageId = await _imageCreator.CreateArticleImageAsync($"{title}_article_image.png", title)
 				};
+
+				var blocksCount = faker.PickRandom(Enumerable.Range(5, 15));
+				for (int j = 0; j < blocksCount; j++)
+				{
+					article.BlockModels.Add(new TextBlockModel
+					{
+						Body = faker.Lorem.Paragraph()
+					});
+				}
 
 				// TODO: Should be between profile registration date and now
 				article.CreatedAt = faker.Date.Past();
@@ -58,10 +77,8 @@ namespace ThoughtHub.Seeding
 					article.PublicationId = faker.PickRandom(publications).PublicationId;
 				}
 
-				_context.Articles.Add(article);
+				await _articleService.SaveAsync(article);
 			}
-
-			await _context.SaveChangesAsync();
 		}
 	}
 }

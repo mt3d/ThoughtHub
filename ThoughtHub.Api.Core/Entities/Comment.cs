@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 using ThoughtHub.Api.Core.Entities.Article;
 
 namespace ThoughtHub.Data.Entities
@@ -86,5 +87,16 @@ namespace ThoughtHub.Data.Entities
 		/// Mark the comment as pinned. Authors/Publications can pin comments.
 		/// </summary>
 		public bool IsPinned { get; set; }
+
+		public static void OnModelCreating(ModelBuilder builder)
+		{
+			builder.Entity<Comment>(options =>
+			{
+				options.HasOne(c => c.Author)
+					.WithMany()
+					.HasForeignKey(c => c.AuthorId)
+					.OnDelete(DeleteBehavior.NoAction);
+			});
+		}
 	}
 }

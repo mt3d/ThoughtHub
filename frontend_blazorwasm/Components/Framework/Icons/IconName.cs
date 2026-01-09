@@ -12,6 +12,10 @@
 
 		MoreOptions = 4,
 
-		ShowLess = 5
+		ShowLess = 5,
+
+		ArticleClap = 6,
+
+		ArticleComment = 7,
 	}
 }

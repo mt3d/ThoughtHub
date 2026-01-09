@@ -43,6 +43,7 @@ namespace ThoughtHub.Data
 			// This line is critical! It sets up keys for Identity tables.
 			base.OnModelCreating(builder);
 
+			Comment.OnModelCreating(builder);
 			FollowMapping.OnModelCreating(builder);
 			Publication.OnModelCreating(builder);
 			Profile.OnModelCreating(builder);

@@ -1,7 +1,8 @@
 ﻿@using ThoughtHub.Api.Models.Blocks
 
-@Block.Body
+<p class="article-body-paragraph">@Block.Body</p>
 
 @code {
+	[Parameter]
 	public TextBlockModel Block { get; set; }
 }

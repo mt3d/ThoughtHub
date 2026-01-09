@@ -38,13 +38,13 @@
                             <div class="post-author">
                                 <a class="post-author__avatar-link" href="#">
                                     <img class="post-author__avatar"
-                                         src="@Article.Author.ProfilePic"
-                                         alt="@Article.Author.FullName" />
+                                         src="@Article.AuthorProfile.ProfilePic"
+                                         alt="@Article.AuthorProfile.FullName" />
                                 </a>
 
                                 <div class="post-author__meta">
                                     <a class="post-author__name" href="#">
-                                        @Article.Author.FullName
+                                        @Article.AuthorProfile.FullName
                                     </a>
                                 </div>
 
@@ -62,31 +62,34 @@
                         </div>
 
                         <div class="post-actions">
+                            <div class="post-actions-section">                       
+                                <button class="post-action post-action--clap">
+                                    <HubIcon Name="IconName.ArticleClap" Width="24" Height="24" ViewBox="0 0 24 24" Fill=""/> <span class="post-action__count">251</span>
+                                </button>
 
-                            <button class="post-action post-action--clap">
-                                <HubIcon Name="IconName.Clap" /> <span class="post-action__count">251</span>
-                            </button>
+                                <button class="post-action post-action--responses">
+                                    <HubIcon Name="IconName.ArticleComment" Width="24" Height="24" ViewBox="0 0 24 24" Fill=""/> <span class="post-action__count">4</span>
+                                </button>
+                            </div>
 
-                            <button class="post-action post-action--responses">
-                                <HubIcon Name="IconName.Comment" /> <span class="post-action__count">4</span>
-                            </button>
+                            <div class="post-actions-section">
+                                <button class="post-action post-action--bookmark">
+                                    <HubIcon Name="IconName.AddToList" Width="24" Height="24" ViewBox="0 0 24 24" />
+                                </button>
 
-                            <button class="post-action post-action--bookmark">
-                                <HubIcon Name="IconName.AddToList" />
-                            </button>
+                                @* TODO: Add custom icon *@
+                                <button class="post-action post-action--listen">
+                                    Listen
+                                </button>
 
-                            @* TODO: Add custom icon *@
-                            <button class="post-action post-action--listen">
-                                ▶ Listen
-                            </button>
+                                <button class="post-action post-action--share">
+                                    Share
+                                </button>
 
-                            <button class="post-action post-action--share">
-                                Share
-                            </button>
-
-                            <button class="post-action post-action--more">
-                                More
-                            </button>
+                                <button class="post-action post-action--more">
+                                    More
+                                </button>
+                            </div>
 
                         </div>
 
@@ -95,11 +98,7 @@
                     <section class="post-body">
                         @foreach (var block in Article.BlockModels)
                         {
-                            <div class="block">
-                                <div class="container">
-                                    <DynamicComponent Type="@GetBlockComponentType(block)" Parameters="@(new Dictionary<string, object>{{"Block", block}})"/>
-                                </div>
-                            </div>
+                            <DynamicComponent Type="@GetBlockComponentType(block)" Parameters="@(new Dictionary<string, object>{{"Block", block}})"/>
                         }
                     </section>
 
@@ -141,7 +140,7 @@
             }
             else
             {
-                Article = await ArticleService.GetPublicationArticleAsync(author, slug);
+                Article = await ArticleService.GetPublicationArticleAsync(publication, slug);
             }
 
             if (Article is null)

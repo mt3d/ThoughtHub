@@ -139,7 +139,7 @@ namespace ThoughtHub.Services
 						// For each property of the type IFieldModel in the BlockModel.
 						foreach (var prop in model.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.IgnoreCase))
 						{
-							if (typeof(IFieldModel).IsAssignableFrom(prop.GetType()))
+							if (typeof(IFieldModel).IsAssignableFrom(prop.PropertyType))
 							{
 								// Pair which one of the current block fields in the database is the value of this property.
 								var field = block.Fields.FirstOrDefault(f => f.FieldId == prop.Name);

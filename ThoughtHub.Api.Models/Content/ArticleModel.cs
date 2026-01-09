@@ -18,18 +18,22 @@
 
 		public IList<BlockModel> BlockModels { get; set; } = new List<BlockModel>();
 
+
 		public DateTime CreatedAt { get; set; }
 
 		public DateTime UpdatedAt { get; set; }
 
+
 		public Guid AuthorProfileId { get; set; }
 
 		// TODO: Rename to ProfileModel and AutherProfile
-		public AuthorModel Author { get; set; } = new();
+		public AuthorModel? AuthorProfile { get; set; }
 
-		public int PublicationId { get; set; }
 
-		public PublicationModel? Publication { get; set; } = new();
+		public int? PublicationId { get; set; }
+
+		public PublicationModel? Publication { get; set; }
+
 
 		// TODO: Add image.
 		// TODO: Add comments.

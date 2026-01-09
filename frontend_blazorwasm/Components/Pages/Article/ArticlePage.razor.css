@@ -67,8 +67,13 @@
 
 .post-actions {
     display: flex;
-    gap: 16px;
     margin-top: 16px;
+    justify-content: space-between;
+}
+
+.post-actions-section {
+    display: flex;
+    gap: 16px;
 }
 
 .post-action {

@@ -1,0 +1,12 @@
+﻿.article-body-paragraph {
+    font-family: source-serif-pro, Georgia, Cambria, "Times New Roman", Times, serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+    line-height: 1.6;
+    letter-spacing: -0.003em;
+    color: rgb(36, 36, 36);
+    word-break: break-word;
+    margin-top: 0.94em;
+    margin-bottom: 0.94em;
+}

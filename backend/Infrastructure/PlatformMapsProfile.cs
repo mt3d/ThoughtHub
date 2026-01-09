@@ -14,6 +14,7 @@ namespace ThoughtHub.Infrastructure
 		{
 			CreateMap<Image, string?>().ConvertUsing<ImageToUrlConverter>();
 
+
 			// Map Article model to Article entity
 			CreateMap<ArticleModel, Article>();
 
@@ -24,8 +25,9 @@ namespace ThoughtHub.Infrastructure
 						? $"@{src.AuthorProfile.User.UserName}/{src.Slug}"
 						: $"{src.Publication.Slug}/{src.Slug}")
 				)
-				.ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.AuthorProfile))
+				.ForMember(dest => dest.AuthorProfile, opt => opt.MapFrom(src => src.AuthorProfile))
 				.ForMember(dest => dest.Publication, opt => opt.MapFrom(src => src.Publication));
+
 
 			CreateMap<Article, ArticleDigestModel>()
 				.ForMember(dest => dest.Url, opt => opt.MapFrom(src =>
@@ -37,14 +39,20 @@ namespace ThoughtHub.Infrastructure
 				.ForMember(dest => dest.Publication, opt => opt.MapFrom(src => src.Publication))
 				.ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.ArticleImage));
 
+
 			CreateMap<Data.Entities.Profile, AuthorModel>()
 				.ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FullName))
 				.ForMember(dest => dest.Url, opt => opt.MapFrom(src => src.User.UserName))
 				.ForMember(dest => dest.ProfilePic, opt => opt.MapFrom(src => src.ProfilePicture));
 
+			CreateMap<AuthorModel, Profile>()
+				.ForMember(dest => dest.FullName, opt => opt.MapFrom(src => src.Name));
+
 			CreateMap<Publication, PublicationModel>()
 				.ForMember(dest => dest.Url, opt => opt.MapFrom(src => src.Slug))
 				.ForMember(dest => dest.PublicationImageUrl, opt => opt.MapFrom(src => src.PublicationImage));
+
+			CreateMap<PublicationModel, Publication>();
 
 
 			CreateMap<Publication, PublicationPublisherModel>()
