@@ -1,8 +1,8 @@
 <Project Sdk="Aspire.AppHost.Sdk/13.1.0">
 
   <ItemGroup>
-    <ProjectReference Include="..\backend\ThoughtHub.Api.csproj" />
-    <ProjectReference Include="..\frontend_blazorwasm\ThoughtHub.UI.BlazorWasm.csproj" />
+    <ProjectReference Include="..\ThoughtHub.Api\ThoughtHub.Api.csproj" />
+    <ProjectReference Include="..\ThoughtHub.UI.BlazorWasm\ThoughtHub.UI.BlazorWasm.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
