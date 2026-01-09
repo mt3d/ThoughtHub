@@ -34,7 +34,7 @@ namespace ThoughtHub.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> GetIndependentArticle(string userName, string slug)
 		{
-			var article = await _articleService.GetIndependentArticle(userName, slug);
+			var article = await _articleService.GetIndependentArticleAsync(userName, slug);
 
 			if (article is null)
 			{
@@ -53,7 +53,7 @@ namespace ThoughtHub.Controllers
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		public async Task<IActionResult> GetPublicationArticle(string publication, string slug)
 		{
-			var article = await _articleService.GetPublicationArticle(publication, slug);
+			var article = await _articleService.GetPublicationArticleAsync(publication, slug);
 
 			if (article is null)
 			{

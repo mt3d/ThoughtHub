@@ -8,8 +8,8 @@ namespace ThoughtHub.Services
 
 		Task SaveAsync(ArticleModel model);
 
-		Task<ArticleModel?> GetIndependentArticle(string userName, string articleSlug);
+		Task<ArticleModel?> GetIndependentArticleAsync(string userName, string articleSlug);
 
-		Task<ArticleModel?> GetPublicationArticle(string publicationName, string articleSlug);
+		Task<ArticleModel?> GetPublicationArticleAsync(string publicationName, string articleSlug);
 	}
 }

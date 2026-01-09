@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
+using ThoughtHub.Api.Core.Entities.Article;
 using ThoughtHub.Api.Models.Content;
 using ThoughtHub.Data;
 
@@ -24,38 +26,42 @@ namespace ThoughtHub.Services
 			_contentService = contentService;
 		}
 
-		public async Task<ArticleModel?> GetIndependentArticle(string userName, string articleSlug)
+		private async Task<ArticleModel?> LoadAndTransformArticleAsync(Expression<Func<Article, bool>> predicate)
 		{
 			// TODO: Use the article repo.
+			// TODO: Use caching.
+
 			var article = await _context.Articles.AsNoTracking()
 				.Include(a => a.Tags)
 				.Include(a => a.Publication)
 				.Include(a => a.AuthorProfile).ThenInclude(p => p.User)
+				.Include(a => a.AuthorProfile).ThenInclude(p => p.ProfilePicture)
+				.Include(a => a.ArticleImage)
 				.Include(a => a.Blocks).ThenInclude(b => b.Block).ThenInclude(b => b.Fields)
-				.FirstOrDefaultAsync(x => x.AuthorProfile.User.UserName == userName && x.Slug == articleSlug);
+				.FirstOrDefaultAsync(predicate);
 
 			if (article is not null)
 			{
-				var model = _contentService.TransformArticleEntityIntoModel(article);
-				return model;
+				return _contentService.TransformArticleEntityIntoModel(article);
 			}
 
 			return null;
 		}
 
-		public async Task<ArticleModel> GetPublicationArticle(string publicationName, string slug)
+		public Task<ArticleModel?> GetIndependentArticleAsync(string userName, string slug)
 		{
-			var article = await _context.Articles.AsNoTracking()
-				.Include(a => a.Publication)
-				.Include(a => a.Tags)
-				.Include(a => a.AuthorProfile)
-				.FirstOrDefaultAsync(a =>
-					a.Publication != null && a.Publication.Slug == publicationName
-					&& a.Slug == slug);
+			return LoadAndTransformArticleAsync(a =>
+				a.PublicationId == null
+				&& a.AuthorProfile.User.UserName == userName
+				&& a.Slug == slug);
+		}
 
-			// TODO: Transform the blocks.
-
-			return _mapper.Map<ArticleModel>(article);
+		public Task<ArticleModel?> GetPublicationArticleAsync(string publicationName, string slug)
+		{
+			return LoadAndTransformArticleAsync(a =>
+				a.PublicationId != null
+				&& a.Publication.Slug == publicationName
+				&& a.Slug == slug);
 		}
 
 		public async Task<ArticleModel?> GetByIdAsync(Guid id)
